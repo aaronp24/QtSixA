@@ -3,7 +3,7 @@
  * written by falkTX, 2009  (used some code from sixhidtest.c)
  *
  * Compile with: gcc -Wall hidraw-dump.c -o hidraw-dump
- * Run with: "./hidraw-dump /dev/hidrawX"
+ * Run with: "sudo ./hidraw-dump /dev/hidrawX"
  *
 */
 

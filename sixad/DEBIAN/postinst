@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#Auto-stop sixad when shutting down
+if [ -f /etc/rc0.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc0.d/K10sixad; fi
+if [ -f /etc/rc1.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc1.d/K10sixad; fi
+if [ -f /etc/rc6.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc6.d/K10sixad; fi
+
+
+ARCH=`uname -m`
+
+case $ARCH in
+    powerpc|ppc)
+sed "s/Legacy=0/Legacy=1/" -i /etc/default/sixad
+echo "Detected PowerPC[32] - Legacy driver will be used"
+  ;;
+esac

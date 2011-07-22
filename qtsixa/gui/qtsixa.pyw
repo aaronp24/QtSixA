@@ -1035,7 +1035,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.func_What()
 
 	if config_display_info == "1":  QtGui.QMessageBox.information(self, self.tr("QtSixA - Updated"), self.tr(""
-	"<b>QtSixA has been updated to 1.0.2</b>.<br>"
+	"<b>QtSixA has been updated to 1.0.3</b>.<br>"
 	"This is the final stable version - Enjoy!<p>"
 	"If you found any bug, please report it using:<br>"
 	"\"Help\" -> \"Web Links\" -> \"Report bug\"<p>"
@@ -1061,7 +1061,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 		self.label_SixaxisProfile.setText("Current Sixaxis profile is "+self.SixaxisProfile)
 	    else: self.label_SixaxisProfile.setText("You're not using a Sixaxis profile")
 
-    def func_DBusDisconnect(self, mode, name):
+    def func_DBusDisconnect(self, mode, name, mac):
 	try:
 	    bluez_bus = bus.get_object('org.bluez', '/')
 	    bluez_id = bluez_bus.DefaultAdapter(dbus_interface='org.bluez.Manager')
@@ -1070,10 +1070,24 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    #self.func_UpdateDeviceStats()
 	except:
 	    listDev = ""
-	    print "Could not disconnect some devices, please wait a few seconds and try again"
-	    QtGui.QMessageBox.warning(self, self.tr("QtSixA - Disconnect"), self.tr(""
-	    "Could not disconect some devices.<br>"
-	    "<i>(Maybe bluetooth is off?)</i>"))
+	    if (mode == "single"):
+		if look4Root(): os.system(ROOT+" hcitool "+"dc "+mac)
+	    elif (mode == "sixaxis"):
+		self.look4Sixaxis = commands.getoutput("hcitool con | grep ACL | awk '{printf$3\" \"}'").split()
+		if look4Root():
+		    s = 0
+		    while s < len(self.look4Sixaxis):
+			if "PLAYSTATION(R)3 Controller" in commands.getoutput("hcitool "+"name "+self.look4Sixaxis[s]):
+			    os.system(ROOT+" hcitool "+"dc "+self.look4Sixaxis[s])
+			s += 1
+	    elif (mode == "all"):
+		if "ACL" in commands.getoutput("hcitool con | grep ACL"):
+		    if look4Root(): os.system(ROOT+" `hcitool con | grep ACL | awk '{printf\"hcitool dc \"$3\"\\n\"}'`")
+	    else:
+		print "Could not disconnect some devices, please wait a few seconds and try again"
+		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Disconnect"), self.tr(""
+		"Could not disconect some devices.<br>"
+		"<i>(Maybe bluetooth is off?)</i>"))
 
 	j = 0
 	while j < len(listDev):
@@ -1102,7 +1116,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    print "Device not connected; Cannot disconnect"
 	    return
 	self.selectedDeviceParsed = commands.getoutput("echo "+self.selectedDevice+" | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' ")
-	self.func_DBusDisconnect("single", self.selectedDeviceParsed)
+	self.func_DBusDisconnect("single", self.selectedDeviceParsed, self.selectedDevice)
 	self.listOfDevices.setCurrentRow(-1)
 
     def func_Battery(self):
@@ -1128,12 +1142,12 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    else: self.barBattery.setValue(int(self.SixaxisBat))
 
     def func_DiscAllSixaxis(self):
-	self.func_DBusDisconnect("sixaxis", "NULL")
+	self.func_DBusDisconnect("sixaxis", "NULL", "NULL")
 	self.listOfDevices.setCurrentRow(-1)
         #QtGui.QMessageBox.information(self, self.tr("QtSixA - Disconnect"), self.tr("All Sixaxis should now be disconected."))
 
     def func_DiscEverything(self):
-	self.func_DBusDisconnect("all", "NULL")
+	self.func_DBusDisconnect("all", "NULL", "NULL")
 	self.listOfDevices.setCurrentRow(-1)
         #if listDev != "": QtGui.QMessageBox.information(self, self.tr("QtSixA - Disconnect"), self.tr("All bluetooth devices should now be disconected."))
 	#else: QtGui.QMessageBox.warning(self, self.tr("QtSixA - Disconnect"), self.tr("Could not disconect all devices. Please try again later"))
@@ -1148,7 +1162,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	if number == 7: self.selectedDevice = self.hidd_number_7
 	if number == 8: self.selectedDevice = self.hidd_number_8
 	self.selectedDeviceParsed = commands.getoutput("echo "+self.selectedDevice+" | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' | awk 'sub(\":\",\"_\")' ")
-	self.func_DBusDisconnect("single", self.selectedDeviceParsed)
+	self.func_DBusDisconnect("single", self.selectedDeviceParsed, self.selectedDevice)
 	self.listOfDevices.setCurrentRow(-1)
 
     def func_BT_Start(self):
@@ -1165,14 +1179,15 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
         QtSixA_Sixpair_Window().exec_()
 
     def func_Force(self):
-        os.system(ROOT+" sixad "+"--force "+"&")
-        QtGui.QMessageBox.information(self, self.tr("QtSixA - Forced"), self.tr(""
-	"The sixad driver has now been forced to start.<p>"
-	"You should be able to connect your devices with no problem now<br>"
-	"<i>(but please note that bluetooth is not workable for anything else in this mode, "
-	"so you should stop sixad when you need to do something else)</i>"))
-        #QtGui.QMessageBox.warning(self, self.tr("QtSixA - Forced"), self.tr(""
-	#"sixad no longer supports this action.\nYou can still force the connection by stopping bluetooth several times before the Sixaxis/Keypad gets connected"))
+        if look4Root():
+	    os.system(ROOT+" sixad "+"--force "+"&")
+	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Forced"), self.tr(""
+	    "The sixad driver has now been forced to start.<p>"
+	    "You should be able to connect your devices with no problem now<br>"
+	    "<i>(but please note that bluetooth is not workable for anything else in this mode, "
+	    "so you should stop sixad when you need to do something else)</i>"))
+	    #QtGui.QMessageBox.warning(self, self.tr("QtSixA - Forced"), self.tr(""
+	    #"sixad no longer supports this action.\nYou can still force the connection by stopping bluetooth several times before the Sixaxis/Keypad gets connected"))
 
     def func_Stop(self):
 	if look4Root():
@@ -1568,7 +1583,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 1.0.2 </b><br>"
+	self.trayTooltip = "<b> QtSixA 1.0.3 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
         else: self.trayTooltip += "Your input profile is set to \"<i>"+self.SixaxisProfile+"</i>\"."
 	self.trayTooltip += "<p>"
@@ -1721,7 +1736,7 @@ if __name__ == '__main__':
 
     appName     = "QtSixA"
     programName = "QtSixA"
-    version     = "1.0.2"
+    version     = "1.0.3"
     description = "Sixaxis Joystick Manager"
     license     = "GPL v2+"
     copyright   = "(C) 2009 falkTX"

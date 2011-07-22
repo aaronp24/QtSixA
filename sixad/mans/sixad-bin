@@ -1,0 +1,8 @@
+.\" Help file created by falkTX
+.TH SIXAD-BIN "1" "November 2009" "sixad-bin "User Commands"
+.SH NAME
+sixad-bin
+.SH NOTICE
+sixad-bin is part of the sixad driver and it's only used when needed.
+
+To use the sixad driver, please run "sixad".

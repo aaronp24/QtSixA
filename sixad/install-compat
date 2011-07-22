@@ -5,13 +5,9 @@
 ARCH=`uname -m`
 
 case $ARCH in
-    powerpc|ppc)
-cp compat/hcid_powerpc32 bins/hcid
-cp compat/libbluetooth.so.2_powerpc32 bins/libbluetooth.so.2
-  ;;
-    powerpc64|ppc64)
-cp compat/hcid_powerpc64 bins/hcid
-cp compat/libbluetooth.so.2_powerpc64 bins/libbluetooth.so.2
+    powerpc|ppc|powerpc64|ppc64)
+cp compat/hcid_powerpc bins/hcid
+cp compat/libbluetooth.so.2_powerpc bins/libbluetooth.so.2
   ;;
     amd64|x64|x86_64)
 cp compat/hcid_amd64 bins/hcid

@@ -3,9 +3,6 @@
 # sixad-bin wrapper
 # written by falktx
 
-#Fix for PowerPC:
-LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/
-
 . /etc/default/sixad
 
 
@@ -101,7 +98,7 @@ else
   { #3
   if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
   sudo /usr/sbin/hcid
-  sudo LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/ /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
+  sudo /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
    } #3
  else
   echo "You need admin/root access to run this application"

@@ -3,7 +3,6 @@
 # For PowerPC or PS3 compilation, check ppu-gcc folder
 # 
 
-# There's still an error while compiling UInput stuff for PowerPC[32]
 
 all: sixad-bin tools
 

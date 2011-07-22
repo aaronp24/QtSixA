@@ -1,3 +1,30 @@
+qtsixa (1.0.3-falktx1) karmic; urgency=low
+
+  * Fixed "Force connection" dialog
+  * Use 'hcitool' to disconnect devices when python-dbus is not available
+  * Use update-rc.d to register sixad service (PPA only, for happy RPMs)
+  * Created man pages
+
+ -- falkTX <falktx@gmail.com>  Tue, 03 Nov 2009 00:36:47 +0000
+
+
+qtsixa (1.0.2-ubuntu2~ppa1) karmic; urgency=low
+
+  * Fixed qtsixa.postinst script to match *.bak -> *.bu rename
+
+ -- falkTX <falktx@gmail.com>  Tue, 03 Nov 2009 00:36:47 +0000
+
+
+qtsixa (1.0.2~falktx1) karmic; urgency=low
+
+  * On the Sixaxis profiles, use "none" for no key instead of "key=NoSymbol"
+  * Renamed *.bak files to *.bu (debian complains)
+  * New Option - "Toggle profiles on/off" (useful for PS3 guys!)
+  * First PPA release!
+
+ -- falkTX <falktx@gmail.com>  Sun, 01 Nov 2009 19:46:48 +0000
+
+
 qtsixa/sixad (1.0.1-falktx2) stable; urgency=low
 
   * Transition to debian-source based packaging

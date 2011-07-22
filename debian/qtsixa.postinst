@@ -8,21 +8,8 @@ check_4_fdi_files () {
 ls /etc/hal/fdi/policy/ | grep sixa_ > /dev/null
 }
 
-keypad_find_old_override_files () {
-ls /etc/hal/fdi/policy/ | grep x11-qt-sixa > /dev/null
-}
-
-find_old_profile_file () {
-cat /usr/share/qtsixa/profiles.list | grep ff8pc > /dev/null
-}
-
 if [ -f /usr/share/qtsixa/profiles.list ]; then true; else
 cp /usr/share/qtsixa/profiles.list.bu /usr/share/qtsixa/profiles.list
-fi
-
-if (find_old_profile_file "$1"); then true; else
-cp /usr/share/qtsixa/profiles.list.bu /usr/share/qtsixa/profiles.list
-echo "Note: old sixaxis profiles file was found and updated"
 fi
 
 if [ -f /etc/hal/fdi/policy/DualShock3.fdi ]; then
@@ -33,14 +20,3 @@ fi
 if (check_4_fdi_files "$1"); then true; else
 cp /usr/share/qtsixa/sixaxis-profiles/sixa_none.fdi /etc/hal/fdi/policy/
 fi
-
-if (keypad_find_old_override_files "$1"); then
-rm /etc/hal/fdi/policy/x11-qt-sixa*
-echo "Note: Old Sixaxis override files were found and deleted"
-fi
-
-case "$1" in
-  purge)
-rm -rf /usr/share/qtsixa/ || true
-  ;;
-esac

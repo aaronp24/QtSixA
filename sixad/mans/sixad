@@ -1,0 +1,33 @@
+.\" Help file created by falkTX
+.TH SIXAD "1" "November 2009" "sixad" "User Commands"
+.SH NAME
+sixad \- [Qt]SixA Daemon
+.SH SYNOPSIS
+.B sixad
+[\fIcommand\fR]
+.SH DESCRIPTION
+sixad is the background daemon/driver of QtSixA
+
+QtSixA is an application that allows connectings PS3 hardware (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine.
+
+Currently it supports:
+  - Sixaxis buttons, axis, accelerometers and LEDs
+  - PS3 Keypads
+
+QtSixA also registers the Sixaxis and Keypad's MAC/ID in the joystick name
+(ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
+.SS "Available Commands:"
+.TP
+--boot-no
+Disable sixad at boot
+.TP
+--boot-yes
+Enable sixad at boot
+.TP
+--force
+Force sixad to search & connect devices, even if already running
+.TP
+--stop
+Stop/Kill sixad and restores bluetooth
+.SH SEE ALSO
+sixad-raw

@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create a deb file for qtsixa
-VERSION="1.0.2~falktx1"
+VERSION="1.0.3-0falktx1"
 
 #Make needed directories
 mkdir ./qtsixa_deb
@@ -23,25 +23,27 @@ mkdir ./qtsixa_deb/usr/share/qtsixa/sixaxis-profiles
 
 #Copy folders
 cp DEBIAN/* ./qtsixa_deb/DEBIAN/
-cp doc/* ./qtsixa_deb/usr/share/doc/qtsixa/
-cp manual/* ./qtsixa_deb/usr/share/doc/qtsixa/manual/
-cp game-profiles/* ./qtsixa_deb/usr/share/qtsixa/game-profiles/
-cp gui/* ./qtsixa_deb/usr/share/qtsixa/gui/
-cp pics/* ./qtsixa_deb/usr/share/qtsixa/pics/
-cp icons/* ./qtsixa_deb/usr/share/qtsixa/icons/
-cp sixaxis-profiles/* ./qtsixa_deb/usr/share/qtsixa/sixaxis-profiles/
+cp ../../qtsixa-*/qtsixa/doc/* ./qtsixa_deb/usr/share/doc/qtsixa/
+cp ../../qtsixa-*/qtsixa/manual/* ./qtsixa_deb/usr/share/doc/qtsixa/manual/
+cp ../../qtsixa-*/qtsixa/game-profiles/* ./qtsixa_deb/usr/share/qtsixa/game-profiles/
+cp ../../qtsixa-*/qtsixa/gui/* ./qtsixa_deb/usr/share/qtsixa/gui/
+cp ../../qtsixa-*/qtsixa/pics/* ./qtsixa_deb/usr/share/qtsixa/pics/
+cp ../../qtsixa-*/qtsixa/icons/* ./qtsixa_deb/usr/share/qtsixa/icons/
+cp ../../qtsixa-*/qtsixa/sixaxis-profiles/* ./qtsixa_deb/usr/share/qtsixa/sixaxis-profiles/
 
 #Copy individual files
-cp sixa ./qtsixa_deb/usr/bin/
-cp sixa-lq ./qtsixa_deb/usr/bin/
-cp sixa-notify ./qtsixa_deb/usr/bin/
-cp qtsixa ./qtsixa_deb/usr/bin/
-cp qtsixa.desktop ./qtsixa_deb/usr/share/applications/
-# cp qtsixa.menu ./qtsixa_deb/usr/share/menu/qtsixa
-cp qtsixa.xpm ./qtsixa_deb/usr/share/pixmaps/
-cp *.bu ./qtsixa_deb/usr/share/qtsixa/
-cp features.html ./qtsixa_deb/usr/share/qtsixa/
-cp sixa-notify.desktop ./qtsixa_deb/usr/share/qtsixa/
+cp ../../qtsixa-*/qtsixa/sixa ./qtsixa_deb/usr/bin/
+cp ../../qtsixa-*/qtsixa/sixa-lq ./qtsixa_deb/usr/bin/
+cp ../../qtsixa-*/qtsixa/sixa-notify ./qtsixa_deb/usr/bin/
+cp ../../qtsixa-*/qtsixa/qtsixa ./qtsixa_deb/usr/bin/
+cp ../../qtsixa-*/qtsixa/qtsixa.desktop ./qtsixa_deb/usr/share/applications/
+# cp ../../qtsixa-*/qtsixa/qtsixa.menu ./qtsixa_deb/usr/share/menu/qtsixa
+cp ../../qtsixa-*/qtsixa/qtsixa.xpm ./qtsixa_deb/usr/share/pixmaps/
+cp ../../qtsixa-*/qtsixa/*.bu ./qtsixa_deb/usr/share/qtsixa/
+cp ../../qtsixa-*/qtsixa/features.html ./qtsixa_deb/usr/share/qtsixa/
+cp ../../qtsixa-*/qtsixa/sixa-notify.desktop ./qtsixa_deb/usr/share/qtsixa/
+
+sed "s/---VERSION---/$VERSION/" -i ./qtsixa_deb/DEBIAN/control
 
 #Create the deb
 dpkg -b ./qtsixa_deb

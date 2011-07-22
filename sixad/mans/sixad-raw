@@ -1,0 +1,13 @@
+.\" Help file created by falkTX
+.TH SIXAD-RAW "1" "November 2009" "sixad-raw "User Commands"
+.SH NAME
+sixad-raw - sixad driver for hidraw devices
+.SH SYNOPSIS
+.B sixad-raw
+[\fIdevice\fR]
+.SH DESCRIPTION
+sixad-raw allows you to use the sixad driver in hidraw devices
+.SS "Usage:"
+.TP
+sixad-raw /dev/hidrawX
+Starts sixad driver on hidraw device X

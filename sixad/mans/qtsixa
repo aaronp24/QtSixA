@@ -1,0 +1,16 @@
+.\" Help file created by falkTX
+.TH QTSIXA "1" "November 2009" "QtSixA" "User Commands"
+.SH NAME
+QtSixA \- The Sixaxis Joystick Manager
+.SH SYNOPSIS
+.B qtsixa
+.SH DESCRIPTION
+QtSixA is an application that allows connectings PS3 hardware (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine.
+
+Currently it supports:
+  - Sixaxis buttons, axis, accelerometers and LEDs
+  - PS3 Keypads
+
+QtSixA also registers the Sixaxis and Keypad's MAC/ID in the joystick name
+(ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
+

@@ -1,0 +1,28 @@
+.\" Help file created by falkTX
+.TH [QT]SIXA "1" "November 2009" "[Qt]SixA" "User Commands"
+.SH NAME
+[Qt]SixA \- The Sixaxis Joystick Manager
+.SH SYNOPSIS
+.B sixa
+[\fIcommand\fR]
+.SH DESCRIPTION
+QtSixA is an application that allows connectings PS3 hardware (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine.
+
+Currently it supports:
+  - Sixaxis buttons, axis, accelerometers and LEDs
+  - PS3 Keypads
+
+QtSixA also registers the Sixaxis and Keypad's MAC/ID in the joystick name
+(ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
+.SS "Available Commands:"
+.TP
+h, help
+Show help
+.TP
+v, version
+Show [Qt]SixA version
+.PP
+(Please note that pressing the PS button is all you need to connect a device.
+To start the gui launch 'qtsixa')
+.PP
+Released under the terms of the GNU GPL v2 license
