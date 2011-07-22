@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deviceinfo version="0.2">
+  <device>
+
+      <match key="input.product" string_outof="Sony Computer Entertainment Wireless Keypad;Wireless Keypad">
+        <merge key="input.x11_driver" type="string">evdev</merge>
+      </match>
+      
+  </device>
+</deviceinfo>

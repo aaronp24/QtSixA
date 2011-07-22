@@ -1,0 +1,50 @@
+# sixad configuration file
+#
+# Please use "1" or "0" instead of "yes/no" or "true/false"
+#  (this values are sent to C code...)
+
+
+# Enable LEDs?
+Enable_leds=1
+
+# Use js # for LED #? (overrides "LED_n" and "LED_plus"; doesn't work with "Legacy" )
+LED_js_n=1
+
+# Start with LED #
+LED_n=1
+
+# LED # increase after new connection?
+LED_plus=1
+
+# Enable LEDs/Rumble animation?
+LED_anim=1
+
+# Enable buttons?
+Enable_buttons=1
+
+# Enable sensible buttons? (as axis)
+Enable_sbuttons=1
+
+# Enable axis? (Left & Right)
+Enable_axis=1
+
+# Enable accelerometers?
+Enable_accel=1
+
+# Enable acceleration?
+Enable_accon=0
+
+# Enable speed?
+Enable_speed=0
+
+# Enable position?
+Enable_pos=0
+
+# Enable rumble? (Incomplete)
+Enable_rumble=0
+
+# Use Old/Legacy driver instead of sixad (Workaround for PowerPC[32] UInput)
+Legacy=0
+
+# Enable debug?
+Debug=0

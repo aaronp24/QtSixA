@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deviceinfo version="0.2">
+  <device>
+      <!-- Sixaxis configuration for Firefox 3.x -->
+      <match key="input.product" contains="PLAYSTATION(R)3 Controller">
+
+        <merge key="input.x11_driver" type="string">joystick</merge>
+        
+	<!-- Main Axis. Left=Mouse; Right=Move-Between-Tabs/Scroll
+        -->
+        <merge key="input.x11_options.MapAxis1" type="string">mode=relative axis=+2x deadzone=5000</merge>
+        <merge key="input.x11_options.MapAxis2" type="string">mode=relative axis=+2y deadzone=5000</merge>
+        <merge key="input.x11_options.MapAxis3" type="string">mode=accelerated keylow=Control_L+Page_Up keyhigh=Control_L+Page_Down deadzone=20000</merge>
+        <merge key="input.x11_options.MapAxis4" type="string">mode=relative axis=+1zy deadzone=10000</merge>
+	<merge key="input.x11_options.MapAxis5" type="string">mode=none</merge>
+	<merge key="input.x11_options.MapAxis6" type="string">mode=none</merge>
+	<merge key="input.x11_options.MapAxis7" type="string">mode=none</merge>
+	<merge key="input.x11_options.MapAxis8" type="string">mode=none</merge>
+
+	<!-- Select=Back; Start=Forward; PS=Refresh
+        -->
+        <merge key="input.x11_options.MapButton1" type="string">key=Control_L+bracketleft</merge>
+        <merge key="input.x11_options.MapButton2" type="string">none</merge>
+        <merge key="input.x11_options.MapButton3" type="string">none</merge>
+        <merge key="input.x11_options.MapButton4" type="string">key=Control_L+bracketright</merge>
+        <merge key="input.x11_options.MapButton17" type="string">key=F5</merge>
+
+	<!-- Direcctional keys (Up, Down, Left & Right)
+        -->
+        <merge key="input.x11_options.MapButton5" type="string">key=Up</merge>
+        <merge key="input.x11_options.MapButton8" type="string">key=Left</merge>
+        <merge key="input.x11_options.MapButton6" type="string">key=Right</merge>
+        <merge key="input.x11_options.MapButton7" type="string">key=Down</merge>
+
+	<!-- R2=New-Tab; L2=Bookmarks; R1=FullScreen; L1=Menus
+        -->
+        <merge key="input.x11_options.MapAxis14" type="string">mode=accelerated keylow=none mode=accelerated keyhigh=Control_L+T deadzone=15000</merge>
+        <merge key="input.x11_options.MapButton9" type="string">key=Control_L+B</merge>
+        <merge key="input.x11_options.MapButton12" type="string">key=F11</merge>
+        <merge key="input.x11_options.MapButton11" type="string">key=Alt_L+F</merge>
+
+	<!-- X=Left-Click; O=Right-Click; []=Enter; Δ=Escape
+        -->
+        <merge key="input.x11_options.MapButton15" type="string">button=1</merge>
+        <merge key="input.x11_options.MapButton14" type="string">button=3</merge>
+        <merge key="input.x11_options.MapButton16" type="string">key=Return</merge>
+        <merge key="input.x11_options.MapButton13" type="string">key=Escape</merge>
+
+      </match>
+  </device>
+</deviceinfo>

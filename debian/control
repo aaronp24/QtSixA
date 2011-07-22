@@ -1,0 +1,35 @@
+Source: qtsixa
+Section: utils
+Priority: optional
+XSBC-Original-Maintainer: Filipe Coelho (aka 'falkTX') <falktx@gmail.com>
+Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+Standards-Version: 3.8.3
+Build-Depends: libusb-dev, libbluetooth-dev, gcc (>= 4.1), debhelper (>= 7.0)
+
+Package: qtsixa
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, bluez (>= 4.12), bluez-hcidump, sixad (>= 1.0.2~falktx1), python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
+Recommends: gksu | kdesu | kdesudo, python2.5 | python2.6
+Conflicts: qt-sixa (<= 0.4.3-falktx1)
+Description: Sixaxis Joystick Manager
+ This package provides a useful GUI to control the sixad modules.
+ .
+ QtSixA is written in PyQt
+
+Package: sixad
+Architecture: amd64 i386 powerpc lpia
+Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12)
+Conflicts: bluez-sixa, bluez-sixaxis, bluez-sixaxis-bin, libbluetooth2
+Description: [Qt]SixA Daemon
+ This package provides the modules (called 'sixad') for connecting PS3 hardware
+ (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine
+ .
+ Currently sixad supports:
+  - Sixaxis buttons, axis, accelerometers and LEDs
+  - PS3 Keypads
+ .
+ sixad also registers the Sixaxis and Keypad's MAC/ID in the joystick name
+ (ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
+ .
+ sixad is triggered by udev, making it super easy to connect new devices
+ (you just need to press the PS button)

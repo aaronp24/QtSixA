@@ -1,0 +1,16 @@
+etc
+etc/default
+etc/hal
+etc/hal/fdi
+etc/hal/fdi/policy
+etc/init.d
+lib
+lib/udev
+lib/udev/rules.d
+usr
+usr/bin
+usr/lib
+usr/lib/sixad
+usr/sbin
+usr/share
+usr/share/sixad

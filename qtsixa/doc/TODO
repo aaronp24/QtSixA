@@ -1,0 +1,15 @@
+-- TODO Stuff for later
+
+ - Rumble support for DualShock3:  -- In progress
+  · Study how to receive UInput events (instead of just reading bluetooth packet files)
+  · Get a DualShock3 and finish code
+ - Fix PowerPC-32 UInput error: - NOTE - this is not a problem on Karmic
+  · Try to use patch from WiiMote guys
+  · Needs too many checking, ask for testing volunteers
+
+
+Stuff to do way later:
+ - Wake up a PC from suspend
+ - RPM repo ? -> needs some study
+ - What else ?
+ - 

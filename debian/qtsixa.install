@@ -1,0 +1,17 @@
+qtsixa/doc/* usr/share/doc/qtsixa/
+qtsixa/manual/* usr/share/doc/qtsixa/manual/
+qtsixa/game-profiles/* usr/share/qtsixa/game-profiles/
+qtsixa/gui/* usr/share/qtsixa/gui/
+qtsixa/pics/* usr/share/qtsixa/pics/
+qtsixa/icons/* usr/share/qtsixa/icons/
+qtsixa/sixaxis-profiles/* usr/share/qtsixa/sixaxis-profiles/
+
+qtsixa/sixa usr/bin/
+qtsixa/sixa-lq usr/bin/
+qtsixa/sixa-notify usr/bin/
+qtsixa/qtsixa usr/bin/
+qtsixa/qtsixa.desktop usr/share/applications/
+qtsixa/qtsixa.xpm usr/share/pixmaps/
+qtsixa/*.bu usr/share/qtsixa/
+qtsixa/features.html usr/share/qtsixa/
+qtsixa/sixa-notify.desktop usr/share/qtsixa/

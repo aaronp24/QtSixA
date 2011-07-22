@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+
+#DEBHELPER#
+
+#Auto-stop sixad when shutting down
+if [ -f /etc/rc0.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc0.d/K10sixad; fi
+if [ -f /etc/rc1.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc1.d/K10sixad; fi
+if [ -f /etc/rc6.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc6.d/K10sixad; fi
+
+#Check for old sixad configuration file
+old_sixad () {
+cat /etc/default/sixad | grep Debug > /dev/null
+}
+
+if (old_sixad "$1"); then true; else
+cp /etc/default/sixad.bak /etc/default/sixad
+echo "Replacing old sixad file with new one, overriding settings"
+fi
+
+
+ARCH=`uname -m`
+
+case $ARCH in
+    powerpc|ppc)
+sed "s/Legacy=0/Legacy=1/" -i /etc/default/sixad
+echo "Detected PowerPC[32] - Legacy driver will be used"
+cp /usr/share/hal/fdi/policy/20thirdparty/11-x11-synaptics.fdi /usr/share/sixad/11-x11-synaptics.fdi.bak
+cp /usr/share/sixad/11-x11-synaptics.fdi.fixed /usr/share/hal/fdi/policy/20thirdparty/11-x11-synaptics.fdi
+echo "11-x11-synaptics.fdi was fixed for PowerPC compatibility"
+  ;;
+    powerpc64|ppc64)
+cp /usr/share/hal/fdi/policy/20thirdparty/11-x11-synaptics.fdi /usr/share/sixad/11-x11-synaptics.fdi.bak
+cp /usr/share/sixad/11-x11-synaptics.fdi.fixed /usr/share/hal/fdi/policy/20thirdparty/11-x11-synaptics.fdi
+echo "11-x11-synaptics.fdi was fixed for PowerPC compatibility"
+  ;;
+esac
+
+ldconfig

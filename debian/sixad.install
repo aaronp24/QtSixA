@@ -1,0 +1,19 @@
+sixad/sixad usr/bin/
+
+sixad/bins/hidraw-dump usr/sbin/
+sixad/bins/sixpair usr/sbin/
+sixad/bins/sixpair-kbd usr/sbin/
+sixad/bins/sixad-raw usr/sbin/
+sixad/bins/sixad-bin usr/sbin/
+sixad/bins/sixad-uinput-sixaxis usr/sbin/
+
+sixad/bins/hcid usr/sbin/
+sixad/bins/libbluetooth.so.2 usr/lib/
+
+sixad/98-sixad.rules lib/udev/rules.d/
+
+sixad/x11-sony-keypad.fdi etc/hal/fdi/policy/
+sixad/11-x11-synaptics.fdi.fixed usr/share/sixad/
+
+sixad/default/sixad etc/default/
+sixad/init/sixad etc/init.d/

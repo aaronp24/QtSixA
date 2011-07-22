@@ -1,0 +1,63 @@
+qtsixa (1.0.2-ubuntu2~ppa1) karmic; urgency=low
+
+  * Fixed postinst script to match *.bak -> *.bu rename
+
+ -- falkTX <falktx@gmail.com>  Tue, 03 Nov 2009 00:36:47 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa8) jaunty; urgency=low
+
+  * Backport to Jaunty
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 17:50:28 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa7) karmic; urgency=low
+
+  * Set MOTU as maintainer and added watch file
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 15:40:48 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa6) karmic; urgency=low
+
+  * Set myself as Original Mainteiner
+  * Uploaded for revision (Closes LP: #198048)
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 15:21:17 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa5) karmic; urgency=low
+
+  * Update for official QtSixA repository
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 12:58:17 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa4) karmic; urgency=low
+
+  * Upload to my new registered fingerprint
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 12:07:57 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa3) karmic; urgency=low
+
+  * Trying to upload again
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 11:46:27 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa2) karmic; urgency=low
+
+  * Upload to proper PPA
+
+ -- falkTX <falktx@gmail.com>  Mon, 02 Nov 2009 11:36:15 +0000
+
+qtsixa (1.0.2-ubuntu1~ppa1) karmic; urgency=low
+
+  * Upload for Testing PPA
+
+ -- falkTX <falktx@gmail.com>  Sun, 01 Nov 2009 22:20:23 +0000
+
+qtsixa (1.0.2~falktx1) karmic; urgency=low
+
+  * On the Sixaxis profiles, use "none" for no key instead of "key=NoSymbol"
+  * Renamed *.bak files to *.bu (debian complains)
+  * New Option - "Toggle profiles on/off" (useful for PS3 guys!)
+  * First PPA release!
+
+ -- falkTX <falktx@gmail.com>  Sun, 01 Nov 2009 19:46:48 +0000

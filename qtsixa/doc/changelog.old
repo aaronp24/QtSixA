@@ -1,0 +1,821 @@
+qtsixa/sixad (1.0.1-falktx2) stable; urgency=low
+
+  * Transition to debian-source based packaging
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  29 Oct 2009 12:21:10 +0000
+
+
+qtsixa/sixad (1.0.1-falktx1) stable; urgency=low
+
+  * Final release! (v1.0.1 for happy update)
+  * QtSixA:
+    - Final fix for the notifications
+    - Fixed sixad-raw PATH (needed for RPM Linuxes)
+    - Write to sixad config file as root (needed for RPM Linuxes)
+    - Other very small fixes where needed
+  * sixad:
+    - hidraw-dump and sixad-raw do now read file instead of stdin
+    [No more 'sudo su root -c "hid...', just 'hidraw-dump /dev/hidrawX']
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  29 Oct 2009 12:21:10 +0000
+
+
+qtsixa/sixad (1.0.0-falktx7) stable; urgency=low
+
+  * Pre-Final release (just for users to test)
+  * QtSixA:
+    - Do not apply a game profile if the it's configuration file doesn't exist
+  * sixad:
+    - Disable debug by default
+    - Workaround for a PowerPC synaptics bug (LP#351059)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  29 Oct 2009 13:02:17 +0000
+
+
+qtsixa (1.0-falktx6) stable; urgency=low
+
+  * Fixed the notifications not being able to start
+
+-- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  28 Oct 2009 09:21:24 +0000
+
+
+qtsixa (1.0-falktx5) stable; urgency=low
+
+  * QtSixA:
+    - Fixed sixa-notify file appearing on home folder
+    - Fixed notifications not auto-started on Gnome sessions
+    - Notifications can now be started anytime by running "sixa-notify"
+    - Disabled [Incomplete] Rumble feature (for v1.0 stability, can be enabled manually)
+    - Display warning when "Legacy Driver" is not enabled on PowerPC
+
+-- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  26 Oct 2009 09:52:16 +0000
+
+
+qtsixa/sixad (1.0-falktx4) stable; urgency=low
+
+  * QtSixA:
+    - Changed rumble feature to "Incomplete"
+    - Added debug on/off option in "Configure Sixaxis"/"Advanced"
+  * sixad:
+    - *REALLY* Only process packets if received from a Sixaxis (Random uinput bug now fixed!)
+    [print "got non-Sixaxis packet and ignored" for debug purposes]
+    - Added debug on/off option
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  25 Oct 2009 20:22:57 +0000
+
+
+qtsixa/sixad (1.0-falktx3) stable; urgency=low
+
+  * QtSixA:
+    - All bluetooth devices appear in the list, so updated features to match that
+  * sixad:
+    - Re-enabled axis deadzones
+    - Deadzones also for Accelerometers and Accel/Speed/Position
+    - The accelerometers are now properly centered
+    - Small rumble effect along with LEDs animation
+    - Fixed rumble activating all LEDs
+    - Removed most rumble code for now (looking for the best way to implement it)
+    - Only process packets if received from a Sixaxis (may fix random uinput bug)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  25 Oct 2009 11:53:10 +0000
+
+
+qtsixa (1.0-falktx2) stable; urgency=low
+
+  * Removed "Status" from main device properties
+  * Fixed "list of devices" unselectable when only USB devices were connected
+  * Marked update as RC
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  23 Oct 2009 21:35:04 +0000
+
+
+qtsixa (1.0-falktx1) stable; urgency=low
+
+  * Auto-add *.fdi extension to new created profiles
+  * Revert "Allow any filetype to be selected as fdi profile to add"
+  * Fixed not showing fdi/png files in browser when adding a new profile (only happened on Gnome)
+
+sixad (1.0-falktx{1,2}) stable; urgency=low
+
+  * Fixed sixad search for devices
+  * Trying to fix random input bug (disabling axis deadzones)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  22 Oct 2009 17:31:26 +0000
+
+
+qtsixa/sixad (1.0-falktx0) stable; urgency=low
+
+  * QtSixA:
+    - Changed homepage to 'http://qtsixa.sourceforge.net'
+    - Fixed crash when creating a new profile using old PyQt (create button is now available)
+    - Do not display warning about old PyQt anymore (bug fixed)
+    - Fixed script to add new profile (it works now)
+    - Allow any filetype to be selected as fdi profile to add
+    - Finally wrote the manual!
+    - A last check to the code, fixing all the possible bugs still around
+  * sixad:
+    - Small cleanup of code
+    - Read sixad configuration file when connecting a new Sixaxis
+    [You don't have to stop sixad to apply configuration changes]
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  21 Oct 2009 21:35:04 +0000
+
+
+qtsixa (0.6.0-falktx2) stable; urgency=low
+
+  * Fixed missing tray icon
+
+sixad (0.9-falktx2) unstable; urgency=low
+
+  * Reverse acX axis (was like this before, thus it makes more sense this way)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  20 Oct 2009 13:58:27 +0000
+
+
+qtsixa (0.6.0-falktx1) stable; urgency=low
+
+  * Fixed bluetooth Keypad always appearing as USB Keypad, in notifications
+  * Fixed some game profiles not applied properly
+  * Updated "Configure Sixaxis" and "Sixaxis Reference" dialogs to match sixad updates
+  * Added "Final Fantasy VIII PC" profile
+  * Other small fixes as usual
+
+sixad (0.9-falktx1) unstable; urgency=low
+
+  * Preparations for v1.0 stable release: (remove unnecessary stuff, clean the rest)
+    - Removed accelerometer buttons (not really needed and a little confusing)
+    - Moved "gyro" to "accelerometers" section (but disabled for now)
+    - Moved rumble (experimental) to "Input events"
+    - Changed all "PS3 Fix" text to "Legacy driver"
+    - Added "Position" axis (25-28)
+    - Increased timeout for Acceleration/Speed/Position values
+    - Cleaned up the accelerometers code (cause they can be disabled at any time)
+  * Start 0,1,2,3 axis at 0
+  * New option - set LED # according to joystick # (default now; js0 will be LED 1)
+  * New option - start sixad at boot (disables normal bluetooth; can be stopped anytime)
+  * Show sixad configuration when starting from terminal
+  * Applied same updates for sixad-raw
+  * Temporarily enable some debug output for 'sixad-uniput-sixaxis'
+  * Fixed weird random input to axis 0-3
+  * Disable Acceleration/Speed/Position by default (but keep Accelerometers)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  20 Oct 2009 09:35:11 +0000
+
+
+qtsixa (0.5.4-falktx1) stable; urgency=low
+
+  * In the "Configure Sixaxis" dialog:
+    - New tab "Advanced"
+    - Moved PS3 Fix option  to "Advanced"
+    - Added experimental option 'Enable DualShock3 Rumble'
+    - Other minor changes
+  * Updated features.html to reflect recent changes to sixad code (rumble)
+  * Warn if using an old PyQt version (< 4.5.0)
+  * Disable, in "Configure Sixaxis", 'Add New Profile' button if PyQt < 4.5.0
+
+sixad (0.8-falktx1) stable; urgency=low
+
+  * Proper build for PowerPC:
+    - Create separate 32bit and 64bit PowerPC packages
+    - Build with "-m32" and "-m64" for 32 and 64 bit (respectively)
+    - Only enable PS3 Fix/Workaround for PowerPC32
+  * Experimental rumble support
+  * Added TODO and CHANGELOG to sixad source
+  * Small code cleanup
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Oct 2009 09:16:34 +0000
+
+
+qtsixa (0.5.3-falktx1) stable; urgency=low
+
+  * Fixed "kdesu" usage in RPM distros [They don't echo to terminal, but open a separate session for sudo]
+  * Added "PS3 UInput Fix" option (in "Configure Sixaxis")
+  * Fixed checking battery of Sixaxis (will take a little longer, but it will [probably] work)
+
+sixad (0.7-falktx1) stable; urgency=low
+
+  * Final fixes for openSUSE compatibility (and maybe other RPM distros)
+  * Warn to install 'libbluetooth.so.2' and 'hcid' manually, in Makefile [only needed when compiling from source]
+  * Build all binaries on PowerPC with "-32" flag, except for UInput stuff (sixad-uniput-sixaxis and sixad-raw)
+  [Otherwise UInput will fail to initialize]
+  * Added sixad option "PS3 Fix for UInput" [When connecting a Sixaxis, initiates regular driver instead of the sixad one]
+  * Auto-enable PS3 Fix if installing PowerPC sixad
+  * Axis 0-3 (left & right axis) are now also centered at 0 when disabled
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Oct 2009 09:16:34 +0000
+
+
+qtsixa (0.5.2-falktx1) stable; urgency=low
+
+  * Fixed debian postinst script (wrong path to "sixa_none.fdi" file)
+  * Display "You're not using a Sixaxis profile" in systray when main GUI says that too
+  * Fixed layout in the "Game Profiles" tab
+  * Sixpair setup now displays an error when no root privileges are available
+  * Debian conflits with old qt-sixa version (for happy update)
+  * Report to terminal when QtSixA cannot disconnect devices (old PyQt version)
+  [On Jaunty, use the KDE updates repo to update your PyQt version]
+  * Updated features.html file (used in "Help" -> "List of Features")
+  * Other very small fixes
+
+sixad (0.6-falktx{2,3,4}) stable; urgency=low
+
+  * Fixed some PATH issues
+  * Debian conflicts with "libbluetooth2", "bluez-sixa", "bluez-sixaxis" and "bluez-sixaxis-bin"
+  * Make sure sixad binaries are executable (no more "/usr/sbin/sixad-bin: command not found" when the file is really there!)
+  * Axis 4-7 (accelerometers) are now centered at 0 when disabled (was always max, 32767)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 10 Oct 2009 12:16:02 +0000
+
+
+qtsixa (0.5.1-falktx1) stable; urgency=low
+
+  * Do not display icons on "Cancel"/"Finish" buttons, Sixpair Setup (looks bad on GTK)
+  * Fixed Configure Sixaxis widget layout on 1st tab
+  * Fixed root actions needed to be run twice in KDE (kdesudo)
+  * Use 'kdesu' when 'kdesudo' is not available (needed for some RPM distros)
+  * QtSixA/sixad are now also available as RPM packages [check 'qtsixa.sourceforge.net' for downloads]
+  * Force option is available again
+  * Some other small fixes
+
+sixad (0.6-falktx1) unstable; urgency=low
+
+  * Fixed bluetooth not stopped properly when starting sixad (needed for auto-connect devices)
+  * Re-Added 'hcid' (still needed for SDP)
+  * Force option is available again
+  * Output much more information from sixad
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 05 Oct 2009 21:43:02 +0000
+
+
+qtsixa (0.5.0-falktx1) unstable; urgency=low
+
+  * Added "Fake Joystick 2" profile
+  * Added "xdg-utils" as debian dependency (needed for opening web pages)
+  * Disconnect a device now uses DBus, which doesn't need root
+  * Added python-dbus as debian dependency
+  * The GUI is ready for real usage!
+  * Release 0.5.0
+
+sixad (0.5-falktx1) unstable; urgency=low
+
+  * Forgotten check for "LED_plus=X" (was always "yes", now fixed)
+  * Removed bluez-sixa as debian dependency
+  * Drop LPIA architecture support (LPIA users can safely use i386 binaries)
+  * Set bluetooth restore timeout to 10 seconds (was 15)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 28 Sep 2009 01:28 +0000
+
+
+qtsixa (0.5.0-dev_falktx1) unstable; urgency=low
+
+  * New package name (qtsixa instead of qt-sixa)
+  * New GUI layout (not finished yet)
+
+sixad (0.5-falktx0) unstable; urgency=low
+
+  * Merged sixpair into sixad package
+  * Stop launching hcid before sixad (was needed for SDP, but SDP is now included in sixad)
+  * Drop bluez-sixa package (no longer needed)
+  * Preparations for RPM Linuxes (Fedora, OpenSUSE, etc)
+  * Fixed LED # increase issue
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 25 Sep 2009 13:47:15 +0000
+
+
+qt-sixa (0.4.3-falktx1) stable; urgency=low
+
+  * New upstream release:
+    - Disabled the "Info" button (causing problems, will be removed/replaced in next version)
+    - Enabled Keypad 'signal quality'
+    - Fixed typo that made Keypad and Remotes not appear in the list when connected thorugh USB
+    - Fixed little bug when trying to check 'signal quality' for a disconnected device
+    [When auto-refreshing and user clicks "Disconnect"]
+    - Removed Keypad profile option (will not be needed)
+    - Moved restore stuff to "Help" menu
+    - Removed "Outro" tab
+    - Other small fixes to the GUI
+    - Test button is now disabled since it's checks are incompatible with the new driver
+    - Maybe - Sixaxis profiles *may* work on PS3 now (needs testing)
+
+sixad (0.4-falktx0) unstable; urgency=low
+
+  * Major sixad update:
+    - Code rewrite now based on "hidd" (from bluez-compat) instead of a custom user code
+    - Support for lots of hardware (incluing keypads and imitations of the Sixaxis controller [will use same driver as USB])
+    - Ported Sixaxis/DualShock3 special functions to the new code (leds, acceleration, etc)
+    - You can connect as many devices as you want!
+    - You can now check the 'sixad' activity without using the terminal
+    [Open a System Log Viewer and filter the output to "sixad"]
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 16 Sep 2009 00:43:29 +0000
+
+
+qt-sixa (0.4.2-falktx5) stable; urgency=low
+
+  * Fixed bug when saving a file using old PyQt version
+  [Actually a PyQt bug, now fixed using "echo 'CONF&VARS' > /to/path"]
+  * Restore default configuration files if broken (due to last bug)
+  * Fixed a notification bug when "$HOME/.config/autostart/" didn't existed
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 08 Sep 2009 23:50:10 +0000
+
+
+qt-sixa (0.4.2-falktx4) stable; urgency=low
+
+  * Fixed random hcidump error (killing it too soon)
+  * Fixed PyQt check (was checking for global Qt version instead)
+  * Show main Qt and PyQt versions on startup (on terminal, even with gksu/kdesudo)
+  * "Signal Quality Actions" is back
+  * Updated the "About" dialog
+  * sixad builds on PowerPC now (needs testing)
+  * (Maybe) Fixed systray "activated" error (disabling it for some systems)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 08 Sep 2009 09:23:14 +0000
+
+
+qt-sixa (0.4.2-falktx3) stable; urgency=low
+
+  * Print PyQt version when starting QtSixA
+  * Fix "activated" error (check for PyQt version, usable only if PyQt >= 4.4.0)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 07 Sep 2009 13:57:23 +0000
+
+
+qt-sixa (0.4.2-falktx2) stable; urgency=low
+
+  * Really fix sixad debian rules
+  * Fix QtSixA 'out-of-range' configuration file issues
+  * Temporarily disabled 'Advanced'/'Signal Quality Actions' (needs some work)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 06 Sep 2009 01:38:04 +0000
+
+
+qt-sixa (0.4.2-falktx1) stable; urgency=low
+
+  * sixad now supports hidraw devices (usage: sixad --raw <hidraw device>)
+  * Support sixad preferences (except LEDs) in sixad-raw
+  * sixad-raw is now implemented in the GUI
+  * Fixed some debian rules for sixad
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 04 Sep 2009 21:29:06 +0000
+
+
+qt-sixa (0.4.1-falktx2) stable; urgency=low
+
+  * Added "Force Connect" action to tasks and systray menu
+  * Re-worked the systray tooltip
+  * Auto-stop sixad when shutting down
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 03 Sep 2009 16:22:40 +0000
+
+
+qt-sixa (0.4.1-falktx1) stable; urgency=low
+
+  * New upstream release:
+    - Show proper info when asking for password (kdesudo and gksu)
+    - Fixed an issue that caused sixad not to auto-start on some systems
+    - Re-read configuration file when showing preferences
+    - sixad can now be configured (file is - /etc/default/sixad)
+    - Notify group has been moved to "Preferences"
+    - It's now possible to configure sixad in the GUI ("Preferences" -> "sixad")
+    - Associate "pitch/roll/yaw/gravity" names to the accelerometer and gyro
+    - "Change Input Profiles" menu is now available (also on systray)
+    - Clicking on the systray icon shows/hides main window (only if Qt >= 4.4.0)
+    - Misc improvements to systray icon
+    - Some other very small fixes
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 01 Sep 2009 16:28:36 +0000
+
+
+qt-sixa (0.4.0-falktx5) stable; urgency=low
+
+  * sixad now comes pre-compiled (avoids compile errors on user's system)
+  * Added "Sixpair Setup" action to 'tasks'
+  * Added "Preferences" to systray menu
+  * Added (some) missing menu icons
+  * In 'Old QtSixA Modules', "Cancel" and "Finish" buttons don't work - fixed
+  * Systray icon doesn't really terminates when clicked "Close Systray" - fixed
+  * Other very small fixes
+  * Final 0.4.0 release
+  [Keypads are not fully supported yet, I'm currently working on it]
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 29 Aug 2009 22:52:40 +0000
+
+
+qt-sixa (0.4.0-falktx4) unstable; urgency=low
+
+  * Fixed a small issue when starting the old modules
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 27 Aug 2009 23:14:35 +0000
+
+
+qt-sixa (0.4.0-falktx3) unstable; urgency=low
+
+  * Fixed final dialog when creating a new profile
+  * If there are various names in "list of users" and they are the same, only show one
+  * Is now possible to open the web links (only when 1 user is logged in)
+  * Only add Sixaxis to the list of Sixaxis profiles overrides
+  * Auto-restart QtSixA when clicked restore/clear buttons
+  * Support for Keypad layouts (but not yet completed in sixad)
+  * Install english layout for keypad as default (when no layout is found)
+  * Updated the terminal 'sixa' to match updates
+  * sixad:
+  -> Keypads now registers as joysticks
+  -> Experimental 5 key/button support (for testing)
+  * Removed Sixaxis profiles option when starting old modules (no longer compatible)
+  * Marked as RC1
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 26 Aug 2009 20:44:50 +0000
+
+
+qt-sixa (0.4.0-falktx2) unstable; urgency=low
+
+  * Replaced "Refresh" button for "Test" button
+  * Neverball game profile was (not always) applied successfully - fixed
+  * Extreme Tux Racer game profile is now available
+  * SuperTuxKart game profile is now available [all 4 players!]
+  * ePSXe game profile now supports 2 players
+  * The sixad driver now supports acceleration and speed
+  * Added all the missing status tips
+  * Added keypad option to sixpair setup
+  * Added 2 new tools to sixad package:
+    -> sixad-raw (prints all buttons/axis information from a Sixaxis hidraw (sudo su root -c "sixad-raw < /dev/hidrawX")
+    -> hidraw-dump (dumps all info from a hidraw device, just like hcidump (sudo su root -c "hidraw-dump < /dev/hidrawX")
+  * Mouse hover systray icon now shows the list of connected devices
+  * The Info button works again (reworked)
+  * Hide sixa-notify file (user request)
+  * Removed qt-sixa.menu file
+  * (Maybe) fixed a random/weird X/Xorg crash (profiles now use 'NoSymbol' for "none" keys)
+  * Warning when cannot write to file, in game profiles "Apply"
+  * When creating a new profile: Mouse buttons and no axis are now supported, 'list of keys' is now clear and visible
+  * Pop-up dialogs are now displayed correctly [finally!]
+  * "Sixaxis reference" now fits on the screen
+  * Marked as Beta 3
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 24 Aug 2009 20:40:03 +0000
+
+
+qt-sixa (0.4.0-falktx1) unstable; urgency=low
+
+  * Re-Added bluez-sixa as debian dependency [Why was it removed??]
+  * Do not refresh "Advanced" tab automatically (causes visual bugs)
+  * All web links are now in "Help" -> "Web Links" (Also added "Ubuntu Forums" and "Submit Idea")
+  * Added "Sixaxis Reference" to Help menu
+  * Added python2.5 or python2.6 as debian dependency
+  * Notifications are now implemented [through libnotify-bin]
+  * Override system-wide set profiles through MAC/ID-Check is now implemented (only for bluetooth, using sixad)
+    [This will not be possible for USB cause it would require modifying the kernel...]
+  * All widgets in "Outro" and "Advanced" tabs are now not checkable
+  * Added missing status tips where convenient (still need some more)
+  * Removed support for PS3 remotes in sixad (BlueZ officially supports them, not need for an extra driver)
+  * Marked as Beta 2
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 19 Aug 2009 20:56:08 +0000
+
+
+qt-sixa (0.4.0-falktx0) unstable; urgency=low
+
+  * New upstream release:
+    - You can now add your own custom input profiles
+    - Disconnect menu now also displays device's name
+    - Added "Change Input Profile" to menu (disabled for now)
+    - Added "Preferences" to Options menu (moved systray options there)
+    - sixad now displays all devices detected (even if non-Sony)
+    - Add debian dependency "qt4-qtconfig" (needed for changing Qt theme)
+    - Only try to check battery if the selected device is a Sixaxis
+    - New tab "Outro" (with some widgets from the old "Advanced" tab)
+    - New "Advanced" tab (disabled for now)
+    - Replaced "Stop QtSixA Modules" for "Sixpair Setup" in 'Quick Tasks'
+    - Added "Stop Bluetooth" action to Tasks menu
+    - (Maybe) PS3 remotes will appear on the 'list of devices' when connected through bluetooth
+    - "Start QtSixA Modules" renamed to 'old'; Only starts Old hidd connection
+    [sixad is now auto-started when needed]
+    - Removed the splash screen
+    - Added an update information when starting QtSixA
+    - Added "Donate" menu action (in Help)
+    - Added names of people that donated QtSixA, in the About/Thanks tab
+    - Lots of other small fixes and improvements
+    - Mark this release as Beta
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 18 Aug 2009 12:22:17 +0000
+
+
+qt-sixa (0.3.2-falktx2) unstable; urgency=low
+
+  * PS3 Keypad now acts as keyboard (still needs some work)
+  * Make sure bluetooth is restored properly
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 29 Jul 2009 11:04:31 +0000
+
+
+qt-sixa (0.3.2-falktx1) unstable; urgency=low
+
+  * New upstream release:
+    - New SixA driver is now compatible with input profiles!
+    - Fixed input profiles "none" keys (may had cause X crashes)
+    - "New" button on input profile tab is available again
+    [You're now able to choose the filename/path to save to]
+    - 'List of Sixaxis' now also displays controller's name (at the right of address)
+    - "QtSixA Modules" now has option to start the new driver
+    - Removed the experimental driver tab
+    - Added a "Game Profiles" tab ('Neverball' and 'ePSXe' profiles are available now)
+    - Added a simple label text that informs if QtSixA modules are running or not
+    - In the about dialog, 'devs' has changed to 'thanks to'
+    - Support for new hardware:
+      + PS3 remote appears in 'list of Sixaxis' when connected through USB (bluetooth not yet)
+      + PS3 remote support using the new driver (NOT TESTED!, and will not appear on 'list of Sixaxis' or setup)
+      + Keypad support using the new driver (only mouse "works" yet [NOT TESTED!])
+    - New 'List of Features' menu action in "Help"
+    - Allow the 'non-use' of LED in QtSixA modules (new driver only, all LEDs will be off)
+    - Auto-start new driver when starting QtSixA
+    - Added a splash screen [can someone do a better one, please?]
+    - 'List of Sixaxis' is now 'list of devices', since QtSixA now supports more than just Sixaxis
+    - QtSixA Daemon removed (QtSixA auto-loads modules now; still available in applications)
+    - Other small fixes
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 26 Jul 2009 20:15:15 +0000
+
+
+qt-sixa (0.3.1-falktx6) unstable; urgency=low
+
+  * Changed the way Sixaxis are detected, now through 'hcitool', making appear Sixaxis connected using methods other than QtSixA
+  * Display Sixaxis keypads when connected through USB
+  * GUI refresh interval is now 5 seconds instead of 3
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 24 Jul 2009 00:43:15 +0000
+
+
+qt-sixa (0.3.1-falktx5) unstable; urgency=low
+
+  * Experimental Accelerometer/Gyro driver in a new tab
+  * Info button now displays more information
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 22 Jul 2009 04:24:36 +0000
+
+
+qt-sixa (0.3.1-falktx4) unstable; urgency=low
+
+  * Really fix problem that made QtSixA modules won't start at first setup time
+  * Fixed a small visual bug when disconnecting a Sixaxis
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 20 Jul 2009 21:33:52 +0000
+
+
+qt-sixa (0.3.1-falktx3) unstable; urgency=low
+
+  * Faster GUI responsiveness
+    - Do not write to files and then read them unless stricly necessary
+    - Starting the QtSixA modules/daemon is even faster now
+  * Fixed some small issues related to QtSixA modules
+  [Don't started at first time; needed to be runned twice]
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 18 Jul 2009 00:30:41 +0000
+
+
+qt-sixa (0.3.1-falktx2) unstable; urgency=low
+
+  * Fixes for the QtSixA Modules:
+    - Load QtSixA modules faster
+    - Fixed Sixaxis sometimes been disconnected when starting modules
+    - Fixed modules not starting correctly in terminal mode
+    - Don't print information in terminal unless some error ocur
+  * Removed old bluetooth related conf/script files (no longer necessary)
+  * Added "QtSixA Daemon" to applications menu
+  * Added desktop menu files (just for compatibility, will not be needed in karmic)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 17 Jul 2009 01:13:48 +0000
+
+
+qt-sixa (0.3.1-falktx1) unstable; urgency=low
+
+  * New upstream release:
+    - Fixed GUI hanging when checking battery
+    - Stop "bluetoothd-service-input" before starting modules (it uses the HIDD channel, needed for the connection)
+    - 'List of Sixaxis' no longer flashes when auto-updating the list
+    - QtSixA Daemon now implemented
+    - Added Debian recommends gksu or kdesudo
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 16 Jul 2009 20:02:30 +0000
+
+
+qt-sixa (0.3.0-falktx2) unstable; urgency=low
+
+  * Fixed "Report bug" menu action
+  * Run QtSixA as root
+  [some actions are disabled by now because of this]
+  * Half LED animation time
+  * All temporary files are now in dir "/tmp/sixa/" instead of just "/tmp/"
+  * Battery status check support (only for wireless/bluetooth Sixaxis)
+  * Added option to change Qt Theme
+  * Don't allow to select "No Sixaxis found" on 'list of Sixaxis'
+  * Some other small fixes
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 16 Jul 2009 01:02:30 +0000
+
+
+qt-sixa (0.3.0-falktx1) unstable; urgency=low
+
+  * Reflect program name change in all ways possible (from "SixA" to "QtSixA")
+  * Preparations for battery charge status (not completed yet)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Jul 2009 22:18:30 +0000
+
+
+qt-sixa (0.3.0-falktx0) stable; urgency=low
+
+  * Final release
+  * Revert old "View available keys" text file (new file doesn't work)
+  * Small fix of the SMPlayer profile
+  * Changed name from SixA to Qt-SixA
+  * Change Holmen status to former developer
+  * Updated links to the new Qt-SixA blog
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Jul 2009 13:25:28 +0000
+
+
+sixa (0.3.0-falktx17) unstable; urgency=low
+
+  * Dummy transition to qt-sixa
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Jul 2009 13:25:28 +0000
+
+
+sixa (0.3.0-falktx16) unstable; urgency=low
+
+  * Marked as RC2
+  * In the 'list of sixaxis':
+    - bugfix: different Sixaxis appeared, but in the same line (thanks Pierluigi Vicinanza);
+    - improvement: auto-refresh (3sec).
+  * Very cool LED animation when connecting a Sixaxis
+  [LED changes 1,2,3,4,3,2,1,2... 8 times, before lighting up the selected one]
+  * Display a really useful text file when clicking 'View Available Keys' in new profile window
+  * New 'SixA Modules Setup' interface (with auto-refresh!)
+  * Replaced "Restore Bluetooth" button for "Start Daemon" in main tab, although the daemon is not written yet
+  * Official support to LPIA and PowerPC
+  * Limit LEDs to 1-7, since Sixaxis doesn't seem to support more than this
+  * Added bluez-hcidump as debian dependeds (used for battery check)
+  * Completed the Firefox profile
+  * Inform user that it's needed to disconnect Sixaxis after apply a profile
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 09 Jul 2009 14:25:28 +0000
+
+
+sixa (0.3.0-falktx15) unstable; urgency=low
+
+  * Is now possible to know a Sixaxis battery status (but not yet implemented on the GUI)
+    [usage:  'sixa battery <sixaxis-adrr>']
+  * You can now choose a LED when connecting a Sixaxis (only in terminal, not yet in the GUI)
+    [usage:  'sixa start led #'] (where # can be 0-10)
+  * Modified the fdi input profiles to make sure they are loaded by HAL
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 07 Jul 2009 17:25:13 +0000
+
+
+sixa (0.3.0-falktx14) unstable; urgency=low
+
+  * Clicking on the systray icon now shows/hides main window
+  * Display "You are not using an input profile" instead of "... profile is set to 'None'" in main tab
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 03 Jul 2009 23:45:51 +0000
+
+
+sixa (0.3.0-falktx13) unstable; urgency=medium
+
+  * "SixA Modules Setup" quick-fix
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  02 Jul 2009 10:21:36 +0000
+
+
+sixa (0.3.0-falktx12) unstable; urgency=low
+
+  * "SixA Modules Setup" now allows to select a different profile from the one set system-wide, before connecting any Sixaxis
+    [previous selected profile is restored when setup is finished]
+  * Even more "Small fixes for small things"
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  02 Jul 2009 02:48:10 +0000
+
+
+sixa (0.3.0-falktx11) unstable; urgency=low
+
+  * Properly show SixA version (0.3.0-11 or 0.3.0_RC1-11)
+  * Updated GUIs to Qt 4.5.2
+  * Small changes to 'sixa' [terminal] script
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  30 Jun 2009 09:44:27 +0000
+
+
+sixa (0.3.0-falktx10) unstable; urgency=low
+
+  * Sixaxis connected through USB now appears on the 'list of sixaxis'
+    [Disconnect button, as not needed, is disabled when a USB Sixaxis is selected]
+  * New SixA icon
+    [Original icon from tango/gnome devs]
+  * Updated sixa.desktop file
+  * Marked as RC1
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  26 Jun 2009 02:41:52 +0000
+
+
+sixa (0.3.0-falktx9) unstable; urgency=low
+
+  * Is now possible to create new profiles
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  22 Jun 2009 23:10:05 +0000
+
+
+sixa (0.3.0-falktx8) unstable; urgency=low
+
+  * On 'list of Sixaxis' the "Info" button is now available (when a Sixaxis is connected)
+  * New progress bar near the 'list of Sixaxis' shows currently selected Sixaxis' signal quality
+  * Auto-uncheck "Use Sixaxis as Mouse/Keyboard" when no profile is set in the system
+  * Removed XBMC profile
+    [New versions of XBMC have a built-in Sixaxis profile. Using a custom profile just messes around with XBMC]
+  * More "Small fixes for small things"
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  22 Jun 2009 09:33:11 +0000
+
+
+sixa (0.3.0-falktx7) unstable; urgency=low
+
+  * List of Sixaxis on main tab works now (although the info button is still disabled)
+  * On SixA setup dialog start with the "Next" button focused
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  19 Jun 2009 01:09:40 +0000
+
+
+sixa (0.3.0-falktx6) unstable; urgency=low
+
+  * GUI Updates (SixA and Sixpair setup dialogs; about dialog; main window)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  18 Jun 2009 02:35:13 +0000
+
+
+sixa (0.3.0-falktx5) unstable; urgency=low
+
+  * Fixed Refresh button on SixA Setup dialog
+  * Added list of connected Sixaxis to main tab (also some buttons, but disabled for now)
+  * Added text label display OS' version and currently set profile [in the main tab]
+  * Added HERE-WILL-BE-LOGO to main tab (just to clean the layout until SixA gets a real icon)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  18 Jun 2009 01:17:13 +0000
+
+
+sixa (0.3.0-falktx4) unstable; urgency=low
+
+  * Updated About dialog
+  * Sixpair setup now available
+  * Disconnect Menu (also on Systray) now properly detects Sixaxis and presents their MACs
+  * Small fixes for the sixa (terminal) app
+  * New "SixA Modules Start" setup
+  * Marked as 'Beta 2'
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  17 Jun 2009 20:38:26 +0000
+
+
+sixa (0.3.0-falktx3) unstable; urgency=low
+
+  * Added Oblivion and ETQW profiles by Holmen
+  * Implemented the rest of the icons (now 16x16)
+  * Input Profiles Tab now shows a preview of the selected profile
+  * New option 'Minimize to Systray on Close'
+  * New COPYING and README doc files
+  * Marked as 'Beta 1'
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  15 Jun 2009 16:38:26 +0000
+
+
+sixa (0.3.0-falktx2) unstable; urgency=low
+
+  * Systray option
+  * New 'About' dialog
+  * "Small fixes for small things"
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  13 Jun 2009 22:45:39 +0000
+
+
+sixa (0.3.0-falktx1) unstable; urgency=low
+
+  * Input profiles now work with the new GUI
+  * Fixed 2H4U profile not working (also on terminal)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  13 Jun 2009 18:56:08 +0000
+
+
+sixa (0.3.0-falktx0) unstable; urgency=low
+
+  * Fixed some debian rules (custom fdi file was always deleted).
+  * Created a new GUI (unfinished).
+  * New 'Clear' and 'Restore Profiles' actions added.
+  * New profiles.list file (for future custom/user fdi files support)
+  * Droped *.qtr icon resource file
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  13 Jun 2009 16:03:20 +0000
+
+
+sixa (0.2.0-falktx4) unstable; urgency=low
+
+  * First repository release.
+  * Added SMC (Super Maryo Chronicles) profile.
+  * Attempt to use *.qtr file for menu icons.
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  12 Jun 2009 11:30:39 +0000

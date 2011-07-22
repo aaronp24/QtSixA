@@ -1,0 +1,13 @@
+QtSixA and sixad depends on the follwing packages:
+
+BlueZ (+bluez-hcidump) (latest versions are highly recommended)
+Python 2.5 or 2.6 (2.6 is recommended)
+Python-Qt4 (at least v4.4; v4.5 or later recommended)
+Python-DBus
+KDEsu/KDEsudo/GKsu
+
+
+Optional:
+xserver-xorg-input-joystick (for Sixaxis profiles)
+libnotify-bin/notify-send (for notifications)
+xdg-utils/xdg-open (for opening web links)
