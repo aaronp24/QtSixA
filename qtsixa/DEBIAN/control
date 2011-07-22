@@ -1,0 +1,14 @@
+Package: qtsixa
+Version: ---VERSION---
+Architecture: all
+Maintainer: Filipe Coelho (aka 'falkTX') <falktx@gmail.com>
+Installed-Size: 1560
+Depends: python, bluez (>= 4.12), bluez-hcidump, sixad (>= 1.0.3), python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
+Recommends: gksu | kdesu | kdesudo, python2.5 | python2.6
+Section: utils
+Priority: optional
+Description: Sixaxis Joystick Manager
+ This package provides a useful GUI to control the sixad modules.
+ .
+ QtSixA is written in PyQt
+

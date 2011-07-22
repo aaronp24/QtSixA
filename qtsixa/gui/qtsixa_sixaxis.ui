@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>436</width>
-    <height>552</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -259,7 +259,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>../../../../../../usr/share/qtsixa/pics/sixa_none.png</pixmap>
+             <pixmap>../../../../../../../usr/share/qtsixa/pics/sixa_none.png</pixmap>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -439,11 +439,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="advTab">
+     <widget class="QWidget" name="misc">
       <attribute name="title">
-       <string>Advanced</string>
+       <string>Misc</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
+      <layout class="QVBoxLayout" name="verticalLayout_13">
        <item>
         <widget class="QGroupBox" name="groupPS3">
          <property name="title">
@@ -465,7 +465,7 @@
             <property name="text">
              <string>&lt;i&gt;This option will disable the sixad driver for Sixaxis&lt;br&gt;
 and use the default driver (same as USB).&lt;br&gt;
-The option &quot;Set LED # according to joystick #&quot; is
+The option &quot;Set LED # according to joystick #&quot;&lt;br&gt;is
 not available in this mode&lt;/i&gt;</string>
             </property>
             <property name="alignment">
@@ -506,6 +506,26 @@ Use L3 to enable/disable mouse and R3 for keys.&lt;/i&gt;</string>
          </layout>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="advTab">
+      <attribute name="title">
+       <string>Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
@@ -570,6 +590,50 @@ Please activate it if you want to report a bug&lt;/i&gt;</string>
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>UInput at boot</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QCheckBox" name="checkUInput">
+            <property name="text">
+             <string>Load UInput module at boot</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>&lt;i&gt;This option will load UInput module at boot.&lt;br&gt;
+The UInput is the base driver for sixad.&lt;br&gt;
+Although UInput is auto-started when sixad runs&lt;br&gt;
+in bluetooth mode, it doesn't auto-start when using hidraw.&lt;br&gt;
+In that you would need &quot;modprobe uinput&quot; manually&lt;br&gt;
+(or just set this option on)&lt;/i&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

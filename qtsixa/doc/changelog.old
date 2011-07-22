@@ -1,10 +1,52 @@
+qtsixa (1.1.1-falktx1) karmic; urgency=low
+
+  * modprobe uinput before running sixad-raw (GUI only)
+  * Added new option: "uinput at boot"
+  * Fixed systray showing a previously connected device
+
+ -- falkTX <falktx@gmail.com>  Tue, 01 Dec 2009 17:36:47 +0000
+
+
+qtsixa (1.1.0-falktx1) karmic; urgency=low
+
+  * Do not display warning if starting minimized
+  * Fixed notifications
+  * Some more small fixes
+
+ -- falkTX <falktx@gmail.com>  Tue, 26 Nov 2009 17:36:47 +0000
+
+
+qtsixa (1.0.9-falktx1) karmic; urgency=low
+
+  * Fixed some issues related to creating a new profile
+  * You can view a FULL list of possible keys now
+  * Removed update info at startup
+  * Added "Show warnings" option, which will show:
+    - No bluetooth dongle detected -> no bluetooth support
+    - Running PowerPC[32] without Legacy enabled
+  * Configuration file:
+    - Now in ~/.qtsixa instead of ~/.qtsixa/qtsixa.conf
+    - Uses yes/no instead of 0/1
+  * Sixaxis Profiles can now use spaces
+  * Added new devices to notifications:
+    - Bluetooth dongles (*all*)
+    - Generic USB Joystick (0079:0006)
+  * Supported new device: Generic USB Joystick (0079:0006)
+  * Fixed display bug when 2+ USB joysticks where connected
+  * Fixed sixad-raw crashing X
+  * Some other small fixes
+  * Marked release as Beta (PPA only)
+
+ -- falkTX <falktx@gmail.com>  Tue, 21 Nov 2009 17:36:47 +0000
+
+
 qtsixa (1.0.4-falktx1) karmic; urgency=low
 
   * Use "ppc64" for 64-bit PowerPC (used in some RPM distros)
   * Fixed sixad-raw (looking for 2nd argument instead of 1st)
   * Use "/var/lib/sixad/" for STORAGEDIR instead of "/" (root)
 
- -- falkTX <falktx@gmail.com>  Tue, 10 Nov 2009 17:36:47 +0000
+ -- falkTX <falktx@gmail.com>  Tue, 18 Nov 2009 17:36:47 +0000
 
 
 qtsixa (1.0.3-falktx2) karmic; urgency=low

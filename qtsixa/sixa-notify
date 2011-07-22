@@ -20,6 +20,7 @@ else:
 DeviceMAC="00:00:00:00:00"
 DeviceName="Null"
 DeviceIcon="sixaxis"  # FIXME - there's only a Sixaxis icon...
+Filter='grep -e "PLAYSTATION(R)3 Controller" -e "PLAYSTATION(R)3 Remote" -e "Wireless Keypad" -e "new interface driver btusb" -e "054C:0268" -e "054C:03A0" -e "054C:0306" -e "0079:0006"'
 
 last_dmesg = commands.getoutput("dmesg | tail -n 1")
 os.system('notify-send --icon=/usr/share/qtsixa/icons/qtsixa.png "QtSixA" "Device notifications have been started"')
@@ -32,10 +33,10 @@ while (1 == 1): #Always loop program until file removed, or killed
     exit(-2)
   else:
 
-    if (commands.getoutput('dmesg | tail -n 1 | grep -e "PLAYSTATION(R)3 Controller" -e "PLAYSTATION(R)3 Remote" -e "Wireless Keypad"') != ""):
-	if (commands.getoutput('dmesg | tail -n 1 | grep -e "PLAYSTATION(R)3 Controller" -e "PLAYSTATION(R)3 Remote" -e "Wireless Keypad"') != last_dmesg):
+    if (commands.getoutput('dmesg | tail -n 1 | '+Filter) != ""):
+	if (commands.getoutput('dmesg | tail -n 1 | '+Filter) != last_dmesg):
 	    #New Device!
-	    final_dmesg = commands.getoutput("dmesg | tail -n 1")
+	    final_dmesg = commands.getoutput("dmesg | tail -n 1") #new
 	    if ("054C:0268" in final_dmesg):
 		if ("054C:" in final_dmesg.split()[1]): DeviceMAC = final_dmesg.split()[1]
 		if ("054C:" in final_dmesg.split()[2]): DeviceMAC = final_dmesg.split()[2]
@@ -66,6 +67,17 @@ while (1 == 1): #Always loop program until file removed, or killed
 		DeviceMAC = commands.getoutput("hcitool con | tail -n 1 | awk '{printf$3}'")
 		DeviceName = "PLAYSTATION(R)3 Remote (Bluetooth)"
 		#DeviceIcon = "remote"
+	    elif ("0079:0006" in final_dmesg):
+		if ("0079:" in final_dmesg.split()[1]): DeviceMAC = final_dmesg.split()[1]
+		if ("0079:" in final_dmesg.split()[2]): DeviceMAC = final_dmesg.split()[2]
+		if ("0079:" in final_dmesg.split()[3]): DeviceMAC = final_dmesg.split()[3]
+		DeviceName = "Generic USB Joystick"
+		DeviceIcon = "sixaxis"
+	    elif ("new interface driver btusb" in final_dmesg):
+		time.sleep(1)
+		DeviceMAC = commands.getoutput("hcitool dev | tail -n 1 | awk '{printf$2}'")
+		DeviceName = "Bluetooth dongle"
+		#DeviceIcon = "bt-dongle"
 
 	    print "New Device: "+DeviceMAC+" "+DeviceName
 	    os.system('notify-send --icon=/usr/share/qtsixa/icons/'+DeviceIcon+'.png "QtSixA" "New Device Connected:\n '+DeviceMAC+' '+DeviceName+'"')

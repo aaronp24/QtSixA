@@ -10,6 +10,7 @@ qtsixa/sixa usr/bin/
 qtsixa/sixa-lq usr/bin/
 qtsixa/sixa-notify usr/bin/
 qtsixa/qtsixa usr/bin/
+qtsixa/qtsixa.conf usr/share/qtsixa/
 qtsixa/qtsixa.desktop usr/share/applications/
 qtsixa/qtsixa.xpm usr/share/pixmaps/
 qtsixa/*.bu usr/share/qtsixa/

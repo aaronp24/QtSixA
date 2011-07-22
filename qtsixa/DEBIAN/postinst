@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e
-
-#DEBHELPER#
-
 check_4_fdi_files () {
 ls /etc/hal/fdi/policy/ | grep sixa_ > /dev/null
 }

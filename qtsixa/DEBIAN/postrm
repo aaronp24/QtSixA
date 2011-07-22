@@ -1,0 +1,8 @@
+#!/bin/bash
+
+case "$1" in
+  purge)
+rm -rf /usr/share/qtsixa/profiles.list
+  ;;
+esac
+ 

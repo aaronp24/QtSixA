@@ -79,6 +79,7 @@ int uinput_open(int enable_axis, int enable_accel)
     if (fd < 0) {
 	fprintf(stderr, "Unable to open uinput\n");
 	return -1;
+	exit(-1);
     }
     
     memset(&dev, 0, sizeof(dev));
@@ -196,7 +197,10 @@ int main(int argc, char **argv) {
 	exit(-1);
   }
   
-  if ((fd = open(argv[1], O_RDONLY)) < 0) { perror("sixad-raw"); exit(-1); }
+  if ((fd = open(argv[1], O_RDONLY)) < 0) { 
+      fprintf(stderr, "sixad-raw");
+      exit(-1);
+  }
     
   if (argc > 2) {
     if (atoi(argv[2]) == 3654) { //hidden codename for testing
@@ -230,11 +234,12 @@ int main(int argc, char **argv) {
   }
   pclose(f);
   
+  uinput_open(enable_axis, enable_accel);
+  
   while ( (nr=read(fd, buf, sizeof(buf))) ) {
 	if ( nr < 0 ) { perror("Error when opening file"); exit(1); }
 	if ( nr != 50 ) { printf("Error: Not a Sixaxis!\n"); exit(1); }
 	
-	uinput_open(enable_axis, enable_accel);
 	if ( msg == 0 ) { printf("Sixaxis sucessfully initiated\n"); msg = 1; }
 	
 	if ( gettimeofday(&tv, NULL) ) { perror("gettimeofday"); exit(1); }

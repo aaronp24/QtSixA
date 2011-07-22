@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>380</height>
+    <width>332</width>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,19 +56,19 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="box_info">
-            <property name="text">
-             <string>Display update information at startup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="box_min">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
              <string>Start QtSixA minimized (requires systray)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="box_warn">
+            <property name="text">
+             <string>Show useful warnings when appropriate</string>
             </property>
            </widget>
           </item>
@@ -149,7 +149,7 @@
        <item>
         <widget class="QGroupBox" name="groupNFor">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="title">
           <string>Show notifications for:</string>
@@ -159,46 +159,15 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="QCheckBox" name="checkNsixaxis">
+           <widget class="QLabel" name="label">
             <property name="text">
-             <string>Sixaxis/DualShock3</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkNkeypad">
-            <property name="text">
-             <string>PS3 Keypads</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkNremotes">
-            <property name="text">
-             <string>PS3 Remotes</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkNIsixaxis">
-            <property name="text">
-             <string>Sixaxis imitations</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkNIkeypad">
-            <property name="text">
-             <string>Keypad imitations</string>
+             <string>- Sixaxis/DualShock3&lt;br&gt;
+- PS3 Keypads&lt;br&gt;
+- PS3 Remotes&lt;br&gt;
+- Sixaxis imitations&lt;br&gt;
+- Keypad imitations&lt;br&gt;
+- Bluetooth dongles&lt;br&gt;
+- Other joysticks</string>
             </property>
            </widget>
           </item>
@@ -238,7 +207,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../../usr/share/qtsixa/icons/ok.png</normaloff>../../../../../../usr/share/qtsixa/icons/ok.png</iconset>
+         <normaloff>../../../../../../../usr/share/qtsixa/icons/ok.png</normaloff>../../../../../../../usr/share/qtsixa/icons/ok.png</iconset>
        </property>
       </widget>
      </item>
@@ -252,7 +221,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</iconset>
+         <normaloff>../../../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../../../usr/share/qtsixa/icons/apply.png</iconset>
        </property>
       </widget>
      </item>
@@ -263,7 +232,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
+         <normaloff>../../../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
        </property>
       </widget>
      </item>

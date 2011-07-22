@@ -11,17 +11,19 @@ print "Python-Qt version:", QtCore.PYQT_VERSION_STR
 
 #Create configuration files if they don't exist
 os.system("if [ -d $HOME/.config/autostart ]; then true; else mkdir -p $HOME/.config; mkdir -p $HOME/.config/autostart; fi")
-os.system("if [ -f $HOME/.qtsixa/qtsixa.conf ]; then true; else mkdir -p $HOME/.qtsixa; cp /usr/share/qtsixa/qtsixa.conf.bu $HOME/.qtsixa/qtsixa.conf; fi")
+os.system("if [ -d $HOME/.qtsixa ]; then rm -rf $HOME/.qtsixa; fi") #Remove this line soon
+os.system("if [ -f $HOME/.qtsixa ]; then true; else cp /usr/share/qtsixa/qtsixa.conf $HOME/.qtsixa; fi")
 
 #List Of Sixaxis profiles
-listOfSixaxisProfiles = open('/usr/share/qtsixa/profiles.list').read().split()
+# TODO - check if this file exist. If not, listOfSixaxisProfiles will be ['none','None']
+listOfSixaxisProfiles = open('/usr/share/qtsixa/profiles.list').read().split(";\n")
 
 #Read preferences file
-config_file = commands.getoutput('cat "$HOME/.qtsixa/qtsixa.conf"').split()
+config_file = commands.getoutput('cat "$HOME/.qtsixa"').split()
 config_enable_systray = config_file[1]
 config_start_minimized = config_file[3]
 config_close_to_tray = config_file[5]
-config_display_info = config_file[7]
+config_show_warnings = config_file[7]
 
 #Use dbus for disconnect devices (no root required)
 bus = dbus.SystemBus()
@@ -40,6 +42,9 @@ def look4Root():
         QtGui.QMessageBox.critical(QtSixA, "QtSixA - Error", "Operation not permitted - Not enough rights")
 	return 0
 
+def func_Check_BTs():
+    if (commands.getoutput("hcitool dev") == "Devices:"):
+	QtGui.QMessageBox.warning(QtSixA, "QtSixA - Warning", "No bluetooth dongles detected.\nConnect over bluetooth will not be possible")
 
 #-----------
 # About Window
@@ -108,11 +113,13 @@ class QtSixA_Add_Window(QtGui.QDialog):
 		os.system(ROOT+" cp "+str(self.location)+" "+"/usr/share/qtsixa/sixaxis-profiles/sixa_"+str(self.line_short.displayText())+".fdi")
 		os.system(ROOT+" cp "+str(self.png_file)+" "+"/usr/share/qtsixa/pics/sixa_"+str(self.line_short.displayText())+".png")
 		self.profileFileW = open(("/tmp/qtsixa.profile"), "w")
-		self.profileFileW.write(str(self.line_short.displayText())+"\t"+str(self.line_full.displayText())+"\n")
+		self.profileFileW.write(";\n"+str(self.line_short.displayText())+";\n"+str(self.line_full.displayText()))
 		self.profileFileW.close()
-		os.system(ROOT+' sudo su root -c \"cat /tmp/qtsixa.profile >> /usr/share/qtsixa/profiles.list\"')
-		QtGui.QMessageBox.information(self, self.tr("QtSixA - Done!"), self.tr("Your custom profile "+self.line_full.displayText()+" has been added.\nRestart QtSixA to see changes."))
-		QtSixA_Add_Window().close()
+		os.system("cp /usr/share/qtsixa/profiles.list /tmp/qtsixa.profile.mod")
+		os.system("cat /tmp/qtsixa.profile >> /tmp/qtsixa.profile.mod")
+		os.system(ROOT+" cp /tmp/qtsixa.profile.mod /usr/share/qtsixa/profiles.list")
+		QtGui.QMessageBox.information(self, self.tr("QtSixA - Done!"), self.tr("Your custom profile \""+self.line_full.displayText()+"\" has been added.\nYou will need to restart QtSixA to see changes."))
+		self.close()
 
     def func_Location(self):
 	self.location = QtGui.QFileDialog.getOpenFileName(self, "Open FDI File", "", "QtSixA FDI Files (*fdi *FDI *Fdi)")
@@ -161,7 +168,7 @@ class QtSixA_Profile_New(QtGui.QDialog):
 	"<b>2. </b>Write the key you want to a button input-text;<br>"
 	"<b>3. </b>If you don't want a button to work as key set the input-text to \"none\" (without quotes);<br>"
 	"<b>4. </b>Don't forget about the 'Axis' part!<br>"
-	"<b>5. </b>Combinations are possible using ',' between key names (maximum 4 keys)<br>"
+	"<b>5. </b>Combinations are possible using '+' between key names (maximum 4 keys, Meta not supported)<br>"
 	"<b>6. </b>It's also possible to assign a mouse-button to joystick-button, use \"mouse_BUTTON\" on those you want that. (BUTTON is a number)<br>"
 	"<b>7. </b>Once you finish, you can open the generated file for a further customization."))
 
@@ -294,7 +301,7 @@ class QtSixA_Profile_New(QtGui.QDialog):
 	  self.ComboRightText_H = "mode=accelerated keylow="+self.line_hrs_left.text()+" keyhigh="+self.line_hrs_right.text()+" deadzone=7500"
 	  self.ComboRightText_V = "mode=accelerated keylow="+self.line_vrs_up.text()+" keyhigh="+self.line_vrs_down.text()+" deadzone=7500"
 
-	self.FDI_Content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n<deviceinfo version=\"0.2\">\n  <device>\n    <match key=\"info.capabilities\" contains=\"input\">\n      <!-- Sixaxis configuration for \""+self.line_app.text()+"\", by \""+self.line_author.text()+"\" -->\n      <match key=\"input.product\" contains=\"PLAYSTATION(R)3 Controller\">\n        <merge key=\"input.x11_driver\" type=\"string\">joystick</merge>\n\n        <merge key=\"input.x11_options.MapAxis1\" type=\"string\">"+self.ComboLeftText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis2\" type=\"string\">"+self.ComboLeftText_V+"</merge>\n        <merge key=\"input.x11_options.MapAxis3\" type=\"string\">"+self.ComboRightText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis4\" type=\"string\">"+self.ComboRightText_V+"</merge>\n	<merge key=\"input.x11_options.MapAxis5\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis6\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis7\" type=\"string\">mode=none</merge>\n\n        <merge key=\"input.x11_options.MapButton1\" type=\"string\">key="+self.line_select.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton2\" type=\"string\">key=NoSymbol</merge>\n        <merge key=\"input.x11_options.MapButton3\" type=\"string\">key=NoSymbol</merge>\n        <merge key=\"input.x11_options.MapButton4\" type=\"string\">key="+self.line_start.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton17\" type=\"string\">key="+self.line_ps.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton5\" type=\"string\">key="+self.line_up.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton8\" type=\"string\">key="+self.line_left.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton6\" type=\"string\">key="+self.line_right.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton7\" type=\"string\">key="+self.line_down.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton10\" type=\"string\">key="+self.line_r2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton9\" type=\"string\">key="+self.line_l2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton12\" type=\"string\">key="+self.line_r1.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton11\" type=\"string\">key="+self.line_l1.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton15\" type=\"string\">key="+self.line_cross.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton14\" type=\"string\">key="+self.line_circle.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton16\" type=\"string\">key="+self.line_square.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton13\" type=\"string\">key="+self.line_triangle.text()+"</merge>\n\n      </match>\n    </match>\n  </device>\n</deviceinfo>\n"
+	self.FDI_Content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n<deviceinfo version=\"0.2\">\n  <device>\n    <match key=\"info.capabilities\" contains=\"input\">\n      <!-- Sixaxis configuration for \""+self.line_app.text()+"\", by \""+self.line_author.text()+"\" -->\n      <match key=\"input.product\" contains=\"PLAYSTATION(R)3 Controller\">\n        <merge key=\"input.x11_driver\" type=\"string\">joystick</merge>\n\n        <merge key=\"input.x11_options.MapAxis1\" type=\"string\">"+self.ComboLeftText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis2\" type=\"string\">"+self.ComboLeftText_V+"</merge>\n        <merge key=\"input.x11_options.MapAxis3\" type=\"string\">"+self.ComboRightText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis4\" type=\"string\">"+self.ComboRightText_V+"</merge>\n	<merge key=\"input.x11_options.MapAxis5\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis6\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis7\" type=\"string\">mode=none</merge>\n\n        <merge key=\"input.x11_options.MapButton1\" type=\"string\">key="+self.line_select.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton2\" type=\"string\">none</merge>\n        <merge key=\"input.x11_options.MapButton3\" type=\"string\">none</merge>\n        <merge key=\"input.x11_options.MapButton4\" type=\"string\">key="+self.line_start.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton17\" type=\"string\">key="+self.line_ps.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton5\" type=\"string\">key="+self.line_up.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton8\" type=\"string\">key="+self.line_left.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton6\" type=\"string\">key="+self.line_right.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton7\" type=\"string\">key="+self.line_down.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton10\" type=\"string\">key="+self.line_r2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton9\" type=\"string\">key="+self.line_l2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton12\" type=\"string\">key="+self.line_r1.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton11\" type=\"string\">key="+self.line_l1.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton15\" type=\"string\">key="+self.line_cross.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton14\" type=\"string\">key="+self.line_circle.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton16\" type=\"string\">key="+self.line_square.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton13\" type=\"string\">key="+self.line_triangle.text()+"</merge>\n\n      </match>\n    </match>\n  </device>\n</deviceinfo>\n"
 
 	self.FDI_SelectedFileLocation = QtGui.QFileDialog.getSaveFileName(self)
 	if self.FDI_SelectedFileLocation.isEmpty():
@@ -307,14 +314,13 @@ class QtSixA_Profile_New(QtGui.QDialog):
 	    self.sixadFileW = open((str(self.FDI_SelectedFileLocation)+".fdi"), "w")
 	    self.sixadFileW.write(self.FDI_Content)
 	    self.sixadFileW.close()
-	    #newFile.writeData(self.FDI_Content)
-	    #newFile.close()
-	    os.system('sed -e "s/key=mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
-	    os.system('sed -e "s/key=Mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
-	    os.system('sed -e "s/key=MOUSE_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
-	    os.system('sed -e "s/key=none/none/" -i /'+str(self.FDI_SelectedFileLocation+''))
+	    os.system('sed -e "s/key=mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+'.fdi'))
+	    os.system('sed -e "s/key=Mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+'.fdi'))
+	    os.system('sed -e "s/key=MOUSE_/button=/" -i /'+str(self.FDI_SelectedFileLocation+'.fdi'))
+	    os.system('sed -e "s/key=none/none/" -i /'+str(self.FDI_SelectedFileLocation+'.fdi'))
+	    os.system('sed -e "s/key=None/none/" -i /'+str(self.FDI_SelectedFileLocation+'.fdi'))
+	    os.system('sed -e "s/key=NONE/none/" -i /'+str(self.FDI_SelectedFileLocation+'.fdi'))
 	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Done!"), self.tr("It's done!\nA new profile has been saved.\n \nTo add the new profile, use the \"Add Profile\" button.\nFeel free to quit now"))
-#	  os.system("chmod "+"777 "+str(self.FDI_SelectedFileLocation))
 
 
 #----------------------
@@ -352,6 +358,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.applied2sixad = 0
 	self.applied2boot = 0
 	self.applied2lr3 = 0
+	self.applied2uinput = 0
 	self.Clicked = 0
 
 	self.hidd_number_1 = ""
@@ -425,7 +432,10 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    self.optLEDm.setChecked(1)
 	if (int(sixad_config_debug)): self.checkDebug.setChecked(1)
 
+	# FIXME
 	if commands.getoutput("if [ -f /etc/rc2.d/S90sixad ]; then echo -n 'Present'; fi") == "Present": self.checkBoot.setChecked(1)
+
+	if commands.getoutput("cat /etc/modules | grep uinput") != "": self.checkUInput.setChecked(1)
 
 	i = 0
 	while i < len(listOfSixaxisProfiles):
@@ -488,6 +498,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.inputBox, QtCore.SIGNAL('clicked()'), self.func_ClickBoxOnProfile)
 	self.connect(self.inputBox, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "profile"))
 	self.connect(self.checkBoot, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "boot"))
+	self.connect(self.checkUInput, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "uinput"))
 	self.connect(self.group_specific, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "override"))
 	self.connect(self.combo_specific_device, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
 	self.connect(self.combo_specific_profiles, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
@@ -507,6 +518,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	elif (what2apply == "override"): self.applied2override = 1
 	elif (what2apply == "boot"): self.applied2boot = 1
 	elif (what2apply == "lr3"): self.applied2lr3 = 1
+	elif (what2apply == "uinput"): self.applied2uinput = 1
 
     def func_Legacy_Check(self):
 	if self.checkLegacy.isChecked():
@@ -547,7 +559,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 		    os.system(ROOT+" cp /usr/share/qtsixa/sixaxis-profiles/sixa_"+str(self.specificProfile)+".fdi /etc/hal/fdi/policy/x11-qtsixa_"+str(self.specificDevice)+"_"+str(self.specificProfile)+".fdi")
 		    os.system(ROOT+' sed -e "s/ contains/ string_outof/" -i /etc/hal/fdi/policy/x11-qtsixa_'+str(self.specificDevice)+'_'+str(self.specificProfile)+'.fdi')
 		    os.system(ROOT+' sed -e "s/PLAYSTATION(R)3 Controller/PLAYSTATION(R)3 Controller ('+str(self.specificDevice)+')/" -i /etc/hal/fdi/policy/x11-qtsixa_'+str(self.specificDevice)+'_'+str(self.specificProfile)+'.fdi')
-		    QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr("The override has been set:\n \nDevice: "+self.specificDevice+"\nProfile: "+self.specificProfile_str+"\n"))
+		    QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr("The override has been set:\n \nDevice: "+self.specificDevice+"\nProfile: \""+self.specificProfile_str+"\"\n"))
 	    else:
 		if look4Root(): os.system(ROOT+" rm -rf /etc/hal/fdi/policy/x11-qtsixa_*.fdi")
 
@@ -555,7 +567,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    if look4Root():
 		os.system(ROOT+" rm -rf /etc/hal/fdi/policy/sixa*.fdi")
 		os.system(ROOT+" cp /usr/share/qtsixa/sixaxis-profiles/sixa_"+self.fdiProfile+".fdi "+"/etc/hal/fdi/policy/")
-		QtGui.QMessageBox.information(self, self.tr("QtSixA - Profile"), self.tr("Input profile has now been set to "+self.inputComboBox.currentText()+".\n \nIf you want to use it now, please disconnect your Sixaxis\nand connect them again."))
+		QtGui.QMessageBox.information(self, self.tr("QtSixA - Profile"), self.tr("Input profile has now been set to \""+self.inputComboBox.currentText()+"\".\n \nIf you want to use it now, please disconnect your Sixaxis\nand connect them again."))
 
 
 	if self.applied2boot == 1: #Enable/Disable at boot
@@ -576,6 +588,19 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 		    os.system(ROOT+" sed \"s/MapButton3\\\" type=\\\"string\\\">disable-keys<</MapButton3\\\" type=\\\"string\\\">none</\" -i /etc/hal/fdi/policy/sixa_*.fdi")
 		    os.system(ROOT+" sed \"s/MapButton2\\\" type=\\\"string\\\">disable-mouse</MapButton2\\\" type=\\\"string\\\">none</\" -i /usr/share/qtsixa/sixaxis-profiles/sixa_*.fdi")
 		    os.system(ROOT+" sed \"s/MapButton3\\\" type=\\\"string\\\">disable-keys<</MapButton3\\\" type=\\\"string\\\">none</\" -i /usr/share/qtsixa/sixaxis-profiles/sixa_*.fdi")
+		QtGui.QMessageBox.information(self, self.tr("QtSixA - Profile"), self.tr("The chosen Sixaxis profile has now L3/R3 settings\nIf you want to use them now, please disconnect your Sixaxis\nand connect them again."))
+
+
+	if self.applied2uinput == 1: #Enable/Disable uinput at boot
+	    if look4Root():
+		if self.checkUInput.isChecked():
+		    if commands.getoutput("cat /etc/modules | grep uinput") == "": #only if it isn't there yet
+			os.system("cp /etc/modules /tmp/modules.sixad")
+			os.system("echo 'uinput' >> /tmp/modules.sixad")
+			os.system(ROOT+" cp /tmp/modules.sixad /etc/modules")
+		else:
+		    os.system(ROOT+" sed \"s/uinput//\" -i /etc/modules")
+
 
 	if self.applied2sixad == 1: #sixad settings
 #starts here----------------------------
@@ -667,14 +692,13 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    self.sixadFileW.close()
 	    if look4Root(): os.system(ROOT+" cp /tmp/sixad /etc/default/sixad")
 
-	    if self.i_saw_the_warning == 0:
+	    if (config_show_warnings == "yes"):
 	      #QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr(""
 	      #"You have changed sixad settings, which will only be applied on the next connected Sixaxis"))
 	      if commands.getoutput("uname -m") == "powerpc" and not self.checkLegacy.isChecked():
-		  QtGui.QMessageBox.warning(self, self.tr("QtSixA - Caution!"), self.tr(""
+		  QtGui.QMessageBox.warning(self, self.tr("QtSixA - Warning"), self.tr(""
 		  "These Sixaxis settings are invalid!<br>"
-		  "<b>Please enable \"Legacy Driver\" when running from PowerPC!</b>"))
-	    self.i_saw_the_warning = 1
+		  "<b>Please enable \"Legacy Driver\" when running from a 32-bit PowerPC system!</b>"))
 #ends here--------------------------------------------------------------------
 
 	self.applied2profile = 0
@@ -735,11 +759,11 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
         uic.loadUi("/usr/share/qtsixa/gui/qtsixa_options.ui", self)
 
 	#RE-Read preferences file
-	config_file = commands.getoutput('cat "$HOME/.qtsixa/qtsixa.conf"').split()
+	config_file = commands.getoutput('cat "$HOME/.qtsixa"').split()
 	config_enable_systray = config_file[1]
 	config_start_minimized = config_file[3]
 	config_close_to_tray = config_file[5]
-	config_display_info = config_file[7]
+	config_show_warnings = config_file[7]
 
 	self.i_saw_the_warning = 0
 
@@ -758,10 +782,10 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	if (commands.getoutput("ls $HOME/.config/autostart/ | grep qtsixa.desktop") != ""):
 	    self.box_startup.setChecked(1)
 
-	if config_enable_systray == "1":  self.box_systray.setChecked(1)
-	if config_enable_systray == "1" and config_start_minimized == "1":  self.box_min.setChecked(1)
-	if config_enable_systray == "1" and config_close_to_tray == "1":  self.box_close.setChecked(1)
-	if config_display_info == "1":  self.box_info.setChecked(1)
+	if config_enable_systray == "yes":  self.box_systray.setChecked(1)
+	if config_enable_systray == "yes" and config_start_minimized == "yes":  self.box_min.setChecked(1)
+	if config_enable_systray == "yes" and config_close_to_tray == "yes":  self.box_close.setChecked(1)
+	if config_show_warnings == "yes":  self.box_warn.setChecked(1)
 
 	if self.box_systray.isChecked():
 	  self.box_min.setEnabled(1)
@@ -776,7 +800,7 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	self.connect(self.b_ok, QtCore.SIGNAL('clicked()'), self.func_OK)
 	self.connect(self.box_startup, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_min, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
-	self.connect(self.box_info, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
+	self.connect(self.box_warn, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_close, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_systray, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_systray, QtCore.SIGNAL('clicked()'), self.func_Systray)
@@ -812,20 +836,20 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 
     def func_Apply(self):
 
-	if self.box_systray.isChecked(): self.conf_systray = "1"
-	else: self.conf_systray = "0"
-	if self.box_min.isChecked(): self.conf_min = "1"
-	else: self.conf_min = "0"
-	if self.box_close.isChecked(): self.conf_close = "1"
-	else: self.conf_close = "0"
-	if self.box_info.isChecked(): self.conf_info = "1"
-	else: self.conf_info = "0"
+	if self.box_systray.isChecked(): self.conf_systray = "yes"
+	else: self.conf_systray = "no"
+	if self.box_min.isChecked(): self.conf_min = "yes"
+	else: self.conf_min = "no"
+	if self.box_close.isChecked(): self.conf_close = "yes"
+	else: self.conf_close = "no"
+	if self.box_warn.isChecked(): self.conf_warn = "yes"
+	else: self.conf_warn = "no"
 
 	self.finalFile = (""
 	"enable_systray	"+self.conf_systray+"\n"
 	"start_minimized	"+self.conf_min+"\n"
 	"close_to_tray	"+self.conf_close+"\n"
-	"display_info	"+self.conf_info+"\n"
+	"show_warnings	"+self.conf_warn+"\n"
 	"")
 
 	if self.box_notify.isChecked():
@@ -845,12 +869,12 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	if self.box_startup.isChecked(): os.system("cp /usr/share/applications/qtsixa.desktop $HOME/.config/autostart/qtsixa.desktop")
 	else: os.system("rm -rf $HOME/.config/autostart/qtsixa.desktop")
 
-	saveFile = QtCore.QFile(commands.getoutput("ls $HOME/.qtsixa/qtsixa.conf").split()[0])
+	saveFile = QtCore.QFile(commands.getoutput("ls $HOME/.qtsixa").split()[0])
 
 	if not saveFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
 	  QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to configuration file.\nPlease check if your media is not read-only, enough space left on disk and permissions."))
 	else:
-	  os.system("echo '"+str(self.finalFile)+"' > $HOME/.qtsixa/qtsixa.conf")
+	  os.system("echo '"+str(self.finalFile)+"' > $HOME/.qtsixa")
 	  if self.i_saw_the_warning == 0:
 	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr(""
 	    "Don't forget you'll have to restart QtSixA to apply this changes."))
@@ -1034,20 +1058,11 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.autoListRefresh.start(2000)
 	self.func_What()
 
-	if config_display_info == "1":  QtGui.QMessageBox.information(self, self.tr("QtSixA - Updated"), self.tr(""
-	"<b>QtSixA has been updated to 1.0.3</b>.<br>"
-	"This is the final stable version - Enjoy!<p>"
-	"If you found any bug, please report it using:<br>"
-	"\"Help\" -> \"Web Links\" -> \"Report bug\"<p>"
-	"<i>(To disable this pop-up, go to \"Settings\" -> \"Configure QtSixA\")</i>"
-	""))
-
-	if config_enable_systray == "1":
+	if config_enable_systray == "yes":
 	    self.createTrayIcon()
 	    self.trayIsActive = 1
 	else:
 	    self.trayIsActive = 0
-
 
     def func_What(self):
 	self.SixaxisProfileCheck = commands.getoutput("ls /etc/hal/fdi/policy | grep sixa | awk 'sub(\"sixa_\",\"\")' | awk 'sub(\".fdi\",\"\")'")
@@ -1058,7 +1073,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    if (self.SixaxisProfile in listOfSixaxisProfiles):
 		x = listOfSixaxisProfiles.index(self.SixaxisProfile)
 		self.SixaxisProfile = listOfSixaxisProfiles[x+1]
-		self.label_SixaxisProfile.setText("Current Sixaxis profile is "+self.SixaxisProfile)
+		self.label_SixaxisProfile.setText("Current Sixaxis profile is \""+self.SixaxisProfile+"\"")
 	    else: self.label_SixaxisProfile.setText("You're not using a Sixaxis profile")
 
     def func_DBusDisconnect(self, mode, name, mac):
@@ -1069,6 +1084,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    listDev = adapter_bus.ListDevices(dbus_interface='org.bluez.Adapter')
 	    #self.func_UpdateDeviceStats()
 	except:
+	    print "Could not disconnect device(s) through DBus, will use hcitool"
 	    listDev = ""
 	    if (mode == "single"):
 		if look4Root(): os.system(ROOT+" hcitool "+"dc "+mac)
@@ -1084,10 +1100,10 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 		if "ACL" in commands.getoutput("hcitool con | grep ACL"):
 		    if look4Root(): os.system(ROOT+" `hcitool con | grep ACL | awk '{printf\"hcitool dc \"$3\"\\n\"}'`")
 	    else:
-		print "Could not disconnect some devices, please wait a few seconds and try again"
+		print "Could not disconnect some devices; Maybe bluetooth is off or you don't have permissions?"
 		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Disconnect"), self.tr(""
 		"Could not disconect some devices.<br>"
-		"<i>(Maybe bluetooth is off?)</i>"))
+		"Maybe bluetooth is off or you don't have permissions?"))
 
 	j = 0
 	while j < len(listDev):
@@ -1216,9 +1232,9 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	if look4Root():
 	    os.system(ROOT+" rm -rf /etc/hal/fdi/policy/DualShock3.fdi")
 	    os.system(ROOT+" rm -rf /etc/hal/fdi/policy/sixa*.fdi")
-	    os.system(ROOT+" cp /usr/share/qtsixa/profiles/sixa_none.fdi /etc/hal/fdi/policy/")
+	    os.system(ROOT+" cp /usr/share/qtsixa/sixaxis-profiles/sixa_none.fdi /etc/hal/fdi/policy/")
 	    os.system(ROOT+" cp /usr/share/qtsixa/profiles.list.bu /usr/share/qtsixa/profiles.list")
-	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Restored"), self.tr("The default input profiles are now restored"))
+	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Restored"), self.tr("The default input profiles are now restored.<br><b>Please restart QtSixA now</b>"))
 	    self.func_What()
 
     def func_Donate(self):
@@ -1271,13 +1287,15 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
             self.actionDiscSeven.setVisible(0)
             self.actionDiscEight.setVisible(0)
             self.actionDiscNull.setVisible(1)
-	    if (not "054c:03a0" in self.Check4USBDevices) and (not "054c:0306" in self.Check4USBDevices) and (not "054c:0268" in self.Check4USBDevices):
+	    self.hidd_number_1 = self.hidd_number_2 = self.hidd_number_3 = self.hidd_number_4 = self.hidd_number_5 = self.hidd_number_6 = self.hidd_number_7 = self.hidd_number_8 = ""
+	    if (not "054c:03a0" in self.Check4USBDevices) and (not "054c:0306" in self.Check4USBDevices) and (not "0079:0006" in self.Check4USBDevices) and (not "054c:0268" in self.Check4USBDevices):
 		self.listOfDevices.item(9).setHidden(1)
 		self.listOfDevices.item(10).setHidden(1)
 		self.listOfDevices.item(11).setHidden(1)
 		self.listOfDevices.item(12).setHidden(1)
 		self.listOfDevices.item(0).setHidden(0)
 		self.listOfDevices.setSelectionMode(0)
+		self.usb_number_1 = self.usb_number_2 = self.usb_number_3 = self.usb_number_4 = ""
 	else:
 	    self.func_UpdateBluetoothNames()
             self.listOfDevices.setSelectionMode(1)
@@ -1332,11 +1350,12 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 		self.actionDiscEight.setVisible(1)
 		self.actionDiscEight.setText(self.hidd_number_8)
 
-	if (not "054c:03a0" in self.Check4USBDevices) and (not "054c:0306" in self.Check4USBDevices) and (not "054c:0268" in self.Check4USBDevices):
+	if (not "054c:03a0" in self.Check4USBDevices) and (not "054c:0306" in self.Check4USBDevices) and (not "0079:0006" in self.Check4USBDevices) and (not "054c:0268" in self.Check4USBDevices):
 	    self.listOfDevices.item(9).setHidden(1)
 	    self.listOfDevices.item(10).setHidden(1)
 	    self.listOfDevices.item(11).setHidden(1)
 	    self.listOfDevices.item(12).setHidden(1)
+	    self.usb_number_1 = self.usb_number_2 = self.usb_number_3 = self.usb_number_4 = ""
 	else:
 	    self.func_UpdateUSBNames()
 	    self.listOfDevices.item(0).setHidden(1)
@@ -1371,11 +1390,11 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 
     def func_UpdateUSBNames(self):
 	self.usb_number_1 = self.usb_number_2 = self.usb_number_3 = self.usb_number_4 = ""
-	self.nOfDevices = int(commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -n | tail -n 1 | awk '{printf$1}' | awk 'sub(\":Bus\",\"\")'"))
-	if self.nOfDevices > 0: self.usb_number_1 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" | awk '{printf$2\":\"$4$6}' | head -n 1 | tail -n 1")
-	if self.nOfDevices > 1: self.usb_number_2 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" | awk '{printf$2\":\"$4$6}' | head -n 2 | tail -n 1")
-	if self.nOfDevices > 2: self.usb_number_3 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" | awk '{printf$2\":\"$4$6}' | head -n 3 | tail -n 1")
-	if self.nOfDevices > 3: self.usb_number_4 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" | awk '{printf$2\":\"$4$6}' | head -n 4 | tail -n 1")
+	self.nOfDevices = int(commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -e \"0079:0006\" | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -e \"0079:0006\"  -n | tail -n 1 | awk '{printf$1}' | awk 'sub(\":Bus\",\"\")'"))
+	if self.nOfDevices > 0: self.usb_number_1 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -e \"0079:0006\" | awk '{printf$2\":\"$4$6\"\\n\"}' | head -n 1 | tail -n 1")
+	if self.nOfDevices > 1: self.usb_number_2 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -e \"0079:0006\" | awk '{printf$2\":\"$4$6\"\\n\"}' | head -n 2 | tail -n 1")
+	if self.nOfDevices > 2: self.usb_number_3 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -e \"0079:0006\" | awk '{printf$2\":\"$4$6\"\\n\"}' | head -n 3 | tail -n 1")
+	if self.nOfDevices > 3: self.usb_number_4 = commands.getoutput("echo '"+self.Check4USBDevices+"' | grep -e \"054c:03a0\" -e \"054c:0306\" -e \"054c:0268\" -e \"0079:0006\" | awk '{printf$2\":\"$4$6\"\\n\"}' | head -n 4 | tail -n 1")
 
 
     def func_UpdateDeviceStats(self):
@@ -1405,6 +1424,9 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    elif (self.parsedID[2] == "054c" and self.parsedID[3] == "0306"):
 		self.devName = "PLAYSTATION(R)3 Remote"
 		self.devType = "Remote"
+	    elif (self.parsedID[2] == "0079" and self.parsedID[3] == "0006"):
+		self.devName = "Generic USB Joystick"
+		self.devType = "Joystick"
 	    else:
 		self.devName = "Unkown"
 		self.devType = "Unkown"
@@ -1485,6 +1507,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 
     def func_Apply_hidraw(self):
 	if look4Root():
+	    os.system(ROOT+" /sbin/modprobe uinput")
 	    self.rawReport = commands.getoutput(ROOT+" /usr/sbin/sixad-raw "+str(self.combo_hidraw.currentText())+" 3654")
 	    if (self.rawReport == "Found a Sixaxis"):
 		os.system(ROOT+" /usr/sbin/sixad-raw "+str(self.combo_hidraw.currentText())+" &")
@@ -1563,7 +1586,6 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	  self.trayIcon.activated.connect(self.func_Systray_Clicked) #Not available on some systems ( why ? )
 	except:
 	  print "Your system doesn't suport double-click on systray"
-	  print "Your system doesn't suport disconnect devices through DBus"
 
 	self.trayIcon.setToolTip(self.trayTooltip)
 	self.trayIcon.setIcon(QtGui.QIcon('/usr/share/qtsixa/icons/qtsixa_32.png'))
@@ -1583,7 +1605,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 1.0.3 </b><br>"
+	self.trayTooltip = "<b> QtSixA 1.1.1 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
         else: self.trayTooltip += "Your input profile is set to \"<i>"+self.SixaxisProfile+"</i>\"."
 	self.trayTooltip += "<p>"
@@ -1714,7 +1736,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
         QtGui.QMessageBox.information(self, self.tr("QtSixA - Game Profile"), self.tr("Done!\nNow just launch the game to start the fun!"))
 
     def func_Game_msgNO(self):
-        QtGui.QMessageBox.warning(self, self.tr("QtSixA - Game Profile"), self.tr("Done!\nThe chosen game has never been started before...\nIt's configuration file does not exist!"))
+        QtGui.QMessageBox.warning(self, self.tr("QtSixA - Game Profile"), self.tr("Error!\nThe chosen game has never been started before...\nIt's configuration file does not exist!"))
 
     def func_HelpGame(self):
         QtGui.QMessageBox.information(self, self.tr("QtSixA - Game Help"), self.tr(""
@@ -1736,14 +1758,23 @@ if __name__ == '__main__':
 
     appName     = "QtSixA"
     programName = "QtSixA"
-    version     = "1.0.3"
+    version     = "1.1.1"
     description = "Sixaxis Joystick Manager"
     license     = "GPL v2+"
     copyright   = "(C) 2009 falkTX"
 
     app = QtGui.QApplication(sys.argv)
     QtSixA = Main_QtSixA_Window()
-    if config_start_minimized == "1": QtSixA.hide()
-    else: QtSixA.show()
-    if config_close_to_tray == "1": app.setQuitOnLastWindowClosed(0)
+
+    if (config_start_minimized == "yes"):
+	QtSixA.hide()
+    else:
+	QtSixA.show()
+
+    if (config_close_to_tray == "yes"): app.setQuitOnLastWindowClosed(0)
+    if (config_show_warnings == "yes" and config_start_minimized == "no"): func_Check_BTs()
+
     sys.exit(app.exec_())
+
+
+#The End
