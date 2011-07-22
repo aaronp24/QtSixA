@@ -28,10 +28,7 @@ install:
 	cp bins/sixad-bin /usr/sbin/
 	cp bins/sixad-uinput-sixaxis /usr/sbin/
 	DEBIAN.split/postinst.all
-	echo "You'll need to install 'libbluetooth.so.2' and 'hcid' manually"
-
-powerpc:
-	cp bins/libbluetooth.so.3_powerpc /usr/lib/sixad/libbluetooth.so.3
+	# NOTE - You'll need to install 'libbluetooth.so.2' and 'hcid' manually
 
 uninstall:
 	rm -rf /usr/lib/sixad/

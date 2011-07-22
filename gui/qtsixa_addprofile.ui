@@ -255,7 +255,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
        </property>
       </widget>
      </item>
@@ -266,7 +266,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/plus.png</normaloff>../../../../../usr/share/qtsixa/icons/plus.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/plus.png</normaloff>../../../../../../usr/share/qtsixa/icons/plus.png</iconset>
        </property>
       </widget>
      </item>

@@ -7,10 +7,17 @@ if [ -f /etc/rc6.d/K10sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc
 
 #Check for old sixad configuration file
 old_sixad () {
-cat /etc/default/sixad | grep Fix_PS3 > /dev/null
+cat /etc/default/sixad | grep LED_js_n > /dev/null
 }
+
+ARCH=`uname -m`
 
 if (old_sixad "$1"); then true; else
 cp /etc/default/sixad.bak /etc/default/sixad
 echo "Replacing old sixad file with new one, overriding settings"
+fi
+
+if [ $ARCH == "powerpc" ]; then
+sed "s/Legacy=0/Legacy=1/" -i /etc/default/sixad
+echo "Detected PowerPC[32] - Legacy driver will be used"
 fi

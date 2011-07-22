@@ -28,7 +28,6 @@ if (sixad_already_running_check "$1"); then
 else
 {
   log_daemon_msg "Starting sixad"
-  /sbin/modprobe uinput
   $DAEMON &
   log_end_msg 0
 }

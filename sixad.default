@@ -4,14 +4,20 @@
 #  (this values are sent to C code...)
 
 
-# Start with LED # (1-7, use "-1" for no LEDs)
+# Enable LEDs?
+Enable_leds=1
+
+# Use js # for LED #? (overrides "LED_n" and "LED_plus"; doesn't work with "Legacy" )
+LED_js_n=1
+
+# Start with LED #
 LED_n=1
 
-# LED # increase after another connection?
+# LED # increase after new connection?
 LED_plus=1
 
 # Enable LEDs animation?
-LED_anim=1
+LED_anim=0
 
 # Enable buttons?
 Enable_buttons=1
@@ -26,13 +32,16 @@ Enable_axis=1
 Enable_accel=1
 
 # Enable acceleration?
-Enable_accon=1
+Enable_accon=0
 
 # Enable speed?
-Enable_speed=1
+Enable_speed=0
 
-# Enable gyro? (NOT IMPLEMENTED YET)
-Enable_gyro=0
+# Enable position?
+Enable_pos=0
 
-# Enable PS3 Workaround/Fix for UInput? (NEED HELP!)
-Fix_PS3=0
+# Enable rumble? (Experimental)
+Enable_rumble=0
+
+# Use Old/Legacy driver instead of sixad (Workaround for PowerPC[32] UInput)
+Legacy=0

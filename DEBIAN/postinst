@@ -8,9 +8,17 @@ keypad_find_old_override_files () {
 ls /etc/hal/fdi/policy/ | grep x11-qt-sixa > /dev/null
 }
 
+find_old_profile_file () {
+cat /usr/share/qtsixa/profiles.list | grep ff8pc > /dev/null
+}
 
 if [ -f /usr/share/qtsixa/profiles.list ]; then true; else
 cp /usr/share/qtsixa/profiles.list.bak /usr/share/qtsixa/profiles.list
+fi
+
+if (find_old_profile_file "$1"); then true; else
+cp /usr/share/qtsixa/profiles.list.bak /usr/share/qtsixa/profiles.list
+echo "Note: old sixaxis profiles file was found and updated"
 fi
 
 if [ -f /etc/hal/fdi/policy/DualShock3.fdi ]; then

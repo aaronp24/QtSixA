@@ -1,0 +1,17 @@
+-- TODO Stuff before sixad v1.0:
+
+ - Rumble support for DualShock3:  -- In progress
+  · Needs check if device is Sixaxis or DualShock3 (?) [not sure if needed]
+  · I don't have a DualShock3 yet, ask for testing volunteers
+  · Get a DualShock3 and finish code
+ - Fix PowerPC-32 UInput error:
+  · Try to use patch from WiiMote guys
+  · Needs too many checking, ask for testing volunteers
+
+
+Stuff to do later:
+ - Wake up a PC from suspend
+ - RPM repo ? -> needs some study
+ - Make Ubuntu repository trusted - Need help!
+ - What else ?
+ - 

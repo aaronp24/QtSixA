@@ -8,6 +8,7 @@ from PyQt4 import QtCore, QtGui, uic
 #For easy debugging, print version information to terminal
 print "Main Qt version:", QtCore.QT_VERSION_STR
 print "Python-Qt version:", QtCore.PYQT_VERSION_STR
+if QtCore.PYQT_VERSION < 0x040500: print "WARNING: You're using an old PyQt version, some actions will be disabled or may not work at all!"
 
 #Create configuration files if they don't exist
 os.system("if [ -d $HOME/.config/autostart ]; then true; else mkdir -p $HOME/.config; mkdir -p $HOME/.config/autostart; fi")
@@ -291,7 +292,7 @@ class QtSixA_Profile_New(QtGui.QDialog):
 	  self.ComboRightText_H = "mode=accelerated keylow="+self.line_hrs_left.text()+" keyhigh="+self.line_hrs_right.text()+" deadzone=7500"
 	  self.ComboRightText_V = "mode=accelerated keylow="+self.line_vrs_up.text()+" keyhigh="+self.line_vrs_down.text()+" deadzone=7500"
 
-	self.FDI_Content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n<deviceinfo version=\"0.2\">\n  <device>\n    <match key=\"info.capabilities\" contains=\"input\">\n      <!-- Sixaxis configuration for \""+self.line_app.text()+"\", by \""+self.line_author.text()+"\" -->\n      <match key=\"input.product\" contains=\"PLAYSTATION(R)3 Controller\">\n        <merge key=\"input.x11_driver\" type=\"string\">joystick</merge>\n\n        <merge key=\"input.x11_options.MapAxis1\" type=\"string\">"+self.ComboLeftText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis2\" type=\"string\">"+self.ComboLeftText_V+"</merge>\n        <merge key=\"input.x11_options.MapAxis3\" type=\"string\">"+self.ComboRightText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis4\" type=\"string\">"+self.ComboRightText_V+"</merge>\n	<merge key=\"input.x11_options.MapAxis5\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis6\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis7\" type=\"string\">mode=none</merge>\n\n        <merge key=\"input.x11_options.MapButton1\" type=\"string\">key="+self.line_select.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton2\" type=\"string\">key=none</merge>\n        <merge key=\"input.x11_options.MapButton3\" type=\"string\">key=none</merge>\n        <merge key=\"input.x11_options.MapButton4\" type=\"string\">key="+self.line_start.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton17\" type=\"string\">key="+self.line_ps.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton5\" type=\"string\">key="+self.line_up.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton8\" type=\"string\">key="+self.line_left.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton6\" type=\"string\">key="+self.line_right.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton7\" type=\"string\">key="+self.line_down.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton10\" type=\"string\">key="+self.line_r2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton9\" type=\"string\">key="+self.line_l2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton12\" type=\"string\">key="+self.line_r1.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton11\" type=\"string\">key="+self.line_l1.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton15\" type=\"string\">key="+self.line_cross.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton14\" type=\"string\">key="+self.line_circle.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton16\" type=\"string\">key="+self.line_square.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton13\" type=\"string\">key="+self.line_triangle.text()+"</merge>\n\n      </match>\n    </match>\n  </device>\n</deviceinfo>\n"
+	self.FDI_Content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n<deviceinfo version=\"0.2\">\n  <device>\n    <match key=\"info.capabilities\" contains=\"input\">\n      <!-- Sixaxis configuration for \""+self.line_app.text()+"\", by \""+self.line_author.text()+"\" -->\n      <match key=\"input.product\" contains=\"PLAYSTATION(R)3 Controller\">\n        <merge key=\"input.x11_driver\" type=\"string\">joystick</merge>\n\n        <merge key=\"input.x11_options.MapAxis1\" type=\"string\">"+self.ComboLeftText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis2\" type=\"string\">"+self.ComboLeftText_V+"</merge>\n        <merge key=\"input.x11_options.MapAxis3\" type=\"string\">"+self.ComboRightText_H+"</merge>\n        <merge key=\"input.x11_options.MapAxis4\" type=\"string\">"+self.ComboRightText_V+"</merge>\n	<merge key=\"input.x11_options.MapAxis5\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis6\" type=\"string\">mode=none</merge>\n	<merge key=\"input.x11_options.MapAxis7\" type=\"string\">mode=none</merge>\n\n        <merge key=\"input.x11_options.MapButton1\" type=\"string\">key="+self.line_select.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton2\" type=\"string\">key=NoSymbol</merge>\n        <merge key=\"input.x11_options.MapButton3\" type=\"string\">key=NoSymbol</merge>\n        <merge key=\"input.x11_options.MapButton4\" type=\"string\">key="+self.line_start.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton17\" type=\"string\">key="+self.line_ps.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton5\" type=\"string\">key="+self.line_up.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton8\" type=\"string\">key="+self.line_left.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton6\" type=\"string\">key="+self.line_right.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton7\" type=\"string\">key="+self.line_down.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton10\" type=\"string\">key="+self.line_r2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton9\" type=\"string\">key="+self.line_l2.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton12\" type=\"string\">key="+self.line_r1.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton11\" type=\"string\">key="+self.line_l1.text()+"</merge>\n\n        <merge key=\"input.x11_options.MapButton15\" type=\"string\">key="+self.line_cross.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton14\" type=\"string\">key="+self.line_circle.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton16\" type=\"string\">key="+self.line_square.text()+"</merge>\n        <merge key=\"input.x11_options.MapButton13\" type=\"string\">key="+self.line_triangle.text()+"</merge>\n\n      </match>\n    </match>\n  </device>\n</deviceinfo>\n"
 
 	self.FDI_SelectedFileLocation = QtGui.QFileDialog.getSaveFileName(self)
 	if self.FDI_SelectedFileLocation.isEmpty():
@@ -320,23 +321,27 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
         uic.loadUi("/usr/share/qtsixa/gui/qtsixa_sixaxis.ui", self)
 
 	#Read sixad configuration file
-	sixad_file = commands.getoutput(". /etc/default/sixad; echo $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro $Fix_PS3").split()
-	sixad_config_led_n = sixad_file[0]
-	sixad_config_led_plus = sixad_file[1]
-	sixad_config_led_anim = sixad_file[2]
-	sixad_config_buttons = sixad_file[3]
-	sixad_config_sbuttons = sixad_file[4]
-	sixad_config_axis = sixad_file[5]
-	sixad_config_accel = sixad_file[6]
-	sixad_config_accon = sixad_file[7]
-	sixad_config_speed = sixad_file[8]
-	sixad_config_gyro = sixad_file[9]
-	sixad_config_ps3fix = sixad_file[10]
+	sixad_file = commands.getoutput(". /etc/default/sixad; echo $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy").split()
+	sixad_config_leds = sixad_file[0]
+	sixad_config_led_js_n = sixad_file[1]
+	sixad_config_led_n = sixad_file[2]
+	sixad_config_led_plus = sixad_file[3]
+	sixad_config_led_anim = sixad_file[4]
+	sixad_config_buttons = sixad_file[5]
+	sixad_config_sbuttons = sixad_file[6]
+	sixad_config_axis = sixad_file[7]
+	sixad_config_accel = sixad_file[8]
+	sixad_config_accon = sixad_file[9]
+	sixad_config_speed = sixad_file[10]
+	sixad_config_pos = sixad_file[11]
+	sixad_config_rumble = sixad_file[12]
+	sixad_config_legacy = sixad_file[13]
 
 	self.i_saw_the_warning = 0
 	self.applied2profile = 0
 	self.applied2override = 0
 	self.applied2sixad = 0
+	self.applied2boot = 0
 	self.Clicked = 0
 
 	self.hidd_number_1 = ""
@@ -381,25 +386,35 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	if (self.overridesN == ""): self.group_specific.setChecked(0)
 	else: self.group_specific.setChecked(1)
 
-	if (int(sixad_config_led_n) == -1):
+	if (int(sixad_config_leds) == 0):
 	    self.groupLED.setChecked(0)
-	    self.checkLED_plus.setChecked(0)
-	    self.checkLED_anim.setChecked(0)
+	    #self.checkLED_plus.setChecked(0)
+	    #self.checkLED_anim.setChecked(0)
 	else:
 	    self.groupLED.setChecked(1)
 	    self.spinLED.setValue(int(sixad_config_led_n))
-	    if (int(sixad_config_led_plus) == 1): self.checkLED_plus.setChecked(1)
-	    if (int(sixad_config_led_anim) == 1): self.checkLED_anim.setChecked(1)
-	if (int(sixad_config_buttons) == 1): self.checkButtons.setChecked(1)
-	if (int(sixad_config_sbuttons) == 1): self.checkSButtons.setChecked(1)
-	if (int(sixad_config_axis) == 1): self.checkAxis.setChecked(1)
-	if (int(sixad_config_accel) == 1): self.checkAccel.setChecked(1)
-	if (int(sixad_config_accon) == 1): self.checkAccon.setChecked(1)
-	if (int(sixad_config_speed) == 1): self.checkSpeed.setChecked(1)
-	if (int(sixad_config_gyro) == 1): self.checkGyro.setChecked(1)
-	if (int(sixad_config_ps3fix) == 1):
-	    self.checkPS3Fix.setChecked(1)
+	    if (int(sixad_config_led_plus)): self.checkLED_plus.setChecked(1)
+	    if (int(sixad_config_led_anim)): self.checkLED_anim.setChecked(1)
+	if (int(sixad_config_buttons)): self.checkButtons.setChecked(1)
+	if (int(sixad_config_sbuttons)): self.checkSButtons.setChecked(1)
+	if (int(sixad_config_axis)): self.checkAxis.setChecked(1)
+	if (int(sixad_config_accel)): self.checkAccel.setChecked(1)
+	if (int(sixad_config_accon)): self.checkAccon.setChecked(1)
+	if (int(sixad_config_speed)): self.checkSpeed.setChecked(1)
+	if (int(sixad_config_pos)): self.checkPos.setChecked(1)
+	if (int(sixad_config_rumble)): self.checkRumble.setChecked(1)
+	if (int(sixad_config_led_js_n)):
+	    self.optLEDn.setChecked(1)
+	    self.frameLED.setEnabled(0)
+	else:
+	    self.optLEDm.setChecked(1)
+	if (int(sixad_config_legacy)):
+	    self.checkLegacy.setChecked(1)
 	    self.groupInput.setEnabled(0)
+	    self.optLEDn.setEnabled(0)
+	    self.optLEDm.setChecked(1)
+
+	if commands.getoutput("if [ -f /etc/rc2.d/S90sixad ]; then echo -n 'Present'; fi") == "Present": self.checkBoot.setChecked(1)
 
 	i = 0
 	while i < len(listOfSixaxisProfiles):
@@ -427,9 +442,15 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    self.fdiProfile = "none"
 	    self.inputComboBox.setCurrentIndex(0)
 
+	if QtCore.PYQT_VERSION < 0x040500: self.b_new.setEnabled(0)
+
 	self.connect(self.b_overrides, QtCore.SIGNAL("clicked()"), self.func_ShowOverrides)
 	self.connect(self.b_apply, QtCore.SIGNAL('clicked()'), self.func_Apply)
 	self.connect(self.b_ok, QtCore.SIGNAL('clicked()'), self.func_OK)
+	self.connect(self.optLEDn, QtCore.SIGNAL("clicked()"), self.func_LED_js)
+	self.connect(self.optLEDm, QtCore.SIGNAL("clicked()"), self.func_LED_man)
+	self.connect(self.optLEDn, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	self.connect(self.optLEDm, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkLED_plus, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkLED_anim, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkButtons, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
@@ -438,9 +459,10 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.checkAccel, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkAccon, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkSpeed, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
-	self.connect(self.checkGyro, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
-	self.connect(self.checkPS3Fix, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
-	self.connect(self.checkPS3Fix, QtCore.SIGNAL("clicked()"), partial(self.func_PS3Fix_Check))
+	self.connect(self.checkPos, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	self.connect(self.checkRumble, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Legacy_Check))
 	self.connect(self.spinLED, QtCore.SIGNAL("valueChanged(int)"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.groupLED, QtCore.SIGNAL("clicked()"), self.func_GroupLED)
 	self.connect(self.b_new, QtCore.SIGNAL('clicked()'), self.func_NewProfile)
@@ -449,6 +471,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.inputComboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "profile"))
 	self.connect(self.inputBox, QtCore.SIGNAL('clicked()'), self.func_ClickBoxOnProfile)
 	self.connect(self.inputBox, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "profile"))
+	self.connect(self.checkBoot, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "boot"))
 	self.connect(self.group_specific, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "override"))
 	self.connect(self.combo_specific_device, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
 	self.connect(self.combo_specific_profiles, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
@@ -466,12 +489,23 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	if (what2apply == "sixad"): self.applied2sixad = 1
 	elif (what2apply == "profile"): self.applied2profile = 1
 	elif (what2apply == "override"): self.applied2override = 1
+	elif (what2apply == "boot"): self.applied2boot = 1
 
-    def func_PS3Fix_Check(self):
-	if self.checkPS3Fix.isChecked():
+    def func_Legacy_Check(self):
+	if self.checkLegacy.isChecked():
 	    self.groupInput.setEnabled(0)
+	    self.optLEDn.setEnabled(0)
+	    self.optLEDm.setChecked(1)
+	    self.frameLED.setEnabled(1)
 	else:
 	    self.groupInput.setEnabled(1)
+	    self.optLEDn.setEnabled(1)
+
+    def func_LED_man(self):
+	self.frameLED.setEnabled(1)
+
+    def func_LED_js(self):
+	self.frameLED.setEnabled(0)
 
     def func_OK(self):
 	self.func_Apply()
@@ -506,18 +540,23 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 		os.system(ROOT+" cp /usr/share/qtsixa/sixaxis-profiles/sixa_"+self.fdiProfile+".fdi "+"/etc/hal/fdi/policy/")
 		QtGui.QMessageBox.information(self, self.tr("QtSixA - Profile"), self.tr("Input profile has now been set to "+self.inputComboBox.currentText()+".\n \nIf you want to use it now, please disconnect your Sixaxis\nand connect them again."))
 
+
+	if self.applied2boot == 1: #Enable/Disable at boot
+	    if look4Root():
+		if self.checkBoot.isChecked(): os.system(ROOT+" sixad "+"--boot-yes")
+		else: os.system(ROOT+" sixad "+"--boot-no")
+
 	if self.applied2sixad == 1: #sixad settings
 #starts here----------------------------
-	    if self.groupLED.isChecked():
-		self.txtLED_n = str(self.spinLED.text())
-		if self.checkLED_plus.isChecked(): self.txtLED_plus = "1"
-		else: self.txtLED_plus = "0"
-		if self.checkLED_anim.isChecked(): self.txtLED_anim = "1"
-		else: self.txtLED_anim = "0"
-	    else:
-		self.txtLED_n = "-1"
-		self.txtLED_plus = "0"
-		self.txtLED_anim = "0"
+	    if self.groupLED.isChecked(): self.txtLEDs = "1"
+	    else: self.txtLEDs = "0"
+	    if self.optLEDn.isChecked(): self.txtLED_js = "1"
+	    else: self.txtLED_js = "0"
+	    self.txtLED_n = str(self.spinLED.text())
+	    if self.checkLED_plus.isChecked(): self.txtLED_plus = "1"
+	    else: self.txtLED_plus = "0"
+	    if self.checkLED_anim.isChecked(): self.txtLED_anim = "1"
+	    else: self.txtLED_anim = "0"
 	    if self.checkButtons.isChecked(): self.txtEnable_buttons = "1"
 	    else: self.txtEnable_buttons = "0"
 	    if self.checkSButtons.isChecked(): self.txtEnable_sbuttons = "1"
@@ -530,10 +569,12 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    else: self.txtEnable_accon = "0"
 	    if self.checkSpeed.isChecked(): self.txtEnable_speed = "1"
 	    else: self.txtEnable_speed = "0"
-	    if self.checkGyro.isChecked(): self.txtEnable_gyro = "1"
-	    else: self.txtEnable_gyro = "0"
-	    if self.checkPS3Fix.isChecked(): self.txtEnable_ps3fix = "1"
-	    else: self.txtEnable_ps3fix = "0"
+	    if self.checkPos.isChecked(): self.txtEnable_pos = "1"
+	    else: self.txtEnable_pos = "0"
+	    if self.checkRumble.isChecked(): self.txtEnable_rumble = "1"
+	    else: self.txtEnable_rumble = "0"
+	    if self.checkLegacy.isChecked(): self.txtEnable_legacy = "1"
+	    else: self.txtEnable_legacy = "0"
 
 	    self.sixadFile = (""
 	    "# sixad configuration file\n"
@@ -542,10 +583,16 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    "#  (this values are sent to C code...)\n"
 	    "\n"
 	    "\n"
-	    "# Start with LED # (1-7, use \"-1\" for no LEDs)\"\n"
+	    "# Enable LEDs?\n"
+	    "Enable_leds="+self.txtLED_n+"\n"
+	    "\n"
+	    "# Use js # for LED #? (overrides \"LED_n\" and \"LED_plus\"; doesn't work with \"Legacy\" )\n"
+	    "LED_js_n="+self.txtLED_js+"\n"
+	    "\n"
+	    "# Start with LED #\n"
 	    "LED_n="+self.txtLED_n+"\n"
 	    "\n"
-	    "# LED # increase after another connection?\n"
+	    "# LED # increase after new connection?\n"
 	    "LED_plus="+self.txtLED_plus+"\n"
 	    "\n"
 	    "# Enable LEDs animation?\n"
@@ -569,15 +616,22 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    "# Enable speed?\n"
 	    "Enable_speed="+self.txtEnable_speed+"\n"
 	    "\n"
-	    "# Enable gyro? (NOT IMPLEMENTED YET)\n"
-	    "Enable_gyro="+self.txtEnable_gyro+"\n"
+	    "# Enable position?\n"
+	    "Enable_pos="+self.txtEnable_pos+"\n"
 	    "\n"
-	    "# Enable PS3 Workaround/Fix for UInput? (NEED HELP!)\n"
-	    "Fix_PS3="+self.txtEnable_ps3fix+"\n"
+	    "# Enable rumble? (Experimental)\n"
+	    "Enable_rumble="+self.txtEnable_rumble+"\n"
+	    "\n"
+	    "# Use Old/Legacy driver instead of sixad (Workaround for PowerPC[32] UInput)\n"
+	    "Legacy="+self.txtEnable_legacy+"\n"
 	    "")
 
-	    os.system("echo \'"+str(self.sixadFile)+"\' > /tmp/sixad")
-	    if look4Root(): os.system(ROOT+" cp /tmp/sixad /etc/default/sixad")
+	    self.sixadFileW = open("/etc/default/sixad", "w")
+	    self.sixadFileW.write(self.sixadFile)
+	    self.sixadFileW.close()
+
+	    #os.system("echo \'"+str(self.sixadFile)+"\' > /tmp/sixad")
+	    #if look4Root(): os.system(ROOT+" cp /tmp/sixad /etc/default/sixad") HEREHERE
 
 	    if self.i_saw_the_warning == 0:
 	      QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr(""
@@ -598,8 +652,6 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	else:
 	    self.checkLED_plus.setEnabled(0)
 	    self.checkLED_anim.setEnabled(0)
-	    self.checkLED_plus.setChecked(0)
-	    self.checkLED_anim.setChecked(0)
 	self.func_Apply_Enable("sixad")
 
     def func_NewProfile(self):
@@ -944,10 +996,9 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.func_What()
 
 	if config_display_info == "1":  QtGui.QMessageBox.information(self, self.tr("QtSixA - Updated"), self.tr(""
-	"<b>QtSixA has been updated to 0.5.3</b>.<br>"
-	"This is a bugfix release.<br>"
-	"Everything should be working now (and now also on RPM distros).<br>"
-	"If not, please use the \"Help\" -> \"Web Links\" -> \"Report bug\".<p>"
+	"<b>QtSixA has been updated to 0.6.0</b>.<br>"
+	"If you have some time, please consider helping QtSixA/sixad development.<br>"
+	"If you found any bug, please report it using \"Help\" -> \"Web Links\" -> \"Report bug\".<p>"
 	"<i>(To disable this pop-up, go to \"Settings\" -> \"Configure QtSixA\")</i>"
 	""))
 
@@ -1110,8 +1161,8 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	if look4Root():
 	    os.system(ROOT+" rm -rf /etc/hal/fdi/policy/DualShock3.fdi")
 	    os.system(ROOT+" rm -rf /etc/hal/fdi/policy/sixa*.fdi")
-	    os.system(ROOT+" cp /usr/share/qt-sixa/profiles/sixa_none.fdi /etc/hal/fdi/policy/")
-	    os.system(ROOT+" cp /usr/share/qt-sixa/profiles.list.bak /usr/share/qt-sixa/profiles.list")
+	    os.system(ROOT+" cp /usr/share/qtsixa/profiles/sixa_none.fdi /etc/hal/fdi/policy/")
+	    os.system(ROOT+" cp /usr/share/qtsixa/profiles.list.bak /usr/share/qtsixa/profiles.list")
 	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Restored"), self.tr("The default input profiles are now restored"))
 	    self.func_What()
 
@@ -1468,7 +1519,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	  print "Your system doesn't suport disconnect devices through DBus"
 
 	self.trayIcon.setToolTip(self.trayTooltip)
-	self.trayIcon.setIcon(QtGui.QIcon('/usr/share/qtsixa/icons/qt-sixa_32.png'))
+	self.trayIcon.setIcon(QtGui.QIcon('/usr/share/qtsixa/icons/qtsixa_32.png'))
 	self.trayIcon.show()
 
     def func_Systray_Clicked(self, reason):
@@ -1485,7 +1536,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 0.5.3 </b><br>"
+	self.trayTooltip = "<b> QtSixA 0.6.0 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
         else: self.trayTooltip += "Your input profile is set to \"<i>"+self.SixaxisProfile+"</i>\"."
 	self.trayTooltip += "<p>"
@@ -1539,18 +1590,18 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
     def func_ApplyGame(self):
 	if self.listOfGames.currentText() == "ePSXe (Wine)":
 	    if self.radio_game_epsxe_1.isChecked():
-		os.system("regedit "+"/usr/share/qt-sixa/game-profiles/wine-epsxe_axis.reg")
+		os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_axis.reg")
 	    elif self.radio_game_epsxe_axis.isChecked():
-		os.system("regedit "+"/usr/share/qt-sixa/game-profiles/wine-epsxe_accel-mov.reg")
+		os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_accel-mov.reg")
 	    else:
-		os.system("regedit "+"/usr/share/qt-sixa/game-profiles/wine-epsxe_accel-driv.reg")
+		os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_accel-driv.reg")
 	elif self.listOfGames.currentText() == "Extreme Tux Racer":
 	    if self.radio_etracer_axis.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qt-sixa/game-profiles/etracer_axis`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
+		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_axis`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
 	    elif self.radio_etracer_accel.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qt-sixa/game-profiles/etracer_accel`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
+		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_accel`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
 	    else:
-		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qt-sixa/game-profiles/etracer_full`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
+		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_full`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
 	    newFile = QtCore.QFile('/tmp/etracer_options')
 	    if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
 		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
@@ -1560,9 +1611,9 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 		os.system("cp /tmp/etracer_options $HOME/.etracer/options")
 	elif self.listOfGames.currentText() == "Neverball / Nevergolf":
 	    if self.radio_neverball_axis.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qt-sixa/game-profiles/neverballrc_axis`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
+		content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qtsixa/game-profiles/neverballrc_axis`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
 	    else:
-		content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qt-sixa/game-profiles/neverballrc_accel`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
+		content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qtsixa/game-profiles/neverballrc_accel`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
 	    newFile = QtCore.QFile('/tmp/neverballrc')
 	    if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
 		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
@@ -1574,13 +1625,13 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    self.config_n_stk_1 = commands.getoutput("cat $HOME/.supertuxkart/config | grep -n \"player 1 settings\" | awk '{printf$1}' | awk 'sub(\":\",\"\")'")
 	    self.config_n_stk = str(  (int(self.config_n_stk_1) + 4) )
 	    if self.radio_stk_digital.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qt-sixa/game-profiles/stk_digital`; echo "$PREV $MOD"')
+		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_digital`; echo "$PREV $MOD"')
 	    elif self.radio_stk_axis.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qt-sixa/game-profiles/stk_axis`; echo "$PREV $MOD"')
+		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_axis`; echo "$PREV $MOD"')
 	    elif self.radio_stk_accel.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qt-sixa/game-profiles/stk_accel`; echo "$PREV $MOD"')
+		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_accel`; echo "$PREV $MOD"')
 	    else:
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qt-sixa/game-profiles/stk_full`; echo "$PREV $MOD"')
+		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_full`; echo "$PREV $MOD"')
 	    newFile = QtCore.QFile('/tmp/supertuxkart_config')
 	    if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
 		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
@@ -1624,7 +1675,7 @@ if __name__ == '__main__':
 
     appName     = "QtSixA"
     programName = "QtSixA"
-    version     = "0.5.2"
+    version     = "0.6.0"
     description = "Sixaxis Joystick Manager"
     license     = "GPL v2+"
     copyright   = "(C) 2009 falkTX"

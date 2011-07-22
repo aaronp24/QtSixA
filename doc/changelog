@@ -1,3 +1,57 @@
+qtsixa (0.6.0-falktx1) stable; urgency=low
+
+  * Fixed bluetooth Keypad always appearing as USB Keypad, in notifications
+  * Fixed some game profiles not applied properly
+  * Updated "Configure Sixaxis" and "Sixaxis Reference" dialogs to match sixad updates
+  * Added "Final Fantasy VIII PC" profile
+  * Other small fixes as usual
+
+sixad (0.9-falktx1) unstable; urgency=low
+
+  * Preparations for v1.0 stable release: (remove unnecessary stuff, clean the rest)
+    - Removed accelerometer buttons (not really needed and a little confusing)
+    - Moved "gyro" to "accelerometers" section (but disabled for now)
+    - Moved rumble (experimental) to "Input events"
+    - Changed all "PS3 Fix" text to "Legacy driver"
+    - Added "Position" axis (25-28)
+    - Increased timeout for Acceleration/Speed/Position values
+    - Cleaned up the accelerometers code (cause they can be disabled at any time)
+  * Start 0,1,2,3 axis at 0
+  * New option - set LED # according to joystick # (default now; js0 will be LED 1)
+  * New option - start sixad at boot (disables normal bluetooth; can be stopped anytime)
+  * Show sixad configuration when starting from terminal
+  * Applied same updates for sixad-raw
+  * Temporarily enable some debug output for 'sixad-uniput-sixaxis'
+  * Fixed weird random input to axis 0-3
+  * Disable Acceleration/Speed/Position by default (but keep Accelerometers)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  20 Oct 2009 09:35:11 +0000
+
+
+qtsixa (0.5.4-falktx1) stable; urgency=low
+
+  * In the "Configure Sixaxis" dialog:
+    - New tab "Advanced"
+    - Moved PS3 Fix option  to "Advanced"
+    - Added experimental option 'Enable DualShock3 Rumble'
+    - Other minor changes
+  * Updated features.html to reflect recent changes to sixad code (rumble)
+  * Warn if using an old PyQt version (< 4.5.0)
+  * Disable, in "Configure Sixaxis", 'Add New Profile' button if PyQt < 4.5.0
+
+sixad (0.8-falktx1) stable; urgency=low
+
+  * Proper build for PowerPC:
+    - Create separate 32bit and 64bit PowerPC packages
+    - Build with "-m32" and "-m64" for 32 and 64 bit (respectively)
+    - Only enable PS3 Fix/Workaround for PowerPC32
+  * Experimental rumble support
+  * Added TODO and CHANGELOG to sixad source
+  * Small code cleanup
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Oct 2009 09:16:34 +0000
+
+
 qtsixa (0.5.3-falktx1) stable; urgency=low
 
   * Fixed "kdesu" usage in RPM distros [They don't echo to terminal, but open a separate session for sudo]

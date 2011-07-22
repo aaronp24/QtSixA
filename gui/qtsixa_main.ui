@@ -65,7 +65,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA - 0.5.3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA - 0.6.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -1284,7 +1284,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/web.png</normaloff>../../../../../usr/share/qtsixa/icons/web.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/web.png</normaloff>../../../../../../usr/share/qtsixa/icons/web.png</iconset>
    </property>
    <property name="text">
     <string>QtSixA Blog</string>
@@ -1302,7 +1302,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/bug.png</normaloff>../../../../../usr/share/qtsixa/icons/bug.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/bug.png</normaloff>../../../../../../usr/share/qtsixa/icons/bug.png</iconset>
    </property>
    <property name="text">
     <string>Report Bug...</string>
@@ -1314,7 +1314,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionAbout_QtSixA">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/qtsixa_16.png</normaloff>../../../../../usr/share/qtsixa/icons/qtsixa_16.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/qtsixa_16.png</normaloff>../../../../../../usr/share/qtsixa/icons/qtsixa_16.png</iconset>
    </property>
    <property name="text">
     <string>About QtSixA</string>
@@ -1326,7 +1326,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionAbout_Qt">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/qt.png</normaloff>../../../../../usr/share/qtsixa/icons/qt.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/qt.png</normaloff>../../../../../../usr/share/qtsixa/icons/qt.png</iconset>
    </property>
    <property name="text">
     <string>About Qt</string>
@@ -1338,7 +1338,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionBT_Start">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/bt.png</normaloff>../../../../../usr/share/qtsixa/icons/bt.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/bt.png</normaloff>../../../../../../usr/share/qtsixa/icons/bt.png</iconset>
    </property>
    <property name="text">
     <string>Start &amp;Bluetooth</string>
@@ -1353,7 +1353,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/close.png</normaloff>../../../../../usr/share/qtsixa/icons/close.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/close.png</normaloff>../../../../../../usr/share/qtsixa/icons/close.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Exit</string>
@@ -1368,7 +1368,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionDiscAllSixaxis">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/eject.png</normaloff>../../../../../usr/share/qtsixa/icons/eject.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/eject.png</normaloff>../../../../../../usr/share/qtsixa/icons/eject.png</iconset>
    </property>
    <property name="text">
     <string>Disconnect &amp;All Sixaxis</string>
@@ -1434,7 +1434,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionConfQtSixA">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/config.png</normaloff>../../../../../usr/share/qtsixa/icons/config.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/config.png</normaloff>../../../../../../usr/share/qtsixa/icons/config.png</iconset>
    </property>
    <property name="text">
     <string>Configure QtSixA</string>
@@ -1452,7 +1452,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/stop.png</normaloff>../../../../../usr/share/qtsixa/icons/stop.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/stop.png</normaloff>../../../../../../usr/share/qtsixa/icons/stop.png</iconset>
    </property>
    <property name="text">
     <string>Stop si&amp;xad (QtSixA Modules)</string>
@@ -1483,7 +1483,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionBT_Stop">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/bt_off.png</normaloff>../../../../../usr/share/qtsixa/icons/bt_off.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/bt_off.png</normaloff>../../../../../../usr/share/qtsixa/icons/bt_off.png</iconset>
    </property>
    <property name="text">
     <string>St&amp;op Bluetooth</string>
@@ -1503,7 +1503,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionUbuntu">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/ubuntu.png</normaloff>../../../../../usr/share/qtsixa/icons/ubuntu.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/ubuntu.png</normaloff>../../../../../../usr/share/qtsixa/icons/ubuntu.png</iconset>
    </property>
    <property name="text">
     <string>Ubuntu Forums</string>
@@ -1515,7 +1515,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionIdea">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/hint.png</normaloff>../../../../../usr/share/qtsixa/icons/hint.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/hint.png</normaloff>../../../../../../usr/share/qtsixa/icons/hint.png</iconset>
    </property>
    <property name="text">
     <string>Submit Idea...</string>
@@ -1535,7 +1535,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionSixpair">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/rec.png</normaloff>../../../../../usr/share/qtsixa/icons/rec.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/rec.png</normaloff>../../../../../../usr/share/qtsixa/icons/rec.png</iconset>
    </property>
    <property name="text">
     <string>Pair Sixaxis/Keypad to PC</string>
@@ -1547,7 +1547,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionForce">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/force.png</normaloff>../../../../../usr/share/qtsixa/icons/force.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/force.png</normaloff>../../../../../../usr/share/qtsixa/icons/force.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Force Connection</string>
@@ -1576,7 +1576,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionConfSixaxis">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/sixaxis_16.png</normaloff>../../../../../usr/share/qtsixa/icons/sixaxis_16.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/sixaxis_16.png</normaloff>../../../../../../usr/share/qtsixa/icons/sixaxis_16.png</iconset>
    </property>
    <property name="text">
     <string>Configure Sixaxis</string>
@@ -1627,7 +1627,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/manual.png</normaloff>../../../../../usr/share/qtsixa/icons/manual.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/manual.png</normaloff>../../../../../../usr/share/qtsixa/icons/manual.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Manual</string>
@@ -1642,7 +1642,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionRestoreDef">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/undo.png</normaloff>../../../../../usr/share/qtsixa/icons/undo.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/undo.png</normaloff>../../../../../../usr/share/qtsixa/icons/undo.png</iconset>
    </property>
    <property name="text">
     <string>Restore Default Settings</string>
@@ -1654,7 +1654,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionSixaxisResPro">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/undo.png</normaloff>../../../../../usr/share/qtsixa/icons/undo.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/undo.png</normaloff>../../../../../../usr/share/qtsixa/icons/undo.png</iconset>
    </property>
    <property name="text">
     <string>Restore Sixaxis Profiles</string>
@@ -1666,7 +1666,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionClearBT">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/trash.png</normaloff>../../../../../usr/share/qtsixa/icons/trash.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/trash.png</normaloff>../../../../../../usr/share/qtsixa/icons/trash.png</iconset>
    </property>
    <property name="text">
     <string>Clear Bluetooth Data</string>
@@ -1694,7 +1694,7 @@ p, li { white-space: pre-wrap; }
   <action name="actionDiscEver">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../usr/share/qtsixa/icons/eject.png</normaloff>../../../../../usr/share/qtsixa/icons/eject.png</iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/eject.png</normaloff>../../../../../../usr/share/qtsixa/icons/eject.png</iconset>
    </property>
    <property name="text">
     <string>Disconnect Everything</string>

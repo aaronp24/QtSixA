@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>436</width>
-    <height>495</height>
+    <width>420</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,174 +26,189 @@
       <attribute name="title">
        <string>Events</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QGroupBox" name="groupLED">
-           <property name="title">
-            <string>Enable LEDs</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <widget class="QGroupBox" name="groupLED">
+         <property name="title">
+          <string>Enable LEDs</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QRadioButton" name="optLEDn">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Set LED # according to joystick #</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="optLEDm">
+            <property name="text">
+             <string>Set LED # manually:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frameLED">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QLabel" name="labelLED">
+                 <property name="text">
+                  <string>Start with LED #</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="spinLED">
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>7</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkLED_plus">
+               <property name="text">
+                <string>LED # increase after another connection</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkLED_anim">
+            <property name="text">
+             <string>Enable LEDs animation</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupInput">
+         <property name="title">
+          <string>Input events</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <widget class="QLabel" name="labelLED">
-                  <property name="text">
-                   <string>Start with LED #</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spinLED">
-                  <property name="minimum">
-                   <number>1</number>
-                  </property>
-                  <property name="maximum">
-                   <number>7</number>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkLED_plus">
-                <property name="text">
-                 <string>LED # increase after another connection</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkLED_anim">
-                <property name="text">
-                 <string>Enable LEDs animation</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>187</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupInput">
-           <property name="title">
-            <string>Input events</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <item>
-               <widget class="QCheckBox" name="checkButtons">
-                <property name="text">
-                 <string>Enable buttons</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkSButtons">
-                <property name="text">
-                 <string>Enable sensible buttons (as axis)</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkAxis">
-                <property name="text">
-                 <string>Enable axis (Left &amp;&amp; Right)</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkAccel">
-                <property name="text">
-                 <string>Enable accelerometers (roll/pitch/gravity)</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkAccon">
-                <property name="text">
-                 <string>Enable acceleration</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkSpeed">
-                <property name="text">
-                 <string>Enable speed</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkGyro">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Enable gyro (yaw) (NOT IMPLEMENTED YET)</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>174</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupPS3">
-           <property name="title">
-            <string>PlayStation3 compatibility</string>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <item>
-             <widget class="QCheckBox" name="checkPS3Fix">
+             <widget class="QCheckBox" name="checkButtons">
               <property name="text">
-               <string>Enable fix for PowerPC systems (disables sixad driver!)</string>
+               <string>Enable buttons</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkSButtons">
+              <property name="text">
+               <string>Enable sensible buttons (as axis)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkAxis">
+              <property name="text">
+               <string>Enable axis (Left &amp;&amp; Right) (needed for some profiles)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkAccel">
+              <property name="text">
+               <string>Enable accelerometers (roll/pitch/gravity/gyro)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkAccon">
+              <property name="text">
+               <string>Enable acceleration</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkSpeed">
+              <property name="text">
+               <string>Enable speed</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkPos">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Enable position</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkRumble">
+              <property name="text">
+               <string>Enable DualShock3 rumble (experimental)</string>
               </property>
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-        </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>174</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -241,7 +256,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>../../../../../usr/share/qtsixa/pics/sixa_none.png</pixmap>
+             <pixmap>../../../../../../usr/share/qtsixa/pics/sixa_none.png</pixmap>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -302,7 +317,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../usr/share/qtsixa/icons/new.png</normaloff>../../../../../usr/share/qtsixa/icons/new.png</iconset>
+                <normaloff>../../../../../../usr/share/qtsixa/icons/new.png</normaloff>../../../../../../usr/share/qtsixa/icons/new.png</iconset>
               </property>
              </widget>
             </item>
@@ -329,7 +344,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../usr/share/qtsixa/icons/plus.png</normaloff>../../../../../usr/share/qtsixa/icons/plus.png</iconset>
+                <normaloff>../../../../../../usr/share/qtsixa/icons/plus.png</normaloff>../../../../../../usr/share/qtsixa/icons/plus.png</iconset>
               </property>
              </widget>
             </item>
@@ -421,6 +436,103 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="advTab">
+      <attribute name="title">
+       <string>Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QGroupBox" name="groupPS3">
+         <property name="title">
+          <string>Legacy Driver</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="checkLegacy">
+            <property name="text">
+             <string>Use Legacy driver (disables sixad driver!)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;This option will disable the sixad driver for Sixaxis&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;and use the default driver (same as USB).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;The option &quot;Set LED # according to joystick #&quot; is&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;not available in this mode&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>sixad at boot</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QCheckBox" name="checkBoot">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Auto-start sixad driver at boot</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;This option will make normal bluetooth unusable,&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;but sixad will connect all devices right away.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;You can cancel this action anytime by stopping sixad&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -442,7 +554,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/info.png</normaloff>../../../../../usr/share/qtsixa/icons/info.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/info.png</normaloff>../../../../../../usr/share/qtsixa/icons/info.png</iconset>
        </property>
       </widget>
      </item>
@@ -466,7 +578,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/ok.png</normaloff>../../../../../usr/share/qtsixa/icons/ok.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/ok.png</normaloff>../../../../../../usr/share/qtsixa/icons/ok.png</iconset>
        </property>
       </widget>
      </item>
@@ -480,7 +592,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../usr/share/qtsixa/icons/apply.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</iconset>
        </property>
       </widget>
      </item>
@@ -491,7 +603,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
        </property>
       </widget>
      </item>
@@ -508,8 +620,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>455</x>
-     <y>467</y>
+     <x>586</x>
+     <y>594</y>
     </hint>
     <hint type="destinationlabel">
      <x>253</x>

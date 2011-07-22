@@ -33,7 +33,7 @@ int enable_axis;
 int enable_accel;
 int enable_accon;
 int enable_speed;
-int enable_gyro;
+int enable_pos;
 int ufd;
 
 int just_started = 1;
@@ -49,15 +49,19 @@ struct state {
   int ax, ay, az;       // Raw accelerometer data
   double ddx, ddy, ddz; // Acceleration
   double dx, dy, dz;    // Speed
-//   double x, y, z;       // Position
+  double x, y, z;       // Position
 };
+
+struct state prev;
+struct state newH;
+struct timeval tv;
 
 /* UInput */
 static char *uinput_filename[] = {"/dev/uinput", "/dev/input/uinput",
                            "/dev/misc/uinput"};
 #define UINPUT_FILENAME_COUNT (sizeof(uinput_filename)/sizeof(char *))
 
-int uinput_open(int enable_accel)
+int uinput_open(int enable_axis, int enable_accel)
 {
     unsigned int i;
     int fd = -1;
@@ -91,48 +95,40 @@ int uinput_open(int enable_accel)
     ioctl (fd, UI_SET_EVBIT, EV_ABS);
     ioctl (fd, UI_SET_EVBIT, EV_KEY);
     
-    for (i = 0; i < 26; i++) {
-      if (i >= 0 && i <= 3) { //left & right stick axis
-	dev.absmax[i] = 255;
-	dev.absmin[i] = 0;
-      }
-      else if (i == 4 && enable_accel == 1) { //accelerometer X (reversed)
-	dev.absmax[i] = 60.5;
-	dev.absmin[i] = 37;
-      }	    
-      else if (i == 5 && enable_accel == 1) { //accelerometer Y
-	dev.absmax[i] = 61;
-	dev.absmin[i] = 39;
-      }
-      else if (i == 6 && enable_accel == 1) { //accelerometer Z
-	dev.absmax[i] = 63;
-	dev.absmin[i] = 41;
-      }
-      else if (i == 7) { //gyro (TODO - needs work)
-	dev.absmax[i] = 32767;
-	dev.absmin[i] = -32767;
-      }
-      else if (i >= 8 && i <= 19) { //buttons
-	dev.absmax[i] = 255;
-	dev.absmin[i] = -255;
-      }
-      else if (i >= 20 && i <= 25) { //acceleration and speed
-	dev.absmax[i] = 25;
-	dev.absmin[i] = -25;
-      }
-      else
-      {
-	dev.absmax[i] = 32767;
-	dev.absmin[i] = -32767;
-      }
-      
-    if (ioctl (fd, UI_SET_ABSBIT, i) < 0) {
+    for (i = 0; i < 29; i++) {
+        if (i >= 0 && i <= 3 && enable_axis == 1) { //left & right stick axis
+            dev.absmax[i] = 127;
+            dev.absmin[i] = -127;
+        } else if (i == 4 && enable_accel == 1) { //accelerometer X
+            dev.absmax[i] = 630;
+            dev.absmin[i] = 410;
+        } else if (i == 5 && enable_accel == 1) { //accelerometer Y
+            dev.absmax[i] = 620;
+            dev.absmin[i] = 400;
+        } else if (i == 6 && enable_accel == 1) { //accelerometer Z
+	  dev.absmax[i] = 630;
+	  dev.absmin[i] = 418;
+//      } else if (i == 7 && enable_accel == 1) { //Gyro
+// 	dev.absmax[i] = ???;
+// 	dev.absmin[i] = ???;
+	} else if (i >= 8 && i <= 19) { //buttons
+            dev.absmax[i] = 255;
+            dev.absmin[i] = -255;
+        } else if (i >= 20 && i <= 28) { //acceleration/speed/position
+	    dev.absmax[i] = 1250;
+	    dev.absmin[i] = -1250;
+	} else {
+            dev.absmax[i] = 32767;
+            dev.absmin[i] = -32767;
+	}
+
+	if (ioctl (fd, UI_SET_ABSBIT, i) < 0) {
 	    fprintf(stderr, "error on uinput ioctl (UI_SET_ABSBIT)\n");
 	    return -1;
 	}
     }
 
-    for (i = 0; i < 21; i++) { 
+    for (i = 0; i < 17; i++) { 
 	if (ioctl(fd, UI_SET_KEYBIT, BTN_JOYSTICK + i) < 0) {
 	    fprintf(stderr, "error on uinput ioctl (UI_SET_KEYBIT)\n");
 	    return -1;
@@ -221,7 +217,7 @@ int main(int argc, char *argv[]) {
   enable_accel = 1;
   enable_accon = 1;
   enable_speed = 1;
-  enable_gyro = 0;
+  enable_pos = 0;
   
   if (argc > 2) {
     enable_buttons = atoi(argv[2]);
@@ -236,7 +232,7 @@ int main(int argc, char *argv[]) {
 	    if (argc > 7) {
 	      enable_speed = atoi(argv[7]);
 	      if (argc > 8)
-		enable_gyro = atoi(argv[8]);
+		enable_pos = atoi(argv[8]);
 	    }
 	  }
 	}
@@ -244,7 +240,7 @@ int main(int argc, char *argv[]) {
     }
   }
   
-  uinput_open(enable_accel);
+  uinput_open(enable_axis, enable_accel);
   
   while ( (nr=read(0, buf, sizeof(buf))) ) {
     if ( nr < 0 ) { perror("Error when opening file"); exit(1); }
@@ -252,229 +248,220 @@ int main(int argc, char *argv[]) {
     
     if ( msg == 0 ) { printf("Sixaxis sucessfully initiated\n"); msg = 1; }
     
-    struct state new;
-    struct timeval tv;
     if ( gettimeofday(&tv, NULL) ) fatal("gettimeofday");
-    new.time = tv.tv_sec + tv.tv_usec*1e-6;
-    new.ax = buf[42]<<8 | buf[43];
-    new.ay = buf[44]<<8 | buf[45];
-    new.az = buf[46]<<8 | buf[47];
-    if ( ! prev.time ) {
-      prev.time = new.time;
-      prev.ax = new.ax;
-      prev.ay = new.ay;
-      prev.az = new.az;
-    }
-    double dt = new.time - prev.time;
-    double rc_dd = 0.2;  // Time constant for highpass filter on acceleration
-    double alpha_dd = rc_dd / (rc_dd+dt);
-    new.ddx = alpha_dd*(prev.ddx + (new.ax-prev.ax)*0.01);
-    new.ddy = alpha_dd*(prev.ddy + (new.ay-prev.ay)*0.01);
-    new.ddz = alpha_dd*(prev.ddz - (new.az-prev.az)*0.01);
-    double rc_d = 0.2;  // Time constant for highpass filter on speed
-    double alpha_d = rc_d / (rc_d+dt);
-    new.dx = alpha_d*(prev.dx + new.ddx*dt);
-    new.dy = alpha_d*(prev.dy + new.ddy*dt);
-    new.dz = alpha_d*(prev.dz + new.ddz*dt);
-    prev = new;
-    
-    int b1 = buf[3];
-    int b2 = buf[4];
-    int b3 = buf[5];
-    int lx = buf[7];
-    int ly = buf[8];
-    int rx = buf[9];
-    int ry = buf[10];
-    int up = buf[15];
-    int right = buf[16];
-    int down = buf[17];
-    int left = buf[18];
-    int l2 = buf[19];
-    int r2 = buf[20];
-    int l1 = buf[21];
-    int r1 = buf[22];
-    int tri = buf[23];
-    int cir = buf[24];
-    int cro = buf[25];
-    int squ = buf[26];
-    int posX = abs(((buf[42]<<8 |  buf[43]) / 10) - 100);
-    int posY = abs((buf[44]<<8 | buf[45]) / 10);
-    int posZ = abs((buf[46]<<8 | buf[47]) / 10);
-    int accX = (int)(new.ddx*20);
-    int accY = (int)(new.ddy*20);
-    int accZ = (int)(new.ddz*20);
-    int velX = (int)(new.dx*200);
-    int velY = (int)(new.dy*200);
-    int velZ = (int)(new.dz*200);
-    int gyro = (buf[48]<<8 | buf[49]) * 10000;  //gyro ### TODO - needs something else here...
+        newH.time = tv.tv_sec + tv.tv_usec*1e-6;
+        newH.ax = buf[42]<<8 | buf[43];
+        newH.ay = buf[44]<<8 | buf[45];
+        newH.az = buf[46]<<8 | buf[47];
+        if ( ! prev.time ) {
+            prev.time = newH.time;
+            prev.ax = newH.ax;
+            prev.ay = newH.ay;
+            prev.az = newH.az;
+        }
+        double dt = newH.time - prev.time; //(constants were recuced by half)
+        double rc_dd = 1.0;  // Time constant for highpass filter on acceleration
+        double alpha_dd = rc_dd / (rc_dd+dt);
+        newH.ddx = alpha_dd*(prev.ddx + (newH.ax-prev.ax)*0.01);
+        newH.ddy = alpha_dd*(prev.ddy + (newH.ay-prev.ay)*0.01);
+        newH.ddz = alpha_dd*(prev.ddz - (newH.az-prev.az)*0.01);
+        double rc_d = 1.0;  // Time constant for highpass filter on speed
+        double alpha_d = rc_d / (rc_d+dt);
+        newH.dx = alpha_d*(prev.dx + newH.ddx*dt);
+        newH.dy = alpha_d*(prev.dy + newH.ddy*dt);
+        newH.dz = alpha_d*(prev.dz + newH.ddz*dt);
+        double rc = 0.5;  // Time constant for highpass filter on position
+        double alpha = rc / (rc+dt);
+        newH.x = alpha*(prev.x + newH.dx*dt);
+        newH.y = alpha*(prev.y + newH.dy*dt);
+        newH.z = alpha*(prev.z + newH.dz*dt);
+        prev = newH;
 
-    //center axis
-    if (lx > 120 && lx < 141) { lx = 127; }
-    if (ly > 120 && ly < 141) { ly = 127; }
-    if (rx > 120 && rx < 141) { rx = 127; }
-    if (ry > 120 && ry < 141) { ry = 127; }
-    
-    // buttons
-  if (enable_buttons == 1) {
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 0, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 1, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 2, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 3, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 4, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 5, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 6, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b1 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 7, b1 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 8, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 9, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 10, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 11, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 12, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 13, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 14, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0); b2 >>= 1;
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 15, b2 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 16, b3 & 1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
-    
-    //axis
-  if (enable_axis == 1) {
-    uinput_send(ufd, EV_ABS, 0, lx);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 1, ly);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 2, rx);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 3, ry);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
-    
-    //accelerometers
-  if (enable_accel == 1) {
-    uinput_send(ufd, EV_ABS, 4, posX);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 5, posY);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 6, posZ);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
-  
-    //gyro
-  if (enable_gyro == 1) {
-    uinput_send(ufd, EV_ABS, 7, gyro);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
-    
-    //buttons (sensible, as axis)
-  if (enable_sbuttons == 1) {
-    uinput_send(ufd, EV_ABS, 8, up);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 9, right);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 10, down);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 11, left);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 12, l2);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 13, r2);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 14, l1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 15, r1);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 16, tri);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 17, cir);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 18, cro);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 19, squ);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
-    
-    //acceleration
-  if (enable_accon == 1) {
-    uinput_send(ufd, EV_ABS, 20, accX);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 21, accY);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 22, accZ);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
-  
-    //speed
-  if (enable_speed == 1) {
-    uinput_send(ufd, EV_ABS, 23, velX);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 24, velY);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 25, velZ);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-  }
+        int b1 = buf[3];
+        int b2 = buf[4];
+        int b3 = buf[5];
+        int lx = buf[7] - 128;
+        int ly = buf[8] - 128;
+        int rx = buf[9] - 128;
+        int ry = buf[10] - 128;
+        int acx = buf[42]<<8 | buf[43];
+        int acy = buf[44]<<8 | buf[45];
+        int acz = buf[46]<<8 | buf[47];
+//     int gyro = buf[48]<<8 | buf[49];
+        int up = buf[15];
+        int right = buf[16];
+        int down = buf[17];
+        int left = buf[18];
+        int l2 = buf[19];
+        int r2 = buf[20];
+        int l1 = buf[21];
+        int r1 = buf[22];
+        int tri = buf[23];
+        int cir = buf[24];
+        int cro = buf[25];
+        int squ = buf[26];
+        int posX = (int)(newH.x*1000);
+        int posY = (int)(newH.y*1000);
+        int posZ = (int)(newH.z*1000);
+        int accX = (int)(newH.ddx*1000);
+        int accY = (int)(newH.ddy*1000);
+        int accZ = (int)(newH.ddz*1000);
+        int velX = (int)(newH.dx*1000);
+        int velY = (int)(newH.dy*1000);
+        int velZ = (int)(newH.dz*1000);
 
-    //accelerometer buttons
-  if (enable_buttons == 1 && enable_accel == 1) {
-    if (posX >= 55)
-    {
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 18, 1);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 20, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    }
-    else if (posX > 43 && posX < 55)
-    {
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 18, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 20, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    }
-    else if (posX <= 42)
-    {
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 18, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 20, 1);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    }
-    
-    if (posY >= 56)
-    {
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 17, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 19, 1);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    }
-    else if (posY > 45 && posY < 55)
-    {
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 17, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 19, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    }
-    else if (posY <= 44)
-    {
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 17, 1);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-	uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 19, 0);
-	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    }
-  }
-    
+	//deadzones - NOTE - this may cause garbage input...!
+	if ((lx > -10 && lx < 10) || lx > 255) { lx = 0; }
+	if ((ly > -10 && ly < 10) || ly > 255) { ly = 0; }
+	if ((rx > -10 && rx < 10) || rx > 255) { rx = 0; }
+	if ((ry > -10 && ry < 10) || ry > 255) { ry = 0; }
+//  	if (acx > 508 && acx < 516) { acx = 512; }
+// 	if (acy > 508 && acy < 516) { acy = 512; }
+// 	if (acz > 508 && acz < 516) { acz = 512; }
+//  	if (posX > -150 && posX < -150) { posX = 0; }
+// 	if (posY > -150 && posY < -150) { posY = 0; }
+// 	if (posZ > -150 && posZ < -150) { posZ = 0; }
+// 	if (accX > -150 && accX < -150) { accX = 0; }
+// 	if (accY > -150 && accY < -150) { accY = 0; }
+// 	if (accZ > -150 && accZ < -150) { accZ = 0; }
+// 	if (velX > -150 && velX < -150) { velX = 0; }
+// 	if (velY > -150 && velY < -150) { velY = 0; }
+// 	if (velZ > -150 && velZ < -150) { velZ = 0; }
+
+        // buttons
+        if (enable_buttons == 1) {
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 0, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 1, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 2, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 3, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 4, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 5, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 6, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b1 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 7, b1 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 8, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 9, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 10, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 11, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 12, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 13, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 14, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            b2 >>= 1;
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 15, b2 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 16, b3 & 1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
+        //axis
+        if (enable_axis == 1) {
+            uinput_send(ufd, EV_ABS, 0, lx);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 1, ly);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 2, rx);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 3, ry);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
+        //accelerometer RAW
+        if (enable_accel == 1) {
+            uinput_send(ufd, EV_ABS, 4, acx);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 5, acy);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 6, acz);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+//     uinput_send(ufd, EV_ABS, 7, gyro);
+//     uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
+        //buttons (sensible, as axis)
+        if (enable_sbuttons == 1) {
+            uinput_send(ufd, EV_ABS, 8, up);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 9, right);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 10, down);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 11, left);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 12, l2);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 13, r2);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 14, l1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 15, r1);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 16, tri);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 17, cir);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 18, cro);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 19, squ);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
+        //acceleration
+        if (enable_accon == 1) {
+            uinput_send(ufd, EV_ABS, 20, accX);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 21, accY);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 22, accZ);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
+        //speed
+        if (enable_speed == 1) {
+            uinput_send(ufd, EV_ABS, 23, velX);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 24, velY);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 25, velZ);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
+        //position
+        if (enable_pos == 1) {
+            uinput_send(ufd, EV_ABS, 26, posX);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 27, posY);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+            uinput_send(ufd, EV_ABS, 28, posZ);
+            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+        }
+
   }
   return 0;
 } //The End

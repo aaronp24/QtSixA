@@ -1,6 +1,6 @@
 Package: sixad
 Version: 0.9-falktx1
-Architecture: amd64
+Architecture: powerpc64
 Maintainer: falkTX <falktx@gmail.com>
 Installed-Size: 55
 Depends: bluez (>= 4.12)

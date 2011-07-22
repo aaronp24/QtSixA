@@ -54,8 +54,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>807</width>
-        <height>349</height>
+        <width>809</width>
+        <height>359</height>
        </rect>
       </property>
       <attribute name="label">
@@ -676,8 +676,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>807</width>
-        <height>349</height>
+        <width>490</width>
+        <height>256</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1066,7 +1066,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/manual.png</normaloff>../../../../../usr/share/qtsixa/icons/manual.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/manual.png</normaloff>../../../../../../usr/share/qtsixa/icons/manual.png</iconset>
        </property>
       </widget>
      </item>
@@ -1080,7 +1080,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/info.png</normaloff>../../../../../usr/share/qtsixa/icons/info.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/info.png</normaloff>../../../../../../usr/share/qtsixa/icons/info.png</iconset>
        </property>
       </widget>
      </item>
@@ -1104,7 +1104,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</normaloff>../../../../../../usr/share/qtsixa/icons/cancel.png</iconset>
        </property>
       </widget>
      </item>
@@ -1115,7 +1115,7 @@
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../../../../usr/share/qtsixa/icons/ok.png</normaloff>../../../../../usr/share/qtsixa/icons/ok.png</iconset>
+         <normaloff>../../../../../../usr/share/qtsixa/icons/ok.png</normaloff>../../../../../../usr/share/qtsixa/icons/ok.png</iconset>
        </property>
       </widget>
      </item>

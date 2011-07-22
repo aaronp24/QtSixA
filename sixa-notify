@@ -14,7 +14,6 @@ if (commands.getoutput("ls -a /tmp | grep sixa-notify") == ""):
   exit(-1)
 
 
-
 DeviceMAC="00:00:00:00:00"
 DeviceName="Null"
 DeviceIcon="sixaxis"  # FIXME - there's only a Sixaxis icon...
@@ -43,7 +42,7 @@ while (1 == 1): #Always loop program until file removed, or killed
 		DeviceMAC = commands.getoutput("hcitool con | tail -n 1 | awk '{printf$3}'")
 		DeviceName = "PLAYSTATION(R)3 Controller (Bluetooth)"
 		DeviceIcon = "sixaxis"
-	    elif ("054C:03A0" in final_dmesg):
+	    elif ("054C:03A0" in final_dmesg and "USB" in final_dmesg):
 		if ("054C:" in final_dmesg.split()[1]): DeviceMAC = final_dmesg.split()[1]
 		if ("054C:" in final_dmesg.split()[2]): DeviceMAC = final_dmesg.split()[2]
 		if ("054C:" in final_dmesg.split()[3]): DeviceMAC = final_dmesg.split()[3]
