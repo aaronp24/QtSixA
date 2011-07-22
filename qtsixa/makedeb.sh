@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create a deb file for qtsixa
-VERSION="1.0.3-0falktx1"
+VERSION="1.0.3-falktx2"
 
 #Make needed directories
 mkdir ./qtsixa_deb

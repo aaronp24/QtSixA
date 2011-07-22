@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create the deb files for sixad
-VERSION="1.0.3-0falktx1"
+VERSION="1.0.3-falktx2"
 
 cd ../../qtsixa-*/sixad
 make -f ../../qtsixa-XTE/sixad/Makefile.all
@@ -72,7 +72,7 @@ sed "s/---ARCH---/$ARCH/" -i ./sixad_deb_*/DEBIAN/control
 
 ARCH="amd64"; make_dirs; copy_files; make_arch; copy_64
 ARCH="i386"; make_dirs; copy_files; make_arch; copy_32
-ARCH="powerpc32"; make_dirs; copy_files; make_arch; copy_32
+ARCH="powerpc32"; make_dirs; copy_files; copy_32 ; ARCH="powerpc"; make_arch;
 ARCH="powerpc64"; make_dirs; copy_files; make_arch; copy_64
 
 sed "s/---VERSION---/$VERSION/" -i ./sixad_deb_*/DEBIAN/control
