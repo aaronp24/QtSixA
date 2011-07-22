@@ -32,7 +32,9 @@ print "Will use '"+ROOT.split()[0]+"' for root actions"
 
 
 def look4Root():
-    if "YES" in commands.getoutput(ROOT+" echo YES"):
+    if not "kdesudo" in ROOT and "kdesu" in ROOT: #Fix for openSUSE's kdesu not echoing to terminal (opens separate session for sudo)
+	return 1
+    elif "YES" in commands.getoutput(ROOT+" echo YES"):
 	return 1
     else:
         QtGui.QMessageBox.critical(QtSixA, "QtSixA - Error", "Operation not permitted - Not enough rights")
@@ -318,7 +320,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
         uic.loadUi("/usr/share/qtsixa/gui/qtsixa_sixaxis.ui", self)
 
 	#Read sixad configuration file
-	sixad_file = commands.getoutput(". /etc/default/sixad; echo $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro").split()
+	sixad_file = commands.getoutput(". /etc/default/sixad; echo $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro $Fix_PS3").split()
 	sixad_config_led_n = sixad_file[0]
 	sixad_config_led_plus = sixad_file[1]
 	sixad_config_led_anim = sixad_file[2]
@@ -329,6 +331,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	sixad_config_accon = sixad_file[7]
 	sixad_config_speed = sixad_file[8]
 	sixad_config_gyro = sixad_file[9]
+	sixad_config_ps3fix = sixad_file[10]
 
 	self.i_saw_the_warning = 0
 	self.applied2profile = 0
@@ -394,6 +397,9 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	if (int(sixad_config_accon) == 1): self.checkAccon.setChecked(1)
 	if (int(sixad_config_speed) == 1): self.checkSpeed.setChecked(1)
 	if (int(sixad_config_gyro) == 1): self.checkGyro.setChecked(1)
+	if (int(sixad_config_ps3fix) == 1):
+	    self.checkPS3Fix.setChecked(1)
+	    self.groupInput.setEnabled(0)
 
 	i = 0
 	while i < len(listOfSixaxisProfiles):
@@ -433,6 +439,8 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.checkAccon, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkSpeed, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkGyro, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	self.connect(self.checkPS3Fix, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	self.connect(self.checkPS3Fix, QtCore.SIGNAL("clicked()"), partial(self.func_PS3Fix_Check))
 	self.connect(self.spinLED, QtCore.SIGNAL("valueChanged(int)"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.groupLED, QtCore.SIGNAL("clicked()"), self.func_GroupLED)
 	self.connect(self.b_new, QtCore.SIGNAL('clicked()'), self.func_NewProfile)
@@ -453,11 +461,17 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	  QtGui.QMessageBox.information(self, self.tr("QtSixA - Show"), self.tr("Current overrides:\n \n"+self.overrides+"\n"))
 
     def func_Apply_Enable(self, what2apply):
-	  self.b_apply.setEnabled(1)
-	  self.b_cancel.setEnabled(1)
-	  if (what2apply == "sixad"): self.applied2sixad = 1
-	  elif (what2apply == "profile"): self.applied2profile = 1
-	  elif (what2apply == "override"): self.applied2override = 1
+	self.b_apply.setEnabled(1)
+	self.b_cancel.setEnabled(1)
+	if (what2apply == "sixad"): self.applied2sixad = 1
+	elif (what2apply == "profile"): self.applied2profile = 1
+	elif (what2apply == "override"): self.applied2override = 1
+
+    def func_PS3Fix_Check(self):
+	if self.checkPS3Fix.isChecked():
+	    self.groupInput.setEnabled(0)
+	else:
+	    self.groupInput.setEnabled(1)
 
     def func_OK(self):
 	self.func_Apply()
@@ -518,6 +532,8 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    else: self.txtEnable_speed = "0"
 	    if self.checkGyro.isChecked(): self.txtEnable_gyro = "1"
 	    else: self.txtEnable_gyro = "0"
+	    if self.checkPS3Fix.isChecked(): self.txtEnable_ps3fix = "1"
+	    else: self.txtEnable_ps3fix = "0"
 
 	    self.sixadFile = (""
 	    "# sixad configuration file\n"
@@ -555,6 +571,9 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    "\n"
 	    "# Enable gyro? (NOT IMPLEMENTED YET)\n"
 	    "Enable_gyro="+self.txtEnable_gyro+"\n"
+	    "\n"
+	    "# Enable PS3 Workaround/Fix for UInput? (NEED HELP!)\n"
+	    "Fix_PS3="+self.txtEnable_ps3fix+"\n"
 	    "")
 
 	    os.system("echo \'"+str(self.sixadFile)+"\' > /tmp/sixad")
@@ -925,9 +944,9 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.func_What()
 
 	if config_display_info == "1":  QtGui.QMessageBox.information(self, self.tr("QtSixA - Updated"), self.tr(""
-	"<b>QtSixA has been updated to 0.5.2</b>.<br>"
+	"<b>QtSixA has been updated to 0.5.3</b>.<br>"
 	"This is a bugfix release.<br>"
-	"Everything should be working now.<br>"
+	"Everything should be working now (and now also on RPM distros).<br>"
 	"If not, please use the \"Help\" -> \"Web Links\" -> \"Report bug\".<p>"
 	"<i>(To disable this pop-up, go to \"Settings\" -> \"Configure QtSixA\")</i>"
 	""))
@@ -1010,7 +1029,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	elif (self.DeviceToCheckBattery == 7): self.DeviceToCheck = self.hidd_number_7
 	elif (self.DeviceToCheckBattery == 8): self.DeviceToCheck = self.hidd_number_8
 	else: print "Device not connected; Cannot check battery"
-	if look4Root(): self.SixaxisBat = commands.getoutput(ROOT+" hcidump "+"-R "+"-O '"+self.DeviceToCheck+"' "+"| "+"head "+"-n "+"5 "+"| "+"tail "+"-n "+"1 "+"| "+"awk "+"'{printf$1}' "+"& "+"sleep "+"0.1 "+"&& "+ROOT+" killall "+"hcidump "+"> "+"/dev/null")
+	if look4Root(): self.SixaxisBat = commands.getoutput(ROOT+" hcidump "+"-R "+"-O '"+self.DeviceToCheck+"' "+"| "+"head "+"-n "+"5 "+"| "+"tail "+"-n "+"1 "+"| "+"awk "+"'{printf$1}' "+"& "+"sleep "+"1 "+"&& "+ROOT+" killall "+"hcidump "+"> "+"/dev/null")
 	else: self.SixaxisBat = ""
 	if not "o" in self.SixaxisBat and self.SixaxisBat != "":
 	    if self.SixaxisBat == "EE": self.barBattery.setMaximum(0)
@@ -1466,7 +1485,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 0.5.2 </b><br>"
+	self.trayTooltip = "<b> QtSixA 0.5.3 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
         else: self.trayTooltip += "Your input profile is set to \"<i>"+self.SixaxisProfile+"</i>\"."
 	self.trayTooltip += "<p>"

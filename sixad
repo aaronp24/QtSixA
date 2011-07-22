@@ -27,7 +27,7 @@ sudo /sbin/modprobe uinput
 }
 
 bt_start () {
-if [ -f /lib/udev/rules.d/97-bluetooth.rules ]; then sudo bluetoothd --udev; else sudo /etc/init.d/bluetooth start; fi
+if [ -f /lib/udev/rules.d/97-bluetooth.rules ]; then sudo /usr/sbin/bluetoothd --udev; else sudo /etc/init.d/bluetooth start; fi
 }
 
 case $1 in
@@ -40,7 +40,7 @@ sudo /usr/sbin/hcid
 if (sixad_already_running_check "$1"); then true
 else
   /sbin/modprobe uinput
-  /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro
+  /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro $Fix_PS3
 fi
   ;;
 
@@ -59,7 +59,7 @@ if (bluetoothd_check "$1"); then pkill -KILL bluetoothd; fi
 if (sixad_already_running_check "$1"); then true
 else
   /sbin/modprobe uinput
-  /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro &
+  /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro $Fix_PS3 &
 fi
 sudo /usr/sbin/hcid
 sleep 10 # wait for device to connect
@@ -94,7 +94,7 @@ else
   { #3
   if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
   sudo /usr/sbin/hcid
-  sudo LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/ /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro
+  sudo LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/ /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro $Fix_PS3
    } #3
  else
   echo "You need admin/root access to run this application"

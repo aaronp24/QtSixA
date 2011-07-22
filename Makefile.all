@@ -3,6 +3,9 @@
 # For PowerPC or PS3 compilation, check ppu-gcc folder
 # 
 
+# And a special note too:
+# On PowerPC, UInput stuff (sixad-uniput-sixaxis and sixad-raw), need "-m64" flag, which makes them incompatible with regular PowerPC distros
+
 all: sixad-bin tools
 
 sixad-bin:
@@ -10,8 +13,8 @@ sixad-bin:
 	gcc -m64 -Wall -O2 sdp.c textfile.c sixad-uinput-sixaxis.c -o bins/sixad-uinput-sixaxis_amd64 -lbluetooth
 	gcc -m32 -Wall -O2 sdp.c textfile.c sixad.c -o bins/sixad-bin_i386 -lbluetooth
 	gcc -m32 -Wall -O2 sdp.c textfile.c sixad-uinput-sixaxis.c -o bins/sixad-uinput-sixaxis_i386 -lbluetooth
-	ppu-gcc -mpowerpc -Wall -O2 sdp.c textfile.c sixad.c -o bins/sixad-bin_powerpc -lbluetooth
-	ppu-gcc -mpowerpc -Wall -O2 sdp.c textfile.c sixad-uinput-sixaxis.c -o bins/sixad-uinput-sixaxis_powerpc -lbluetooth
+	ppu-gcc -m32 -Wall -O2 sdp.c textfile.c sixad.c -o bins/sixad-bin_powerpc -lbluetooth
+	ppu-gcc -m64 -Wall -O2 sdp.c textfile.c sixad-uinput-sixaxis.c -o bins/sixad-uinput-sixaxis_powerpc -lbluetooth
 
 tools:
 	gcc -m64 -Wall -O2 sixpair.c -o bins/sixpair_amd64 -lusb
@@ -22,13 +25,10 @@ tools:
 	gcc -m32 -Wall -O2 sixpair_kbd.c -o bins/sixpair-kbd_i386 -lusb
 	gcc -m32 -Wall -O2 sixad-raw.c -o bins/sixad-raw_i386
 	gcc -m32 -Wall -O2 hidraw-dump.c -o bins/hidraw-dump_i386
-	ppu-gcc -mpowerpc -Wall -O2 sixpair.c -o bins/sixpair_powerpc -lusb
-	ppu-gcc -mpowerpc -Wall -O2 sixpair_kbd.c -o bins/sixpair-kbd_powerpc -lusb
-	ppu-gcc -mpowerpc -Wall -O2 sixad-raw.c -o bins/sixad-raw_powerpc
-	ppu-gcc -mpowerpc -Wall -O2 hidraw-dump.c -o bins/hidraw-dump_powerpc
-	chmod +x bins/six*
-	chmod +x bins/hid*
-	chmod +x compat/hcid_*
+	ppu-gcc -m32 -Wall -O2 sixpair.c -o bins/sixpair_powerpc -lusb
+	ppu-gcc -m32 -Wall -O2 sixpair_kbd.c -o bins/sixpair-kbd_powerpc -lusb
+	ppu-gcc -m64 -Wall -O2 sixad-raw.c -o bins/sixad-raw_powerpc
+	ppu-gcc -m32 -Wall -O2 hidraw-dump.c -o bins/hidraw-dump_powerpc
 
 clean:
 	rm -f bins/sixad-bin_* bins/sixad-raw_* bins/sixad-uinput-sixaxis_* bins/hidraw-dump_* bins/sixpair_* bins/sixpair-kbd_*

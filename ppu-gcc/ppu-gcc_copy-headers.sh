@@ -7,8 +7,10 @@ sudo mkdir -p /usr/lib/cell/sysroot/usr/include/bluetooth
 sudo cp /usr/include/bluetooth/* /usr/lib/cell/sysroot/usr/include/bluetooth/
 sudo cp /usr/include/usb.h /usr/lib/cell/sysroot/usr/include/
 
-sudo cp lib/* /usr/lib/cell/sysroot/usr/lib64/
-sudo cp lib/* /usr/lib/cell/sysroot/lib64/
+sudo cp lib64/* /usr/lib/cell/sysroot/usr/lib64/
+sudo cp lib64/* /usr/lib/cell/sysroot/lib64/
+sudo cp lib/* /usr/lib/cell/sysroot/usr/lib/
+sudo cp lib/* /usr/lib/cell/sysroot/lib/
 
 else
 

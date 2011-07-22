@@ -1,3 +1,22 @@
+qtsixa (0.5.3-falktx1) stable; urgency=low
+
+  * Fixed "kdesu" usage in RPM distros [They don't echo to terminal, but open a separate session for sudo]
+  * Added "PS3 UInput Fix" option (in "Configure Sixaxis")
+  * Fixed checking battery of Sixaxis (will take a little longer, but it will [probably] work)
+
+sixad (0.7-falktx1) stable; urgency=low
+
+  * Final fixes for openSUSE compatibility (and maybe other RPM distros)
+  * Warn to install 'libbluetooth.so.2' and 'hcid' manually, in Makefile [only needed when compiling from source]
+  * Build all binaries on PowerPC with "-32" flag, except for UInput stuff (sixad-uniput-sixaxis and sixad-raw)
+  [Otherwise UInput will fail to initialize]
+  * Added sixad option "PS3 Fix for UInput" [When connecting a Sixaxis, initiates regular driver instead of the sixad one]
+  * Auto-enable PS3 Fix if installing PowerPC sixad
+  * Axis 0-3 (left & right axis) are now also centered at 0 when disabled
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 13 Oct 2009 09:16:34 +0000
+
+
 qtsixa (0.5.2-falktx1) stable; urgency=low
 
   * Fixed debian postinst script (wrong path to "sixa_none.fdi" file)
@@ -42,7 +61,7 @@ sixad (0.6-falktx1) unstable; urgency=low
 
 qtsixa (0.5.0-falktx1) unstable; urgency=low
 
-  * Added "Fake Joystick 2" profile by aani_k(...)
+  * Added "Fake Joystick 2" profile
   * Added "xdg-utils" as debian dependency (needed for opening web pages)
   * Disconnect a device now uses DBus, which doesn't need root
   * Added python-dbus as debian dependency

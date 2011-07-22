@@ -40,7 +40,7 @@
 #define L2CAP_PSM_HIDP_CTRL 0x11
 #define L2CAP_PSM_HIDP_INTR 0x13
 
-int led_n, ledplus;
+int led_n, ledplus, n_six, enable_ps3fix;
 char *enable_led_anim, *enable_buttons, *enable_sbuttons;
 char *enable_axis, *enable_accel, *enable_accon, *enable_speed, *enable_gyro;
 
@@ -64,6 +64,126 @@ static inline int ppoll(struct pollfd *fds, nfds_t nfds,
 		return poll(fds, nfds, 500);
 	else
 		return poll(fds, nfds, timeout->tv_sec * 1000);
+}
+
+
+//PS3 Compatibility Fix LEDs
+static void enable_sixaxis(int csk, int led_n, int enable_led_anim)
+{
+  	char buf[1024];
+	unsigned char enable[] = { 
+		0x53, /* HIDP_TRANS_SET_REPORT | HIDP_DATA_RTYPE_FEATURE */
+		0xf4, 0x42, 0x03, 0x00, 0x00 };
+	unsigned char setleds[] = {
+		0x52, /* HIDP_TRANS_SET_REPORT | HIDP_DATA_RTYPE_OUTPUT */
+		0x01,
+		0x00, 0x00, 0x00, 0x00, 0x00,	// rumble values
+		0x00, 0x00, 0x00, 0x00, 0x1E,	// 0x10=LED1 .. 0x02=LED4
+		0xff, 0x27, 0x10, 0x00, 0x32,	// LED 4
+		0xff, 0x27, 0x10, 0x00, 0x32,	// LED 3
+		0xff, 0x27, 0x10, 0x00, 0x32,	// LED 2
+		0xff, 0x27, 0x10, 0x00, 0x32,	// LED 1
+		0x00, 0x00, 0x00, 0x00, 0x00,
+	};
+	const unsigned char ledpattern[8] = {  // last one (0x20) is "all-off", none
+	  0x02, 0x04, 0x08, 0x10,
+	  0x12, 0x14, 0x18, 0x20
+	};
+
+	if (led_n == -1)
+	  n_six = 7;
+	else
+	  n_six = led_n - 1;
+	
+	/* enable reporting */
+	send(csk, enable, sizeof(enable), 0);
+	recv(csk, buf, sizeof(buf), 0);
+
+	if (enable_led_anim == 1 && led_n != -1)
+	{
+	  /* Sixaxis LED animation - Way Cool!! */
+	  int animation;
+	  animation = 0;
+	  while ( animation < 4 ) {  // repeat it 4 times
+	    setleds[11] = ledpattern[0];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(10000);
+	    setleds[11] = ledpattern[1];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(5000);
+	    setleds[11] = ledpattern[2];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(5000);
+	    setleds[11] = ledpattern[3];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(10000);
+	    setleds[11] = ledpattern[2];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(5000);
+	    setleds[11] = ledpattern[1];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(5000);
+	    animation = animation + 1;
+	  }
+	  /* 2nd part of animation (animate until LED reaches selected number) */
+	  if (n_six == 1)
+	  {
+	    setleds[11] = ledpattern[0];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	  }
+	  else if (n_six == 2)
+	  {
+	    setleds[11] = ledpattern[0];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(10000);
+	    setleds[11] = ledpattern[1];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	  }
+	  else if (n_six == 3)
+	  {
+	    setleds[11] = ledpattern[0];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(100000);
+	    setleds[11] = ledpattern[1];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(50000);
+	    setleds[11] = ledpattern[2];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	  }
+	  else if (n_six == 5)
+	  {
+	    setleds[11] = ledpattern[0];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	  }
+	  else if (n_six == 6)
+	  {
+	    setleds[11] = ledpattern[0];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	    usleep(100000);
+	    setleds[11] = ledpattern[1];
+	    send(csk, setleds, sizeof(setleds), 0);
+	    recv(csk, buf, sizeof(buf), 0);
+	  }
+	}
+	
+	/* set LEDs */
+	setleds[11] = ledpattern[n_six];
+	send(csk, setleds, sizeof(setleds), 0);
+	recv(csk, buf, sizeof(buf), 0);
 }
 
 static int get_type(int snsk)
@@ -174,13 +294,16 @@ create:
 	ba2str(&dst, bda);
 	syslog(LOG_INFO, "Connected %s (%s)", req.name, bda);
 
-	if (req.vendor == 0x054c && req.product == 0x0268)
+	if (req.vendor == 0x054c && req.product == 0x0268 && enable_ps3fix != 1)
 	{
 		syslog(LOG_ERR, "Cannot start Sixaxis now; It should had been initialized before");
 		return -1;
 	}
 	else
+	{
+		if (req.vendor == 0x054c && req.product == 0x0268) { enable_sixaxis(csk, led_n, atoi(enable_led_anim)); }
 		err = ioctl(ctl, HIDPCONNADD, &req);
+	}
 
 error:
 	if (req.rd_data)
@@ -226,7 +349,7 @@ void l2cap_accept(int ctl, int csk, int isk)
 	
 	int type = get_type(ctrl_socket);
 	
-	if (type) {
+	if (type == 1 && enable_ps3fix != 1) {
   		printf("Will initiate Sixaxis now\n");
 		
 		char bda[18];
@@ -339,7 +462,7 @@ static void run_server(int ctl, int csk, int isk)
 			  else if (led_n == 7)  { led_n = 1; } //should it stay on LED #7 or go back to LED #1?
 			  else  { led_n = 1; }
 			  printf("Changing LED # to %i\n", led_n);
-			}
+			} else { printf("No changing LED, still on # %i\n", led_n); }
 			
 		}
 		
@@ -359,8 +482,8 @@ int main(int argc, char *argv[])
 	int log_option = LOG_NDELAY | LOG_PID;
 	int ctl, csk, isk, lm = 0;
 	
-	// sixad: led_n ledplus led_anim buttons sbuttons axis accel accon speed gyro
-	if (argc < 11)
+	// sixad: led_n ledplus led_anim buttons sbuttons axis accel accon speed gyro ps3fix
+	if (argc < 12)
 	{
 	 printf("Running %s requires 'sixad'. Please run sixad instead\n",  argv[0]);
 	 exit(-1);
@@ -390,6 +513,9 @@ int main(int argc, char *argv[])
 	enable_accon = argv[8];
 	enable_speed = argv[9];
 	enable_gyro = argv[10];
+	enable_ps3fix = atoi(argv[11]);
+	
+	if (enable_ps3fix == 1)	{ printf("PS3 Compatibility Fix Enabled\n"); }
 	
 	bacpy(&bdaddr, BDADDR_ANY);
 	

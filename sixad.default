@@ -33,3 +33,6 @@ Enable_speed=1
 
 # Enable gyro? (NOT IMPLEMENTED YET)
 Enable_gyro=0
+
+# Enable PS3 Workaround/Fix for UInput? (NEED HELP!)
+Fix_PS3=0

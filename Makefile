@@ -16,9 +16,6 @@ clean:
 	rm -f bins/sixad-bin bins/sixad-raw bins/sixad-uinput-sixaxis bins/hidraw-dump bins/sixpair bins/sixpair-kbd
 
 install:
-	chmod +x bins/six*
-	chmod +x bins/hid*
-	chmod +x compat/hcid_*
 	mkdir -p /usr/lib/sixad
 	cp sixad /usr/bin/
 	cp sixad.default /etc/default/sixad
@@ -31,6 +28,7 @@ install:
 	cp bins/sixad-bin /usr/sbin/
 	cp bins/sixad-uinput-sixaxis /usr/sbin/
 	DEBIAN.split/postinst.all
+	echo "You'll need to install 'libbluetooth.so.2' and 'hcid' manually"
 
 powerpc:
 	cp bins/libbluetooth.so.3_powerpc /usr/lib/sixad/libbluetooth.so.3

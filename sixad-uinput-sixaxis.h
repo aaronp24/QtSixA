@@ -32,7 +32,7 @@ static char *uinput_filename[] = {"/dev/uinput", "/dev/input/uinput",
                            "/dev/misc/uinput"};
 #define UINPUT_FILENAME_COUNT (sizeof(uinput_filename)/sizeof(char *))
 
-int uinput_open_sixaxis(const char * __restrict__ sixaxis_id, int enable_accel)
+int uinput_open_sixaxis(const char * __restrict__ sixaxis_id, int enable_axis, int enable_accel)
 {
     unsigned int i;
     int fd = -1, ufd;
@@ -72,7 +72,7 @@ int uinput_open_sixaxis(const char * __restrict__ sixaxis_id, int enable_accel)
     ioctl (fd, UI_SET_EVBIT, EV_KEY);
     
     for (i = 0; i < 26; i++) {
-      if (i >= 0 && i <= 3) { //left & right stick axis
+      if (i >= 0 && i <= 3 && enable_axis == 1) { //left & right stick axis
 	dev.absmax[i] = 255;
 	dev.absmin[i] = 0;
       }

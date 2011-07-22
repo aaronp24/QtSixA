@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create the deb files for sixad
-VERSION="0.6-falktx4"
+VERSION="0.7-falktx1"
 
 #Make needed directories
 make_dirs () {
@@ -25,11 +25,11 @@ make_dirs () {
 copy_files () {
   cp DEBIAN.split/control.$ARCH ./sixad_deb_$ARCH/DEBIAN/control
   cp DEBIAN.split/conffiles.all ./sixad_deb_$ARCH/DEBIAN/conffiles
-  cp DEBIAN.split/postinst.all ./sixad_deb_$ARCH/DEBIAN/postinst
   cp DEBIAN.split/postrm.all ./sixad_deb_$ARCH/DEBIAN/postrm
   cp DEBIAN.split/preinst.all ./sixad_deb_$ARCH/DEBIAN/preinst
   cp sixad ./sixad_deb_$ARCH/usr/bin/
   cp sixad.default ./sixad_deb_$ARCH/etc/default/sixad
+  cp sixad.default ./sixad_deb_$ARCH/etc/default/sixad.bak
   cp sixad.init ./sixad_deb_$ARCH/etc/init.d/sixad
   cp 98-sixad.rules ./sixad_deb_$ARCH/lib/udev/rules.d/
   cp DEBIAN.split/control.$ARCH ./sixad_deb_$ARCH/DEBIAN/control
@@ -48,10 +48,14 @@ copy_lib () { #Only for PowerPC
   cp compat/libbluetooth.so.3_powerpc ./sixad_deb_$ARCH/usr/lib/sixad/libbluetooth.so.3
 }
 
-ARCH="amd64"; make_dirs; copy_files
-ARCH="i386"; make_dirs; copy_files
-ARCH="powerpc"; make_dirs; copy_files; copy_lib
+ARCH="amd64"; make_dirs; copy_files; cp DEBIAN.split/postinst.outro ./sixad_deb_$ARCH/DEBIAN/postinst; mkdir ./sixad_deb_$ARCH/usr/lib64
+ARCH="i386"; make_dirs; copy_files; cp DEBIAN.split/postinst.outro ./sixad_deb_$ARCH/DEBIAN/postinst; mkdir ./sixad_deb_$ARCH/usr/lib32
+ARCH="powerpc"; make_dirs; copy_files; copy_lib; cp DEBIAN.split/postinst.powerpc ./sixad_deb_$ARCH/DEBIAN/postinst; mkdir ./sixad_deb_$ARCH/usr/lib32
 
+#Special dirs for compat with RPM distros
+cp compat/libbluetooth.so.2_amd64 ./sixad_deb_amd64/usr/lib64/libbluetooth.so.2
+cp compat/libbluetooth.so.2_i386 ./sixad_deb_i386/usr/lib32/libbluetooth.so.2
+cp compat/libbluetooth.so.2_powerpc ./sixad_deb_powerpc/usr/lib32/libbluetooth.so.2
 
 #Create the debs
 dpkg -b ./sixad_deb_amd64

@@ -2,10 +2,12 @@
 #
 # [Qt]SixA - The Sixaxis Joystick Manager
 # last modified by falkTX - 05/10/2009
-VERSION="0.5.2"
+VERSION="0.5.3"
 
 # NOTE - this file only exists because I still don't know how to do some things directly on python
 #	This file is almost useless and it will be removed soon
+
+# TODO - Investigate kdesu
 
 ######################################
 # SWITCHES start
@@ -32,7 +34,7 @@ To start the gui launch 'qtsixa')
 	;;
 
   get-root)
-KDESU='kdesu -i /usr/share/qtsixa/icons/qtsixa.png --comment "This QtSixA action requires root privileges. Please type your password in the field below" -- '
+KDESU='kdesu -- '
 KDESUDO='kdesudo -i /usr/share/qtsixa/icons/qtsixa.png --comment "This QtSixA action requires root privileges. Please type your password in the field below" -- '
 GKSU='gksu --description /usr/share/applications/qtsixa.desktop -- '
 

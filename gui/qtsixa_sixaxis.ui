@@ -177,6 +177,22 @@
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QGroupBox" name="groupPS3">
+           <property name="title">
+            <string>PlayStation3 compatibility</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QCheckBox" name="checkPS3Fix">
+              <property name="text">
+               <string>Enable fix for PowerPC systems (disables sixad driver!)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
