@@ -1,6 +1,6 @@
 qtsixa (1.2.0~beta1) karmic; urgency=low
 
-  * Started working on translations (but not yet completed)
+  * Started working on translations
   * Fixed wrong Accelerometer #4 value in sixad-raw
   * Pre-compiled stuff are no longer needed [hcid and libbluetooth2]
   (hcid is compiled along with sixad)

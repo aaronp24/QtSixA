@@ -8,12 +8,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_about.ui" line="33"/>
-        <source>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
-&lt;font size=4&gt;&lt;b&gt;version 1.2.0 Beta&lt;/b&gt;&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="qtsixa_about.ui" line="58"/>
         <source>About</source>
         <translation type="unfinished"></translation>
@@ -33,6 +27,46 @@ Copyright (C) 2010 falkTX - &lt;a href=&quot;mailto:falktx@gmail.com&quot;&gt;fa
     <message>
         <location filename="qtsixa_about.ui" line="144"/>
         <source>Thanks to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="282"/>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="600"/>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="254"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="260"/>
+        <source>Current language not translated (or just using English)&lt;br&gt;
+
+&lt;hidden NOTES: 
+
+Translate this page using this text as template:
+--------------------------------------------------------------
+
+_your-lang_ translation made by _your-name_\n
+_your-mail_ (if you want)
+
+---------------------------------------------------------------
+
+Then remove everything else
+&gt;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="33"/>
+        <source>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
+&lt;font size=4&gt;&lt;b&gt;version 1.2.0 RC&lt;/b&gt;&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
@@ -80,19 +114,10 @@ Elizabeth Bartz - £35 USD&lt;br&gt;
 Arya Irani - £30 USD&lt;br&gt;
 Nikil Mehta - £20 USD&lt;br&gt;
 Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
+Gregor Kofler - £5 USD&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;u&gt;And the users at the Ubuntu Forums!&lt;/u&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtsixa_about.ui" line="253"/>
-        <source>License</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtsixa_about.ui" line="571"/>
-        <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -834,22 +859,17 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_main.ui" line="1192"/>
+        <location filename="qtsixa_main.ui" line="1225"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_main.ui" line="1196"/>
-        <source>Web &amp;Links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtsixa_main.ui" line="1220"/>
+        <location filename="qtsixa_main.ui" line="1192"/>
         <source>&amp;Tasks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_main.ui" line="1224"/>
+        <location filename="qtsixa_main.ui" line="1196"/>
         <source>&amp;Disconnect devices...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,11 +1183,16 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
         <source>Disconnect all bluetooth devices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="qtsixa_main.ui" line="1229"/>
+        <source>Web &amp;&amp; Links</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Main_QtSixA_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="1090"/>
+        <location filename="qtsixa.pyw" line="1626"/>
         <source>You&apos;re not using a Sixaxis profile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1818,11 +1843,6 @@ and connect them again.</source>
     <name>QtSixA_Profile_New</name>
     <message>
         <location filename="qtsixa.pyw" line="175"/>
-        <source>QtSixA - Tips &amp; Tricks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="qtsixa.pyw" line="175"/>
         <source>&lt;body style=&quot;font-size:10pt;&quot;&gt;Some tips you may need:&lt;p&gt;&lt;body style=&quot;font-size:8pt;&quot;&gt;&lt;b&gt;1. &lt;/b&gt;Click on the &quot;View available keys&quot; buttons to see a full list of available keys you can assign to a button;&lt;br&gt;&lt;b&gt;2. &lt;/b&gt;Write the key you want to a button input-text;&lt;br&gt;&lt;b&gt;3. &lt;/b&gt;If you don&apos;t want a button to work as key set the input-text to &quot;none&quot; (without quotes);&lt;br&gt;&lt;b&gt;4. &lt;/b&gt;Don&apos;t forget about the &apos;Axis&apos; part!&lt;br&gt;&lt;b&gt;5. &lt;/b&gt;Combinations are possible using &apos;+&apos; between key names (maximum 4 keys, Meta not supported)&lt;br&gt;&lt;b&gt;6. &lt;/b&gt;It&apos;s also possible to assign a mouse-button to joystick-button, use &quot;mouse_BUTTON&quot; on those you want that. (BUTTON is a number)&lt;br&gt;&lt;b&gt;7. &lt;/b&gt;Once you finish, you can open the generated file for a further customization.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1849,6 +1869,11 @@ A new profile has been saved.
  
 To add the new profile, use the &quot;Add Profile&quot; button.
 Feel free to quit now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa.pyw" line="175"/>
+        <source>QtSixA - Tips &amp;&amp; Tricks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

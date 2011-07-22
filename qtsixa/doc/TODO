@@ -1,15 +1,1 @@
--- TODO Stuff
-
- - Rumble support for DualShock3:  -- In progress
-  · Study how to receive UInput events (instead of just reading bluetooth packet files)
-  · Get a DualShock3 and finish code
- - Get more icons for the notifications (only the Sixaxis one is used at the moment)
- - What is the gyro suppose to do ??
- - Create a new icon!
-
-
-Stuff to do way later:
- - Wake up a PC from suspend
- - RPM repo -> volunteers?
- - What else ?
- - 
+../../TODO

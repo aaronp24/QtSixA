@@ -172,7 +172,7 @@ class QtSixA_Profile_New(QtGui.QDialog):
         QtSixA_Profile_PKE().exec_()
 
     def func_Tips(self):
-	QtGui.QMessageBox.information(self, self.tr("QtSixA - Tips & Tricks"), self.tr(""
+	QtGui.QMessageBox.information(self, self.tr("QtSixA - Tips && Tricks"), self.tr(""
 	"<body style=\"font-size:10pt;\">Some tips you may need:<p><body style=\"font-size:8pt;\">"
 	"<b>1. </b>Click on the \"View available keys\" buttons to see a full list of available keys you can assign to a button;<br>"
 	"<b>2. </b>Write the key you want to a button input-text;<br>"
@@ -672,7 +672,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    "# Enable sensible buttons? (as axis)\n"
 	    "Enable_sbuttons="+self.txtEnable_sbuttons+"\n"
 	    "\n"
-	    "# Enable axis? (Left & Right)\n"
+	    "# Enable axis? (Left && Right)\n"
 	    "Enable_axis="+self.txtEnable_axis+"\n"
 	    "\n"
 	    "# Enable accelerometers?\n"
@@ -1622,8 +1622,8 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 1.2.0 Beta </b><br>"
-	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
+	self.trayTooltip = "<b> QtSixA 1.2.0 RC </b><br>"
+	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += self.tr("You're not using a Sixaxis profile")
         else: self.trayTooltip += self.tr("Your input profile is set to \"<i>%1</i>\".").arg(self.SixaxisProfile)
 	self.trayTooltip += "<p>"
 

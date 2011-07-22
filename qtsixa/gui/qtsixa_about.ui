@@ -31,7 +31,7 @@
     <widget class="QLabel" name="label_QtSixAv">
      <property name="text">
       <string>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
-&lt;font size=4&gt;&lt;b&gt;version 1.2.0 Beta&lt;/b&gt;&lt;/font&gt;</string>
+&lt;font size=4&gt;&lt;b&gt;version 1.2.0 RC&lt;/b&gt;&lt;/font&gt;</string>
      </property>
     </widget>
    </item>
@@ -158,7 +158,7 @@ Copyright (C) 2010 falkTX - &lt;a href=&quot;mailto:falktx@gmail.com&quot;&gt;fa
             <x>0</x>
             <y>0</y>
             <width>438</width>
-            <height>606</height>
+            <height>619</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
@@ -220,6 +220,7 @@ Elizabeth Bartz - £35 USD&lt;br&gt;
 Arya Irani - £30 USD&lt;br&gt;
 Nikil Mehta - £20 USD&lt;br&gt;
 Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
+Gregor Kofler - £5 USD&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;u&gt;And the users at the Ubuntu Forums!&lt;/u&gt;</string>
@@ -244,6 +245,34 @@ Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Translation</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Current language not translated (or just using English)&lt;br&gt;
+
+&lt;hidden NOTES: 
+
+Translate this page using this text as template:
+--------------------------------------------------------------
+
+_your-lang_ translation made by _your-name_\n
+_your-mail_ (if you want)
+
+---------------------------------------------------------------
+
+Then remove everything else
+&gt;
+</string>
+         </property>
         </widget>
        </item>
       </layout>

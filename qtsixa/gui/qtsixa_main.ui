@@ -1184,34 +1184,6 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <addaction name="separator"/>
     <addaction name="menuRestore"/>
    </widget>
-   <widget class="QMenu" name="menu_Help">
-    <property name="statusTip">
-     <string/>
-    </property>
-    <property name="title">
-     <string>&amp;Help</string>
-    </property>
-    <widget class="QMenu" name="menuLinks">
-     <property name="title">
-      <string>Web &amp;Links</string>
-     </property>
-     <addaction name="actionSourceForge"/>
-     <addaction name="actionUbuntu"/>
-     <addaction name="separator"/>
-     <addaction name="actionReport_Bug"/>
-     <addaction name="actionIdea"/>
-     <addaction name="actionAskSome"/>
-     <addaction name="actionDonate"/>
-    </widget>
-    <addaction name="actionManual"/>
-    <addaction name="menuLinks"/>
-    <addaction name="separator"/>
-    <addaction name="actionReference"/>
-    <addaction name="actionList_of_Features"/>
-    <addaction name="separator"/>
-    <addaction name="actionAbout_QtSixA"/>
-    <addaction name="actionAbout_Qt"/>
-   </widget>
    <widget class="QMenu" name="menu_Tasks">
     <property name="statusTip">
      <string/>
@@ -1244,6 +1216,34 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <widget class="QMenu" name="menuLinks">
+     <property name="title">
+      <string>Web &amp;&amp; Links</string>
+     </property>
+     <addaction name="actionSourceForge"/>
+     <addaction name="actionUbuntu"/>
+     <addaction name="separator"/>
+     <addaction name="actionReport_Bug"/>
+     <addaction name="actionIdea"/>
+     <addaction name="actionAskSome"/>
+     <addaction name="actionDonate"/>
+    </widget>
+    <addaction name="actionManual"/>
+    <addaction name="menuLinks"/>
+    <addaction name="separator"/>
+    <addaction name="actionReference"/>
+    <addaction name="actionList_of_Features"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_QtSixA"/>
+    <addaction name="actionAbout_Qt"/>
    </widget>
    <addaction name="menu_Tasks"/>
    <addaction name="menuOptions"/>

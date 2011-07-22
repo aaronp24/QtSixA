@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="pt_PT">
+<!DOCTYPE TS>
+<TS version="2.0" language="pt_PT">
 <context>
     <name>About</name>
     <message>
@@ -11,7 +12,7 @@
         <location filename="qtsixa_about.ui" line="33"/>
         <source>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
 &lt;font size=4&gt;&lt;b&gt;version 1.2.0 Beta&lt;/b&gt;&lt;/font&gt;</source>
-        <translation>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
 &lt;font size=4&gt;&lt;b&gt;versão 1.2.0 Beta&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
@@ -42,7 +43,7 @@ Copyright (C) 2010 falkTX - &lt;a href=&quot;mailto:falktx@gmail.com&quot;&gt;fa
         <source>Thanks to</source>
         <translation>Agradecimentos</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="qtsixa_about.ui" line="180"/>
         <source>&lt;b&gt;&lt;i&gt;Thanks for your code:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
 Marcel Holtmann&lt;br&gt;
@@ -90,7 +91,7 @@ Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;u&gt;And the users at the Ubuntu Forums!&lt;/u&gt;</source>
-        <translation>&lt;b&gt;&lt;i&gt;Obrigado pelo código:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;b&gt;&lt;i&gt;Obrigado pelo código:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
 Marcel Holtmann&lt;br&gt;
 &lt;a href=&quot;mailto:marcel@holtmann.org&quot;&gt;marcel@holtmann.org&lt;/a&gt;&lt;br&gt;
 Principal desenvolvedor do BlueZ&lt;br&gt;
@@ -138,14 +139,143 @@ Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
 &lt;u&gt;E obrigado ao utilisadores dos fórums do Ubuntu!&lt;/u&gt;</translation>
     </message>
     <message>
-        <location filename="qtsixa_about.ui" line="253"/>
+        <location filename="qtsixa_about.ui" line="282"/>
         <source>License</source>
         <translation>Licença</translation>
     </message>
     <message>
-        <location filename="qtsixa_about.ui" line="571"/>
+        <location filename="qtsixa_about.ui" line="600"/>
         <source>&amp;Close</source>
         <translation>&amp;Fexar</translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="254"/>
+        <source>Translation</source>
+        <translation>Tradução</translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="260"/>
+        <source>Current language not translated (or just using English)&lt;br&gt;
+
+&lt;hidden NOTES: 
+
+Translate this page using this text as template:
+--------------------------------------------------------------
+
+_your-lang_ translation made by _your-name_\n
+_your-mail_ (if you want)
+
+---------------------------------------------------------------
+
+Then remove everything else
+&gt;
+</source>
+        <translation>Tradução para Português feito por Filipe Coelho (aka falkTX)&lt;br&gt;
+&lt;a href=&quot;mailto:falktx@gmail.com&quot;&gt;falktx@gmail.com&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="33"/>
+        <source>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
+&lt;font size=4&gt;&lt;b&gt;version 1.2.0 RC&lt;/b&gt;&lt;/font&gt;</source>
+        <translation>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
+&lt;font size=4&gt;&lt;b&gt;versão 1.2.0 RC&lt;/b&gt;&lt;/font&gt;</translation>
+    </message>
+    <message utf8="true">
+        <location filename="qtsixa_about.ui" line="180"/>
+        <source>&lt;b&gt;&lt;i&gt;Thanks for your code:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+Marcel Holtmann&lt;br&gt;
+&lt;a href=&quot;mailto:marcel@holtmann.org&quot;&gt;marcel@holtmann.org&lt;/a&gt;&lt;br&gt;
+Main BlueZ developer&lt;br&gt;
+&lt;br&gt;
+Pascal&lt;br&gt;
+&lt;a href=&quot;mailto:pascal@pabr.org&quot;&gt;pascal@pabr.org&lt;/a&gt;&lt;br&gt;
+Sixpair, hidd patch, accelerometer data&lt;br&gt;
+&lt;br&gt;
+Jim Paris&lt;br&gt;
+&lt;a href=&quot;mailto:jim@jtan.com&quot;&gt;jim@jtan.com&lt;/a&gt;&lt;br&gt;
+Old sixsrv code&lt;br&gt;
+&lt;br&gt;
+Alexander Chukov&lt;br&gt;
+&lt;a href=&quot;mailto:sash@pdaXrom.org&quot;&gt;sash@pdaXrom.org&lt;/a&gt;&lt;br&gt;
+Old UInput driver (based on Jim&apos;s work)&lt;br&gt;
+&lt;br&gt;
+Vojtech Pavlik&lt;br&gt;
+&lt;a href=&quot;mailto:vojtech@ucw.cz&quot;&gt;vojtech@ucw.cz&lt;/a&gt;&lt;br&gt;
+evtest (Event device test program)&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;&lt;i&gt;Thanks for your contribution:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+Daniel Holmen&lt;br&gt;
+&lt;a href=&quot;mailto:d.holmen@gmail.com&quot;&gt;d.holmen@gmail.com&lt;/a&gt;&lt;br&gt;
+Original SixA idea&lt;br&gt;
+&lt;br&gt;
+Pierluigi Vicinanza&lt;br&gt;
+PowerPC hidd compilation, bug tracking&lt;br&gt;
+&lt;br&gt;
+Arya Irani&lt;br&gt;
+Donations, bug tracking&lt;br&gt;
+&lt;br&gt;
+Derrick Milburn&lt;br&gt;
+Testing, bug tracking&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;&lt;i&gt;Thanks for your donation:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+Elizabeth Bartz - £35 USD&lt;br&gt;
+Arya Irani - £30 USD&lt;br&gt;
+Nikil Mehta - £20 USD&lt;br&gt;
+Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
+Gregor Kofler - £5 USD&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;u&gt;And the users at the Ubuntu Forums!&lt;/u&gt;</source>
+        <translation>&lt;b&gt;&lt;i&gt;Obrigado pelo código:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+Marcel Holtmann&lt;br&gt;
+&lt;a href=&quot;mailto:marcel@holtmann.org&quot;&gt;marcel@holtmann.org&lt;/a&gt;&lt;br&gt;
+Principal desenvolvedor do BlueZ&lt;br&gt;
+&lt;br&gt;
+Pascal&lt;br&gt;
+&lt;a href=&quot;mailto:pascal@pabr.org&quot;&gt;pascal@pabr.org&lt;/a&gt;&lt;br&gt;
+Sixpair, patch para hidd, dados do accelerómetro&lt;br&gt;
+&lt;br&gt;
+Jim Paris&lt;br&gt;
+&lt;a href=&quot;mailto:jim@jtan.com&quot;&gt;jim@jtan.com&lt;/a&gt;&lt;br&gt;
+Antigo código sixsrv&lt;br&gt;
+&lt;br&gt;
+Alexander Chukov&lt;br&gt;
+&lt;a href=&quot;mailto:sash@pdaXrom.org&quot;&gt;sash@pdaXrom.org&lt;/a&gt;&lt;br&gt;
+Antigo driver UInput (baseado no trabalho do Jim)&lt;br&gt;
+&lt;br&gt;
+Vojtech Pavlik&lt;br&gt;
+&lt;a href=&quot;mailto:vojtech@ucw.cz&quot;&gt;vojtech@ucw.cz&lt;/a&gt;&lt;br&gt;
+evtest (Programa de teste de eventos de dispositivos)&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;&lt;i&gt;Obrigado pela contribuição::&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+Daniel Holmen&lt;br&gt;
+&lt;a href=&quot;mailto:d.holmen@gmail.com&quot;&gt;d.holmen@gmail.com&lt;/a&gt;&lt;br&gt;
+Idéia original do SixA&lt;br&gt;
+&lt;br&gt;
+Pierluigi Vicinanza&lt;br&gt;
+Compilação do hidd em PowerPC, correcção de erros&lt;br&gt;
+&lt;br&gt;
+Arya Irani&lt;br&gt;
+Donativos, correcção de erros&lt;br&gt;
+&lt;br&gt;
+Derrick Milburn&lt;br&gt;
+Testes, correcção de erros&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;&lt;i&gt;Obrigado pelo donativo:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+Elizabeth Bartz - £35 USD&lt;br&gt;
+Arya Irani - £30 USD&lt;br&gt;
+Nikil Mehta - £20 USD&lt;br&gt;
+Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
+Gregor Kofler - £5 USD&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;u&gt;E obrigado ao utilisadores dos fórums do Ubuntu!&lt;/u&gt;</translation>
     </message>
 </context>
 <context>
@@ -366,7 +496,7 @@ Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
     <message>
         <location filename="qtsixa_sixaxis.ui" line="426"/>
         <source>Override with this profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Predifinir com este perfil</translation>
     </message>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="444"/>
@@ -376,12 +506,12 @@ Marco Antonio Sperb Shayeb - £10 USD&lt;br&gt;
     <message>
         <location filename="qtsixa_sixaxis.ui" line="450"/>
         <source>Legacy Driver</source>
-        <translation type="unfinished"></translation>
+        <translation>Driver de compatibilidade</translation>
     </message>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="459"/>
         <source>Use Legacy driver (disables sixad driver!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar o driver de compatibilidade (desactiva o sixad!)</translation>
     </message>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="466"/>
@@ -397,7 +527,7 @@ não está disponível neste modo&lt;/i&gt;</translation>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="485"/>
         <source>Toggle profiles on/off</source>
-        <translation type="unfinished">perfis ligado/desligado</translation>
+        <translation>Perfis ligado/desligados</translation>
     </message>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="491"/>
@@ -482,12 +612,12 @@ Nesse caso precisarias de correr manualmente &quot;modprobe uinput&quot; antes&l
     <message>
         <location filename="qtsixa_sixaxis.ui" line="654"/>
         <source>Show the currently set overrides</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar a lista de predifinições feitas</translation>
     </message>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="657"/>
         <source>Show overrides</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar predefinições</translation>
     </message>
     <message>
         <location filename="qtsixa_sixaxis.ui" line="681"/>
@@ -655,7 +785,7 @@ Conectar em modo bluetooth não vai ser possível</translation>
     <message>
         <location filename="qtsixa_main.ui" line="406"/>
         <source>Battery charge status of the selected Sixaxis</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado da carga da bateria do Sixaxis seleccionado</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="360"/>
@@ -665,7 +795,7 @@ Conectar em modo bluetooth não vai ser possível</translation>
     <message>
         <location filename="qtsixa_main.ui" line="458"/>
         <source>Disconnect the selected device</source>
-        <translation type="unfinished"></translation>
+        <translation>Desconectar o dispotivo seleccionado</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="461"/>
@@ -675,7 +805,7 @@ Conectar em modo bluetooth não vai ser possível</translation>
     <message>
         <location filename="qtsixa_main.ui" line="485"/>
         <source>(Re)-Check the battery charge status of the selected Sixaxis</source>
-        <translation type="unfinished"></translation>
+        <translation>(Re)-Verificar o estado da carga da bateria do Sixaxis seleccionado</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="488"/>
@@ -690,7 +820,7 @@ Conectar em modo bluetooth não vai ser possível</translation>
     <message>
         <location filename="qtsixa_main.ui" line="540"/>
         <source>It&apos;s a lazy way, you know...</source>
-        <translation type="unfinished"></translation>
+        <translation>És um bocado preguiçoso, sabes...</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="543"/>
@@ -698,7 +828,10 @@ Conectar em modo bluetooth não vai ser possível</translation>
 The profiles in this page are meant for that.
 When you click to apply a profile here, the game&apos;s joystick configuration is modified.
 This way you won&apos;t need to apply a Sixaxis profile to play that game with it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Em vez de usares um perfil de Sixaxis, podes editar um ficheiro de configuração de um jogo para fazê-lo jogável com o Sixaxis.
+Os perfis nesta parte são para isso.
+Quando clicas em aplicar um perfil aqui, a configuração do jogo é modificada.
+Desta maneira não precisas de aplicar um perfil de Sixaxis para jogares um jogo com ele.</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="678"/>
@@ -783,12 +916,12 @@ This way you won&apos;t need to apply a Sixaxis profile to play that game with i
     <message>
         <location filename="qtsixa_main.ui" line="1071"/>
         <source>(Press Refresh)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Clica em Actualizar)</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="826"/>
         <source>Then, a trigger</source>
-        <translation type="unfinished"></translation>
+        <translation>Então um método</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="819"/>
@@ -813,7 +946,7 @@ This way you won&apos;t need to apply a Sixaxis profile to play that game with i
     <message>
         <location filename="qtsixa_main.ui" line="858"/>
         <source>Maybe you should check on the main tab for this..?</source>
-        <translation type="unfinished"></translation>
+        <translation>Talvez devas verificar o separador principal para isto..?</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="851"/>
@@ -863,17 +996,17 @@ This way you won&apos;t need to apply a Sixaxis profile to play that game with i
     <message>
         <location filename="qtsixa_main.ui" line="990"/>
         <source>Refresh the list of devices above</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar a lista dos dispositivos em baixo</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1120"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1007"/>
         <source>Don&apos;t forget you&apos;re running as root...</source>
-        <translation type="unfinished"></translation>
+        <translation>Não te esqueças que estás a correr como root...</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1026"/>
@@ -883,7 +1016,7 @@ This way you won&apos;t need to apply a Sixaxis profile to play that game with i
     <message>
         <location filename="qtsixa_main.ui" line="1035"/>
         <source>Use the sixad driver in a Sixaxis&apos; hidraw device (sixad-raw)</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar o driver sixad num dispositivo hidraw do Sixaxis (sixad-raw)</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1038"/>
@@ -892,7 +1025,11 @@ By watching &apos;dmesg&apos; you can know which hidraw device is from a Sixaxis
 To start, just select the proper hidraw device and click apply.&lt;br&gt;
 &lt;i&gt;
 (Please note that you&apos;ll have to come here ayntime a new Sixaxis is connected)&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Podes ligar o Sixaxis por USB e aplicar o driver sixad a ele.&lt;br&gt;
+Por correres o &apos;dmesg&apos; podes saber qual o dispositivo hidraw do Sixaxis.&lt;br&gt;
+Para começar, apenas selecciona o dispositivo hidraw apropriado e clica em aplicar.&lt;br&gt;
+&lt;i&gt;
+(Por favor nota que tens de vir aqui sempre que conectares de novo o Sixaxis)&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1067"/>
@@ -917,7 +1054,7 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <message>
         <location filename="qtsixa_main.ui" line="1117"/>
         <source>Refresh the list of hidraw devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar a lista de dispositivos hidraw</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1134"/>
@@ -930,22 +1067,22 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
         <translation>&amp;Definições</translation>
     </message>
     <message>
-        <location filename="qtsixa_main.ui" line="1192"/>
+        <location filename="qtsixa_main.ui" line="1225"/>
         <source>&amp;Help</source>
         <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1196"/>
         <source>Web &amp;Links</source>
-        <translation type="unfinished">Internet e Links</translation>
+        <translation type="obsolete">Internet e &amp;Links</translation>
     </message>
     <message>
-        <location filename="qtsixa_main.ui" line="1220"/>
+        <location filename="qtsixa_main.ui" line="1192"/>
         <source>&amp;Tasks</source>
         <translation>&amp;Tarefas</translation>
     </message>
     <message>
-        <location filename="qtsixa_main.ui" line="1224"/>
+        <location filename="qtsixa_main.ui" line="1196"/>
         <source>&amp;Disconnect devices...</source>
         <translation>&amp;Desconetar dispositivos...</translation>
     </message>
@@ -1062,12 +1199,12 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <message>
         <location filename="qtsixa_main.ui" line="1444"/>
         <source>List of Features</source>
-        <translation type="unfinished">Lista de </translation>
+        <translation>Lista de Funcionalidades</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1447"/>
         <source>Display current features of QtSixA</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar as funcionalidades do QtSixA</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1452"/>
@@ -1132,7 +1269,7 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <message>
         <location filename="qtsixa_main.ui" line="1516"/>
         <source>Pair your Sixaxis to the bluetooth stick via USB</source>
-        <translation type="unfinished">Emparelhar o Sixaxis ao stick bluetooth via USB</translation>
+        <translation>Emparelhar o Sixaxis ao adaptador bluetooth via USB</translation>
     </message>
     <message>
         <location filename="qtsixa_main.ui" line="1525"/>
@@ -1259,11 +1396,16 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
         <source>Disconnect all bluetooth devices</source>
         <translation>Desconectar todos os dispositivos bluetooth</translation>
     </message>
+    <message>
+        <location filename="qtsixa_main.ui" line="1229"/>
+        <source>Web &amp;&amp; Links</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Main_QtSixA_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="1090"/>
+        <location filename="qtsixa.pyw" line="1626"/>
         <source>You&apos;re not using a Sixaxis profile</source>
         <translation>Não estás a usar um perfil para o Sixaxis</translation>
     </message>
@@ -1375,7 +1517,7 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <message>
         <location filename="qtsixa.pyw" line="1276"/>
         <source>QtSixA - Features</source>
-        <translation type="unfinished"></translation>
+        <translation>QtSixA - Funcionalidades</translation>
     </message>
     <message>
         <location filename="qtsixa.pyw" line="1473"/>
@@ -1615,7 +1757,7 @@ O seu ficheiro de configuração não existe!</translation>
     <message>
         <location filename="qtsixa_newprofile.ui" line="988"/>
         <source>Scroll</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Scroll</translation>
     </message>
     <message>
         <location filename="qtsixa_newprofile.ui" line="993"/>
@@ -1708,7 +1850,7 @@ O seu ficheiro de configuração não existe!</translation>
     <message>
         <location filename="qtsixa_options.ui" line="81"/>
         <source>Systray</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Systray</translation>
     </message>
     <message>
         <location filename="qtsixa_options.ui" line="90"/>
@@ -1743,7 +1885,7 @@ O seu ficheiro de configuração não existe!</translation>
     <message>
         <location filename="qtsixa_options.ui" line="139"/>
         <source>Auto-srats every time you login</source>
-        <translation type="unfinished">Iniciar automáticamente sempre que fazes login</translation>
+        <translation>Iniciar automáticamente sempre que fazes login</translation>
     </message>
     <message>
         <location filename="qtsixa_options.ui" line="142"/>
@@ -1764,7 +1906,7 @@ O seu ficheiro de configuração não existe!</translation>
 - Keypad imitations&lt;br&gt;
 - Bluetooth dongles&lt;br&gt;
 - Other joysticks</source>
-        <translation type="unfinished">- Sixaxis/DualShock3&lt;br&gt;
+        <translation>- Sixaxis/DualShock3&lt;br&gt;
 - Keypads da PS3&lt;br&gt;
 - Controladores Remotos da PS3&lt;br&gt;
 - Imitações do Sixaxis&lt;br&gt;
@@ -1860,14 +2002,15 @@ Por favor verifica se a media não é de apenas leitura, se tens espaço dispon�
     <message>
         <location filename="qtsixa.pyw" line="519"/>
         <source>No current overrides are set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhuma predifinição está definida.</translation>
     </message>
     <message>
         <location filename="qtsixa.pyw" line="521"/>
         <source>Current overrides:
  
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Predifinições em uso:
+ </translation>
     </message>
     <message>
         <location filename="qtsixa.pyw" line="565"/>
@@ -1893,7 +2036,11 @@ QtSixA vai fexar agora!</translation>
 Device: %1
 Profile: &quot;%2&quot;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>A predefinição foi ativada:
+ 
+Dispositivo: %1
+Perfil: &quot;%2&quot;
+</translation>
     </message>
     <message>
         <location filename="qtsixa.pyw" line="601"/>
@@ -1928,7 +2075,7 @@ e volta a conectá-lo.</translation>
     <message>
         <location filename="qtsixa.pyw" line="709"/>
         <source>These Sixaxis settings are invalid!&lt;br&gt;&lt;b&gt;Please enable &quot;Legacy Driver&quot; when running from a 32-bit PowerPC system!&lt;/b&gt;</source>
-        <translation type="unfinished">Estas definições de Sixaxis são inválidas!&lt;br&gt;&lt;b&gt;Por favor activa &quot;Legacy Driver&quot; quando correres um sistema PowerPC 32-bit!&lt;/b&gt;</translation>
+        <translation>Estas definições de Sixaxis são inválidas!&lt;br&gt;&lt;b&gt;Por favor activa &quot;Driver de compatibilidade&quot; quando correres um sistema PowerPC 32-bit!&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -1936,12 +2083,12 @@ e volta a conectá-lo.</translation>
     <message>
         <location filename="qtsixa.pyw" line="175"/>
         <source>QtSixA - Tips &amp; Tricks</source>
-        <translation>QtSixA - Truques e Dicas</translation>
+        <translation type="obsolete">QtSixA - Truques e Dicas</translation>
     </message>
     <message>
         <location filename="qtsixa.pyw" line="175"/>
         <source>&lt;body style=&quot;font-size:10pt;&quot;&gt;Some tips you may need:&lt;p&gt;&lt;body style=&quot;font-size:8pt;&quot;&gt;&lt;b&gt;1. &lt;/b&gt;Click on the &quot;View available keys&quot; buttons to see a full list of available keys you can assign to a button;&lt;br&gt;&lt;b&gt;2. &lt;/b&gt;Write the key you want to a button input-text;&lt;br&gt;&lt;b&gt;3. &lt;/b&gt;If you don&apos;t want a button to work as key set the input-text to &quot;none&quot; (without quotes);&lt;br&gt;&lt;b&gt;4. &lt;/b&gt;Don&apos;t forget about the &apos;Axis&apos; part!&lt;br&gt;&lt;b&gt;5. &lt;/b&gt;Combinations are possible using &apos;+&apos; between key names (maximum 4 keys, Meta not supported)&lt;br&gt;&lt;b&gt;6. &lt;/b&gt;It&apos;s also possible to assign a mouse-button to joystick-button, use &quot;mouse_BUTTON&quot; on those you want that. (BUTTON is a number)&lt;br&gt;&lt;b&gt;7. &lt;/b&gt;Once you finish, you can open the generated file for a further customization.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qtsixa.pyw" line="202"/>
@@ -1972,6 +2119,11 @@ O novo perfil foi guardado.
  
 Para adicioná-lo, usa o botão &quot;Adicionar Perfil&quot;.
 Podes fechar a aplicação agora</translation>
+    </message>
+    <message>
+        <location filename="qtsixa.pyw" line="175"/>
+        <source>QtSixA - Tips &amp;&amp; Tricks</source>
+        <translation>QtSixA - Truques e Dicas</translation>
     </message>
 </context>
 <context>
@@ -2021,7 +2173,7 @@ Em baixo podes ver o relatório do Sixpair:</translation>
     <message>
         <location filename="qtsixa.pyw" line="923"/>
         <source>&lt;font size=4 &gt;&lt;b&gt;Getting ready for Sixpair setup...&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Before continue please make sure that your bluetooth&lt;br&gt;stick/device/pen is connected to the PC and that the Sixaxis/Keypad&lt;br&gt;is connected to the PC&apos;s USB&lt;br&gt;&lt;br&gt;&lt;i&gt;Note: only one Sixaxis/Keypad per setup is supported&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font size=4 &gt;&lt;b&gt;Preparação para o emparelhamento...&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Antes de continuares, por favor verifica se o teu adaptador bluetooth&lt;br&gt;está conectado ao USB do PC assim como o Sixaxis/Keypad&lt;br&gt;&lt;br&gt;&lt;i&gt;Nota: o emparelhamento só funciona com um Sixaxis/Keypad de cada vez&lt;/i&gt;</translation>
     </message>
 </context>
 <context>

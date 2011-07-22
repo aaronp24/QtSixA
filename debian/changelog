@@ -1,3 +1,25 @@
+qtsixa (1.2.0~rc1-0ubuntu0~ppa1) lucid; urgency=low
+
+  * Finished strings for translators
+  * Finished pt_PT translation
+  * Make sure translations don't make QtSixA crash
+  * Started GUI code port to C++ (only for v2.0)
+  * Updated manual, and added translation section
+
+ -- falkTX <falktx@gmail.com>  Tue, 12 Jan 2010 02:32:56 +0000
+
+qtsixa (1.2.0~beta1-0ubuntu0~ppa3) lucid; urgency=low
+
+  * Fixed
+
+ -- falkTX <falktx@gmail.com>  Mon, 04 Jan 2010 10:14:35 +0000
+
+qtsixa (1.2.0~beta1-0ubuntu0~ppa2) lucid; urgency=low
+
+  * Added missing build-depends
+
+ -- falkTX <falktx@gmail.com>  Mon, 04 Jan 2010 09:29:48 +0000
+
 qtsixa (1.2.0~beta1-0ubuntu0~ppa1) lucid; urgency=low
 
   * Initial release. (LP: #471081)
