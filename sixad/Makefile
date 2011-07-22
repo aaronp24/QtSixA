@@ -1,18 +1,33 @@
 # You know, there are pre-compile DEBs of this...
 
 DESTDIR =
+CXXFLAGS := -Wall -O2
+CC := $(CXX)
 
 all: sixad_bins
 
-sixad_bins:
-	g++ -Wall -O2 sixad-bin.cpp bluetooth.cpp shared.cpp textfile.cpp -o bins/sixad-bin -lbluetooth
-	g++ -Wall -O2 sixad-sixaxis.cpp sixaxis.cpp shared.cpp uinput.cpp textfile.cpp -o bins/sixad-sixaxis -lpthread
-	g++ -Wall -O2 sixad-raw.cpp sixaxis.cpp shared.cpp uinput.cpp textfile.cpp -o bins/sixad-raw
+targets := sixad-bin sixad-sixaxis sixad-raw
+sixad_bins: $(targets)
+
+sixad-bin: bluetooth.o shared.o textfile.o
+sixad-bin: LDLIBS += -lbluetooth
+
+sixad-sixaxis: sixaxis.o shared.o uinput.o textfile.o
+sixad-sixaxis: LDLIBS += -lpthread
+
+sixad-raw: sixaxis.o shared.o uinput.o textfile.o
 
 clean:
-	rm -f *~ bins/*
+	rm -f *~ $(targets) *.o
 
-install:
+extra_files := \
+    sixad.default \
+    sixad.init \
+    sixad.log \
+    sixad \
+    98-sixad.rules
+
+install: $(targets) $(extra_files)
 	install -d $(DESTDIR)/etc/default/
 	install -d $(DESTDIR)/etc/init.d/
 	install -d $(DESTDIR)/etc/logrotate.d/
@@ -24,9 +39,9 @@ install:
 	install -m 755 sixad.init $(DESTDIR)/etc/init.d/sixad
 	install -m 644 sixad.log $(DESTDIR)/etc/logrotate.d/sixad
 	install -m 755 sixad $(DESTDIR)/usr/bin/
-	install -m 755 bins/sixad-bin $(DESTDIR)/usr/sbin/
-	install -m 755 bins/sixad-sixaxis $(DESTDIR)/usr/sbin/
-	install -m 755 bins/sixad-raw $(DESTDIR)/usr/sbin/
+	install -m 755 sixad-bin $(DESTDIR)/usr/sbin/
+	install -m 755 sixad-sixaxis $(DESTDIR)/usr/sbin/
+	install -m 755 sixad-raw $(DESTDIR)/usr/sbin/
 	install -m 644 98-sixad.rules $(DESTDIR)/lib/udev/rules.d/
 	@echo "Please run '[sudo] make install-system' now if you're installing from source"
 
