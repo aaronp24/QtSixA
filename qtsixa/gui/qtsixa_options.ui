@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>336</width>
-    <height>328</height>
+    <height>286</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_startup">
          <property name="title">
-          <string>Startup</string>
+          <string>General</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -56,19 +56,16 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="box_min">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QCheckBox" name="box_warn">
             <property name="text">
-             <string>Start QtSixA minimized (requires systray)</string>
+             <string>Show useful warnings when appropriate</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="box_warn">
+           <widget class="QCheckBox" name="box_1inst">
             <property name="text">
-             <string>Show useful warnings when appropriate</string>
+             <string>Allow only one instance</string>
             </property>
            </widget>
           </item>
@@ -88,6 +85,16 @@
            <widget class="QCheckBox" name="box_systray">
             <property name="text">
              <string>Show QtSixA on systray</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="box_min">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Start QtSixA minimized (requires systray)</string>
             </property>
            </widget>
           </item>

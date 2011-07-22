@@ -1,3 +1,18 @@
+qtsixa (1.2.1-0ubuntu0+ppa4) karmic; urgency=low
+
+  * SoureForge release
+
+ -- falkTX <falktx@gmail.com>  Mon, 22 Feb 2010 11:23:30 +0000
+
+qtsixa (1.2.1-0ubuntu0+ppa3) lucid; urgency=low
+
+  * Allow only single instance of QtSixA to run (LP: #518350)
+  * Fix Sixaxis settings window too small
+  * Start fixing 'Adding new profile works once out of a hundred times'
+    (LP: #518105)
+
+ -- falkTX <falktx@gmail.com>  Mon, 22 Feb 2010 10:09:18 +0000
+
 qtsixa (1.2.0-0ubuntu0+ppa1) lucid; urgency=low
 
   * Final 1.2.0 release:

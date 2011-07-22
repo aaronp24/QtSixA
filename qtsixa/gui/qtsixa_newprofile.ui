@@ -55,15 +55,15 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>296</width>
-        <height>297</height>
+        <width>811</width>
+        <height>362</height>
        </rect>
       </property>
       <attribute name="label">
@@ -740,8 +740,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>809</width>
-        <height>364</height>
+        <width>811</width>
+        <height>362</height>
        </rect>
       </property>
       <attribute name="label">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
-    <height>475</height>
+    <width>456</width>
+    <height>515</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,8 +37,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>354</width>
-            <height>327</height>
+            <width>416</width>
+            <height>341</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -164,8 +164,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>360</width>
-            <height>265</height>
+            <width>381</width>
+            <height>256</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -301,8 +301,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>354</width>
-            <height>327</height>
+            <width>416</width>
+            <height>341</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -343,7 +343,7 @@
                  <string>Preview of the selected profile appears here</string>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::Panel</enum>
+                 <enum>QFrame::StyledPanel</enum>
                 </property>
                 <property name="frameShadow">
                  <enum>QFrame::Sunken</enum>
@@ -385,82 +385,82 @@
                 </item>
                </layout>
               </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
-                 <spacer name="horizontalSpacer_4">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="b_new">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="statusTip">
-                   <string>This allows you to create your own profiles</string>
-                  </property>
-                  <property name="text">
-                   <string>Create New...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>../../../../../../../../usr/share/qtsixa/icons/new.png</normaloff>../../../../../../../../usr/share/qtsixa/icons/new.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="b_add">
-                  <property name="statusTip">
-                   <string>This allows you to add your custom created profiles</string>
-                  </property>
-                  <property name="text">
-                   <string>Add New...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>../../../../../../../../usr/share/qtsixa/icons/plus.png</normaloff>../../../../../../../../usr/share/qtsixa/icons/plus.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_6">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
              </layout>
             </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="b_new">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="statusTip">
+                <string>This allows you to create your own profiles</string>
+               </property>
+               <property name="text">
+                <string>Create New...</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../../../../../../../usr/share/qtsixa/icons/new.png</normaloff>../../../../../../../../usr/share/qtsixa/icons/new.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="b_add">
+               <property name="statusTip">
+                <string>This allows you to add your custom created profiles</string>
+               </property>
+               <property name="text">
+                <string>Add New...</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../../../../../../../usr/share/qtsixa/icons/plus.png</normaloff>../../../../../../../../usr/share/qtsixa/icons/plus.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
            <item>
             <spacer name="verticalSpacer_4">
@@ -482,8 +482,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>354</width>
-            <height>327</height>
+            <width>377</width>
+            <height>175</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -630,7 +630,7 @@
           <string>Legacy Driver</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
@@ -712,7 +712,7 @@ Use L3 to enable/disable mouse and R3 for keys.&lt;/i&gt;</string>
           <string>sixad at boot</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>

@@ -6,19 +6,26 @@ from functools import partial
 from PyQt4 import QtCore, QtGui, uic
 
 #For easy debugging, print version information to terminal
-print "Main Qt version:", QtCore.QT_VERSION_STR
-print "Python-Qt version:", QtCore.PYQT_VERSION_STR
+print "Qt version:", QtCore.QT_VERSION_STR
+print "PyQt version:", QtCore.PYQT_VERSION_STR
+print "QtSixA version: 1.2.1"
 
-#Create configuration files if they don't exist
-os.system("if [ ! -d $HOME/.config/autostart ]; then mkdir -p $HOME/.config; mkdir -p $HOME/.config/autostart; fi")
-os.system("if [ ! -f $HOME/.qtsixa ]; then cp /usr/share/qtsixa/qtsixa.conf $HOME/.qtsixa; fi")
+#Fix crash when cannot copy file
+os.system("mkdir -p $HOME/.config/autostart/")
 
+#Create configuration files if they don't exist or too old
+if not os.path.exists((os.getenv("HOME"))+"/.qtsixa"):
+    os.system("cp /usr/share/qtsixa/qtsixa.conf $HOME/.qtsixa")
+elif commands.getoutput("cat $HOME/.qtsixa | grep only_1_instance") == "":
+    os.system("cp /usr/share/qtsixa/qtsixa.conf $HOME/.qtsixa")
+    
 #Read preferences file
 config_file = commands.getoutput('cat "$HOME/.qtsixa"').split()
 config_enable_systray = config_file[1]
 config_start_minimized = config_file[3]
 config_close_to_tray = config_file[5]
 config_show_warnings = config_file[7]
+config_only_1_instance = config_file[9]
 
 #List Of Sixaxis profiles
 if os.path.exists('/usr/share/qtsixa/profiles.list'):
@@ -69,6 +76,76 @@ def func_Check_Profiles():
 	"The list of Sixaxis profiles was not found.\n"
 	"Use \"Settings\" -> \"Advanced\" -> \"Restore Sixaxis profiles\"\n"
 	"to restore the default ones."))
+
+
+#----------------------------
+# Verify only a single instance
+#---------------------------------
+class QtSixA_PID:
+   pidFile = '/tmp/.qtsixa.pid'
+   stopProgram = False
+   appPID = 0
+   myPID = 0
+   errorMsg = ''
+   file
+
+   def __init__(self):
+      self.myPID = os.getpid()
+
+      self.func_getPID() 
+      self.func_isRunning()
+
+      if self.stopProgram:
+         self.errorMsg = "QtSixA is already running"
+         return
+
+      self.func_createPIDFile()
+
+
+#Check if the PID file exists and gets the contents if so
+   def func_getPID(self):
+      self.file = QtCore.QFile(self.pidFile)
+      if not self.file.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text):
+         return False
+      
+      line = self.file.readLine()
+      self.file.close()
+      try:
+         self.appPID = int(line)
+      except:
+         self.appPID = 0
+
+      return True
+
+#Check if there is currently a process running with the PID
+   def func_isRunning(self):
+      if self.appPID == 0: return False
+
+      try:
+         os.kill(self.appPID, 0)
+         self.stopProgram = True
+         return True
+      except:
+         self.func_deletePIDFile()
+         return False
+
+#Delete an existing PID file
+   def func_deletePIDFile(self):
+      try:
+         os.unlink(self.pidFile)
+      except:
+         self.errorMsg = "Can not delete PID file because PID file is missing"
+
+#Create a new PID file
+   def func_createPIDFile(self):
+      if not self.file.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
+         self.errorMsg = "Cannot write to pid file."
+         self.stopProgram = True
+         return False
+
+      self.file.writeData(str(self.myPID))
+      self.file.close()
+      return True
 
 
 #-----------
@@ -127,6 +204,9 @@ class QtSixA_Add_Window(QtGui.QDialog):
 	self.connect(self.b_loc, QtCore.SIGNAL('clicked()'), self.func_Location)
 	self.connect(self.b_png, QtCore.SIGNAL('clicked()'), self.func_PNG_file)
 	self.connect(self.b_add, QtCore.SIGNAL('clicked()'), self.func_Add)
+	
+	self.png_file = ""
+	self.location = ""
 
     def func_Add(self):
 	if (self.line_loc.displayText() == ""):
@@ -802,6 +882,7 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	config_start_minimized = config_file[3]
 	config_close_to_tray = config_file[5]
 	config_show_warnings = config_file[7]
+	config_only_1_instance = config_file[9]
 
 	self.i_saw_the_warning = 0
 
@@ -824,6 +905,7 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	if config_enable_systray == "yes" and config_start_minimized == "yes":  self.box_min.setChecked(1)
 	if config_enable_systray == "yes" and config_close_to_tray == "yes":  self.box_close.setChecked(1)
 	if config_show_warnings == "yes":  self.box_warn.setChecked(1)
+	if config_only_1_instance == "yes":  self.box_1inst.setChecked(1)
 
 	if self.box_systray.isChecked():
 	  self.box_min.setEnabled(1)
@@ -841,6 +923,7 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	self.connect(self.box_warn, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_close, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_systray, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
+	self.connect(self.box_1inst, QtCore.SIGNAL('clicked()'), self.func_Apply_Enable)
 	self.connect(self.box_systray, QtCore.SIGNAL('clicked()'), self.func_Systray)
 
 	self.connect(self.box_notify, QtCore.SIGNAL("clicked()"), self.func_NotifyBox)
@@ -882,12 +965,15 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 	else: self.conf_close = "no"
 	if self.box_warn.isChecked(): self.conf_warn = "yes"
 	else: self.conf_warn = "no"
+	if self.box_1inst.isChecked(): self.conf_1inst = "yes"
+	else: self.conf_1inst = "no"
 
 	self.finalFile = (""
 	"enable_systray	"+self.conf_systray+"\n"
 	"start_minimized	"+self.conf_min+"\n"
 	"close_to_tray	"+self.conf_close+"\n"
 	"show_warnings	"+self.conf_warn+"\n"
+	"only_1_instance	"+self.conf_1inst+"\n"
 	"")
 
 	if self.box_notify.isChecked():
@@ -1649,7 +1735,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 1.2.0 </b><br>"
+	self.trayTooltip = "<b> QtSixA 1.2.1 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += self.tr("You're not using a Sixaxis profile")
         else: self.trayTooltip += self.tr("Your input profile is set to \"<i>%1</i>\".").arg(self.SixaxisProfile)
 	self.trayTooltip += "<p>"
@@ -1800,6 +1886,13 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 #--------------- main ------------------
 if __name__ == '__main__':
 
+    #Allow only 1 instance (if QtSixA is already running, give a terminal error and exit)
+    if config_only_1_instance == "yes":
+	pid = QtSixA_PID()
+	if pid.stopProgram:
+	  print pid.errorMsg
+	  sys.exit(-1)
+
     app = QtGui.QApplication(sys.argv)
 
     locale = QtCore.QLocale.system().name()
@@ -1807,7 +1900,6 @@ if __name__ == '__main__':
 
     appTranslator = QtCore.QTranslator()
     if appTranslator.load(locale, "/usr/share/qtsixa/lang/"):
-    #if appTranslator.load(locale, "/shared/Pessoal/QtSixA/qtsixa-1.2.0/qtsixa/lang/"):
 	app.installTranslator(appTranslator)
 	print "Translatiom file found, using it now!"
     elif (locale == "pt_BR"): #Brazilian PT
@@ -1832,5 +1924,6 @@ if __name__ == '__main__':
     #sys.exit(app.exec_())
     app.exec_()
 
+    if config_only_1_instance == "yes": pid.func_deletePIDFile()
 
 #The End
