@@ -2,12 +2,12 @@
 #
 # [Qt]SixA - The Sixaxis Joystick Manager
 # last modified by falkTX - 05/10/2009
-VERSION="1.1"
+VERSION="1.2"
 
 # NOTE - this file only exists because I still don't know how to do some things directly on python
 #	This file is almost useless and it will be removed soon
 
-# TODO - Investigate kdesu
+# NOTE - I don't care about kdesu, it works as it is so...
 
 ######################################
 # SWITCHES start
@@ -35,7 +35,7 @@ To start the gui launch 'qtsixa')
 
   get-root)
 KDESU='kdesu -- '
-KDESUDO='kdesudo -i /usr/share/qtsixa/icons/qtsixa.png --comment "This QtSixA action requires root privileges. Please type your password in the field below" -- '
+KDESUDO='kdesudo -i /usr/share/qtsixa/icons/qtsixa.png -- '
 GKSU='gksu --description /usr/share/applications/qtsixa.desktop -- '
 
 #taken from winetricks (modified):
@@ -48,7 +48,7 @@ if [ x"$KDE_FULL_SESSION" = x"true" ]; then
 	fi
       fi
     fi
-} #KDE
+} #KDE (End)
 else if [ x"$GNOME_DESKTOP_SESSION_ID" != x"" ]; then
 { #Gnome
     if [ -f /usr/bin/gksu ]; then ROOT="$GKSU"; else
@@ -58,7 +58,7 @@ else if [ x"$GNOME_DESKTOP_SESSION_ID" != x"" ]; then
 	fi
       fi
     fi
-} #Gnome
+} #Gnome (End)
 else if [ x"$DISPLAY" != x"" ]; then
 { #Other X
     if [ -f /usr/bin/gksu ]; then ROOT="$GKSU"; else
@@ -68,7 +68,7 @@ else if [ x"$DISPLAY" != x"" ]; then
 	fi
       fi
     fi
-} #Other X
+} #Other X (End)
 else
 { #No known session
     if [ -f /usr/bin/gksu ]; then ROOT="$GKSU"; else
@@ -78,7 +78,7 @@ else
 	fi
       fi
     fi
-} #No known session
+} #No known session (End)
 fi
 fi
 fi

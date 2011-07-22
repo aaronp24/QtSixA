@@ -1,10 +1,24 @@
+qtsixa (1.2.0~beta1) karmic; urgency=low
+
+  * Started working on translations (but not yet completed)
+  * Fixed wrong Accelerometer #4 value in sixad-raw
+  * Pre-compiled stuff are no longer needed [hcid and libbluetooth2]
+  (hcid is compiled along with sixad)
+  * Running "sixad" in a terminal with no arguments shows some info instead of just starting server
+  * Added new stuff to Makefile, which can make sixad installed manually
+  * Other small changes and code clean-up
+  * QtSixA is now also available for Ubuntu Lucid (ppa:falk-t-j/qtsixa)
+
+ -- falkTX <falktx@gmail.com>  29 Dec 2009
+
+
 qtsixa (1.1.1-falktx1) karmic; urgency=low
 
   * modprobe uinput before running sixad-raw (GUI only)
   * Added new option: "uinput at boot"
   * Fixed systray showing a previously connected device
 
- -- falkTX <falktx@gmail.com>  Tue, 01 Dec 2009 17:36:47 +0000
+ -- falkTX <falktx@gmail.com>  Tue, 01 Dec 2009
 
 
 qtsixa (1.1.0-falktx1) karmic; urgency=low
@@ -13,7 +27,7 @@ qtsixa (1.1.0-falktx1) karmic; urgency=low
   * Fixed notifications
   * Some more small fixes
 
- -- falkTX <falktx@gmail.com>  Tue, 26 Nov 2009 17:36:47 +0000
+ -- falkTX <falktx@gmail.com>  Tue, 26 Nov 2009
 
 
 qtsixa (1.0.9-falktx1) karmic; urgency=low
@@ -37,7 +51,7 @@ qtsixa (1.0.9-falktx1) karmic; urgency=low
   * Some other small fixes
   * Marked release as Beta (PPA only)
 
- -- falkTX <falktx@gmail.com>  Tue, 21 Nov 2009 17:36:47 +0000
+ -- falkTX <falktx@gmail.com>  Tue, 21 Nov 2009
 
 
 qtsixa (1.0.4-falktx1) karmic; urgency=low
@@ -46,7 +60,7 @@ qtsixa (1.0.4-falktx1) karmic; urgency=low
   * Fixed sixad-raw (looking for 2nd argument instead of 1st)
   * Use "/var/lib/sixad/" for STORAGEDIR instead of "/" (root)
 
- -- falkTX <falktx@gmail.com>  Tue, 18 Nov 2009 17:36:47 +0000
+ -- falkTX <falktx@gmail.com>  Tue, 18 Nov 2009
 
 
 qtsixa (1.0.3-falktx2) karmic; urgency=low

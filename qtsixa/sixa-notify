@@ -8,10 +8,13 @@
 
 import commands, os, sys, time
 
+if (len(sys.argv) == 2):
+  if (sys.argv[1] == "--stop"): os.system("rm -f /tmp/.sixa-notify")
+  exit(1)
 
 if os.path.exists("/tmp/.sixa-notify"):
   print "sixa-notify is already running"
-  print "run: \"rm /tmp/.sixa-notify\" to stop it"
+  print "run: \"sixa-notify --stop\" to stop it"
   exit(-1)
 else:
   os.system("touch /tmp/.sixa-notify")
@@ -90,5 +93,3 @@ while (1 == 1): #Always loop program until file removed, or killed
 
     time.sleep(1)
 
-
-#os.system("rm /tmp/.sixa-notify")

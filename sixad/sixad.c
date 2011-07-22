@@ -510,7 +510,7 @@ int main(int argc, char *argv[])
     int ctl, csk, isk, lm = 0;
 
     // sixad: leds led_js_n led_n ledplus led_anim legacy
-    if (argc < 6) {
+    if (argc < 7) {
         printf("Running %s requires 'sixad'. Please run sixad instead\n",  argv[0]);
         exit(-1);
     }
@@ -542,15 +542,15 @@ int main(int argc, char *argv[])
 	    printf("sixad settings:\nEnable LEDs:\t%i\njs# as LED #:\t%i\nStart LED #:\t%i\nLED # increase:\t%i\nLED animation:\t%i\nButtons:\t%i\nSens. buttons:\t%i\nAxis:\t\t%i\nAccelerometers:\t%i\nAcceleration:\t%i\nSpeed:\t\t%i\nPosition:\t%i\nRumble:\t\t%i\nDebug:\t\t%i\n", sfile[0], sfile[1], sfile[2], sfile[3], sfile[4], sfile[5], sfile[6], sfile[7], sfile[8], sfile[9], sfile[10], sfile[11], sfile[12], sfile[14]);
 	}
     }
-        
-    //removed code after 0.8.0
+    
+    if (sfile[14]) debug = 1;
+    
     bacpy(&bdaddr, BDADDR_ANY);
     
     if (bacmp(&bdaddr, BDADDR_ANY))
         syslog(LOG_INFO, "sixad started (adress %s), press the PS button now", addr);
     else
         syslog(LOG_INFO, "sixad started, press the PS button now");
-    //removed code after 0.8.0
 
     lm |= L2CAP_LM_MASTER;
 

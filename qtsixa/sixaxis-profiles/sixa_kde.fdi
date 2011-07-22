@@ -17,7 +17,7 @@
 	<merge key="input.x11_options.MapAxis7" type="string">mode=none</merge>
 	<merge key="input.x11_options.MapAxis8" type="string">mode=none</merge>
 
-	<!-- Select=Ctrl; Start=Alt; PS=Shift(?).
+	<!-- Select=Ctrl; Start=Alt; PS=Shift.
         -->
         <merge key="input.x11_options.MapButton1" type="string">key=Control_L</merge>
         <merge key="input.x11_options.MapButton2" type="string">none</merge>
@@ -32,7 +32,7 @@
         <merge key="input.x11_options.MapButton6" type="string">key=Right</merge>
         <merge key="input.x11_options.MapButton7" type="string">key=Down</merge>
 
-	<!-- R2=End; L2=Home; R1=F11(?); L1=F9(?)
+	<!-- R2=End; L2=Home; R1=F11; L1=F9
         -->
         <merge key="input.x11_options.MapButton10" type="string">key=End</merge>
         <merge key="input.x11_options.MapButton9" type="string">key=Home</merge>

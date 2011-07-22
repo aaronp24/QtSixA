@@ -6,7 +6,7 @@
         <merge key="input.x11_driver" type="string">joystick</merge>
 
       <!-- Sometimes Sixaxis acts like mouse even if there's no configuration about it here.
-	 So, this will fix (with also Select/L3/R3) -->
+	 So, this will fix it (with also Select/L3/R3) -->
         <merge key="input.x11_options.MapAxis1" type="string">mode=none</merge>
         <merge key="input.x11_options.MapAxis2" type="string">mode=none</merge>
         <merge key="input.x11_options.MapAxis3" type="string">mode=none</merge>

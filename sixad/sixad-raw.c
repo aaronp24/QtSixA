@@ -279,7 +279,7 @@ int main(int argc, char **argv) {
         int ly = buf[8] - 128;
         int rx = buf[9] - 128;
         int ry = buf[10] - 128;
-        int acx = buf[42]<<8 | buf[43];
+        int acx = - (buf[42]<<8 | buf[43]); //reversed
         int acy = buf[44]<<8 | buf[45];
         int acz = buf[46]<<8 | buf[47];
 //      int gyro = buf[48]<<8 | buf[49];
@@ -324,7 +324,8 @@ int main(int argc, char **argv) {
 	if (velZ > -30 && velZ < 30) { velZ = 0; }
 
         // buttons
-        if (enable_buttons == 1) {
+        if (enable_buttons) {
+	    //part1
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 0, b1 & 1);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 1, b1 & 1);
@@ -340,6 +341,7 @@ int main(int argc, char **argv) {
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 6, b1 & 1);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 7, b1 & 1);
+	    //part2
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 8, b2 & 1);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 9, b2 & 1);
@@ -355,11 +357,12 @@ int main(int argc, char **argv) {
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 14, b2 & 1);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 15, b2 & 1);
+	    //part3
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 16, b3 & 1);
         }
 
         //axis
-        if (enable_axis == 1) {
+        if (enable_axis) {
             uinput_send(ufd, EV_ABS, 0, lx);
             uinput_send(ufd, EV_ABS, 1, ly);
             uinput_send(ufd, EV_ABS, 2, rx);
@@ -367,7 +370,7 @@ int main(int argc, char **argv) {
         }
 
         //accelerometer RAW
-        if (enable_accel == 1) {
+        if (enable_accel) {
             uinput_send(ufd, EV_ABS, 4, acx);
             uinput_send(ufd, EV_ABS, 5, acy);
             uinput_send(ufd, EV_ABS, 6, acz);
@@ -375,7 +378,7 @@ int main(int argc, char **argv) {
         }
 
         //buttons (sensible, as axis)
-        if (enable_sbuttons == 1) {
+        if (enable_sbuttons) {
             uinput_send(ufd, EV_ABS, 8, up);
             uinput_send(ufd, EV_ABS, 9, right);
             uinput_send(ufd, EV_ABS, 10, down);
@@ -391,21 +394,21 @@ int main(int argc, char **argv) {
         }
 
         //acceleration
-        if (enable_accon == 1) {
+        if (enable_accon) {
             uinput_send(ufd, EV_ABS, 20, accX);
             uinput_send(ufd, EV_ABS, 21, accY);
             uinput_send(ufd, EV_ABS, 22, accZ);
         }
 
         //speed
-        if (enable_speed == 1) {
+        if (enable_speed) {
             uinput_send(ufd, EV_ABS, 23, velX);
             uinput_send(ufd, EV_ABS, 24, velY);
             uinput_send(ufd, EV_ABS, 25, velZ);
         }
 
         //position
-        if (enable_pos == 1) {
+        if (enable_pos) {
             uinput_send(ufd, EV_ABS, 26, posX);
             uinput_send(ufd, EV_ABS, 27, posY);
             uinput_send(ufd, EV_ABS, 28, posZ);

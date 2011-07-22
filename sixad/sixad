@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sixad-bin wrapper
-# written by falktx
+# written by falkTX
 
 . /etc/default/sixad
 
@@ -43,7 +43,7 @@ if [ -f /etc/rc4.d/S90sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc
 if [ -f /etc/rc5.d/S90sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc5.d/S90sixad; fi
   ;;
 
-  --force|-force|force)  #Used for QtSixA GUI
+  --force|-force|force|-f)  #Used for QtSixA GUI
 echo "sixad has been forced to start.
 bluetooth will not be operational in this mode"
 if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
@@ -88,7 +88,7 @@ echo "The hidraw driver of sixad can now be runned without sixad.
 So please use: sixad-raw <hidraw device>"
   ;;
 
-  *)  #Running from terminal without arguments (default)
+  --start|-start|start|-s)  #Running from terminal without arguments (default)
 if (sixad_already_running_check "$1"); then
 echo "sixad is already running.
 run 'sixad --stop' to stop it"
@@ -105,6 +105,35 @@ else
  fi
 } #2
 fi
+  ;;
+
+    --version|-version|version|-v)
+echo "[Qt]SixA Daemon - version 1.2.0 (Beta)"
+  ;;
+
+    --help|-help|help|-h)
+echo "[Qt]SixA Daemon
+"
+sixad
+  ;;
+
+    *)
+echo "usage: sixad <command>
+
+command can be:
+    -h, --help		Show help (this message)
+    -v, --version	Show sixad version
+
+    -s, --start		Start sixad
+    -f, --force		Force connection (and starts sixad if not running)
+	--stop		Stop sixad
+
+	--boot-yes	Auto-starts sixad at boot time
+	--boot-no	Does not auto-start sixad at boot time
+
+
+You can also check: sixad-raw, sixa-notify
+"
   ;;
 
 esac

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>Options</class>
+ <widget class="QDialog" name="Options">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>332</width>
+    <width>336</width>
     <height>328</height>
    </rect>
   </property>
@@ -245,7 +245,7 @@
   <connection>
    <sender>b_cancel</sender>
    <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>Options</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

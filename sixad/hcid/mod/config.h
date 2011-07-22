@@ -1,5 +1,5 @@
-#define CONFIGDIR "${configdir}"
-#define SERVICEDIR "${servicedir}"
+#define CONFIGDIR "/var/lib/sixad/config"
+#define SERVICEDIR "/var/lib/sixad/services"
 #define STORAGEDIR "/var/lib/sixad"
 #define HCI_SECMGR 0
-#define VERSION "1.1.0"
+#define VERSION "1.2.0"

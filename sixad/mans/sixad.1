@@ -1,5 +1,5 @@
 .\" Help file created by falkTX
-.TH SIXAD "1" "November 2009" "sixad" "User Commands"
+.TH SIXAD "1" "December 2009" "sixad" "User Commands"
 .SH NAME
 sixad \- [Qt]SixA Daemon
 .SH SYNOPSIS
@@ -18,6 +18,12 @@ QtSixA also registers the Sixaxis and Keypad's MAC/ID in the joystick name
 (ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
 .SS "Available Commands:"
 .TP
+--help
+Show help
+.TP
+--version
+Show sixad version
+.TP
 --boot-no
 Disable sixad at boot
 .TP
@@ -29,5 +35,8 @@ Force sixad to search & connect devices, even if already running
 .TP
 --stop
 Stop/Kill sixad and restores bluetooth
+.TP
+--start
+Starts sixad
 .SH SEE ALSO
-sixad-raw
+sixad-raw, sixa-notify

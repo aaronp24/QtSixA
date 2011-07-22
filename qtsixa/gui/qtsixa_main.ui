@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>625</width>
+    <width>632</width>
     <height>432</height>
    </rect>
   </property>
@@ -19,6 +19,9 @@
   </property>
   <property name="statusTip">
    <string>Welcome to QtSixA!</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -61,11 +64,7 @@
                 <string>Welcome to QtSixA!</string>
                </property>
                <property name="text">
-                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;font size=5&gt;Welcome to QtSixA!&lt;/font&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -106,7 +105,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QLabel" name="label_11">
                  <property name="text">
-                  <string>ID:</string>
+                  <string notr="true">ID:</string>
                  </property>
                  <property name="buddy">
                   <cstring>lineID</cstring>
@@ -136,7 +135,7 @@ p, li { white-space: pre-wrap; }
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>PLAYSTATION(R)3 Controller</string>
+                  <string notr="true">PLAYSTATION(R)3 Controller</string>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -168,7 +167,7 @@ p, li { white-space: pre-wrap; }
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>054c:0268</string>
+                  <string notr="true">054c:0268</string>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -184,7 +183,7 @@ p, li { white-space: pre-wrap; }
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>Bluetooth</string>
+                  <string notr="true">Bluetooth</string>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -202,7 +201,7 @@ p, li { white-space: pre-wrap; }
              <string>Current Sixaxis profile</string>
             </property>
             <property name="text">
-             <string>Current Sixaxis profile is &quot;General Use&quot;</string>
+             <string>...</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -254,62 +253,62 @@ p, li { white-space: pre-wrap; }
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_1</string>
+                  <string notr="true">Sixaxis_1</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_2</string>
+                  <string notr="true">Sixaxis_2</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_3</string>
+                  <string notr="true">Sixaxis_3</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_4</string>
+                  <string notr="true">Sixaxis_4</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_5</string>
+                  <string notr="true">Sixaxis_5</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_6</string>
+                  <string notr="true">Sixaxis_6</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_7</string>
+                  <string notr="true">Sixaxis_7</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Sixaxis_8</string>
+                  <string notr="true">Sixaxis_8</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>USB_1</string>
+                  <string notr="true">USB_1</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>USB_2</string>
+                  <string notr="true">USB_2</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>USB_3</string>
+                  <string notr="true">USB_3</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>USB_4</string>
+                  <string notr="true">USB_4</string>
                  </property>
                 </item>
                </widget>
@@ -375,7 +374,7 @@ p, li { white-space: pre-wrap; }
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>XX:XX:XX:XX</string>
+                  <string notr="true">XX:XX:XX:XX</string>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -396,6 +395,9 @@ p, li { white-space: pre-wrap; }
                  <property name="value">
                   <number>255</number>
                  </property>
+                 <property name="format">
+                  <string notr="true">%p%</string>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -410,7 +412,7 @@ p, li { white-space: pre-wrap; }
                   <number>5</number>
                  </property>
                  <property name="format">
-                  <string>%v/5</string>
+                  <string notr="true">%v/5</string>
                  </property>
                 </widget>
                </item>
@@ -555,22 +557,22 @@ This way you won't need to apply a Sixaxis profile to play that game with it.</s
            <widget class="QComboBox" name="listOfGames">
             <item>
              <property name="text">
-              <string>ePSXe (Wine)</string>
+              <string notr="true">ePSXe (Wine)</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Extreme Tux Racer</string>
+              <string notr="true">Extreme Tux Racer</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Neverball / Nevergolf</string>
+              <string notr="true">Neverball / Neverputt</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Super Tux Kart</string>
+              <string notr="true">Super Tux Kart</string>
              </property>
             </item>
            </widget>
@@ -872,7 +874,7 @@ This way you won't need to apply a Sixaxis profile to play that game with it.</s
                   <string/>
                  </property>
                  <property name="text">
-                  <string>%:</string>
+                  <string notr="true">%:</string>
                  </property>
                 </widget>
                </item>
@@ -1158,43 +1160,10 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>625</width>
-     <height>21</height>
+     <width>632</width>
+     <height>19</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_Tasks">
-    <property name="statusTip">
-     <string/>
-    </property>
-    <property name="title">
-     <string>&amp;Tasks</string>
-    </property>
-    <widget class="QMenu" name="menuDisc">
-     <property name="title">
-      <string>&amp;Disconnect devices...</string>
-     </property>
-     <addaction name="actionDiscAllSixaxis"/>
-     <addaction name="actionDiscEver"/>
-     <addaction name="separator"/>
-     <addaction name="actionDiscNull"/>
-     <addaction name="actionDiscOne"/>
-     <addaction name="actionDiscTwo"/>
-     <addaction name="actionDiscThree"/>
-     <addaction name="actionDiscFour"/>
-     <addaction name="actionDiscFive"/>
-     <addaction name="actionDiscSix"/>
-     <addaction name="actionDiscSeven"/>
-     <addaction name="actionDiscEight"/>
-    </widget>
-    <addaction name="menuDisc"/>
-    <addaction name="actionBT_Start"/>
-    <addaction name="actionBT_Stop"/>
-    <addaction name="actionSixpair"/>
-    <addaction name="actionForce"/>
-    <addaction name="actionStop"/>
-    <addaction name="separator"/>
-    <addaction name="actionExit"/>
-   </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="statusTip">
      <string/>
@@ -1242,6 +1211,39 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
     <addaction name="separator"/>
     <addaction name="actionAbout_QtSixA"/>
     <addaction name="actionAbout_Qt"/>
+   </widget>
+   <widget class="QMenu" name="menu_Tasks">
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="title">
+     <string>&amp;Tasks</string>
+    </property>
+    <widget class="QMenu" name="menuDisc">
+     <property name="title">
+      <string>&amp;Disconnect devices...</string>
+     </property>
+     <addaction name="actionDiscAllSixaxis"/>
+     <addaction name="actionDiscEver"/>
+     <addaction name="separator"/>
+     <addaction name="actionDiscNull"/>
+     <addaction name="actionDiscOne"/>
+     <addaction name="actionDiscTwo"/>
+     <addaction name="actionDiscThree"/>
+     <addaction name="actionDiscFour"/>
+     <addaction name="actionDiscFive"/>
+     <addaction name="actionDiscSix"/>
+     <addaction name="actionDiscSeven"/>
+     <addaction name="actionDiscEight"/>
+    </widget>
+    <addaction name="menuDisc"/>
+    <addaction name="actionBT_Start"/>
+    <addaction name="actionBT_Stop"/>
+    <addaction name="actionSixpair"/>
+    <addaction name="actionForce"/>
+    <addaction name="actionStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menu_Tasks"/>
    <addaction name="menuOptions"/>
@@ -1363,42 +1365,42 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
   </action>
   <action name="actionDiscOne">
    <property name="text">
-    <string>DiscOne</string>
+    <string notr="true">DiscOne</string>
    </property>
   </action>
   <action name="actionDiscTwo">
    <property name="text">
-    <string>DiscTwo</string>
+    <string notr="true">DiscTwo</string>
    </property>
   </action>
   <action name="actionDiscThree">
    <property name="text">
-    <string>DiscThree</string>
+    <string notr="true">DiscThree</string>
    </property>
   </action>
   <action name="actionDiscFour">
    <property name="text">
-    <string>DiscFour</string>
+    <string notr="true">DiscFour</string>
    </property>
   </action>
   <action name="actionDiscSix">
    <property name="text">
-    <string>DiscSix</string>
+    <string notr="true">DiscSix</string>
    </property>
   </action>
   <action name="actionDiscSeven">
    <property name="text">
-    <string>DiscSeven</string>
+    <string notr="true">DiscSeven</string>
    </property>
   </action>
   <action name="actionDiscEight">
    <property name="text">
-    <string>DiscEight</string>
+    <string notr="true">DiscEight</string>
    </property>
   </action>
   <action name="actionDiscFive">
    <property name="text">
-    <string>DiscFive</string>
+    <string notr="true">DiscFive</string>
    </property>
   </action>
   <action name="actionConfQtSixA">

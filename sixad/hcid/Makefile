@@ -1,6 +1,6 @@
 #Compile hcid binary only
 
-all: common_so sdpd_so dbus main
+all: common_so sdpd_so dbus_so main_so
 
 common_so:
 	cc -DHAVE_CONFIG_H -I. -I./mod   -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include   -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include   -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -c common/oui.c
@@ -28,7 +28,7 @@ sdpd_so:
 	ar cru libsdpserver.a server.o cstate.o request.o service.o servicedb.o 
 	ranlib libsdpserver.a
 
-dbus:
+dbus_so:
 	cc -DHAVE_CONFIG_H -I. -I./common -I./sdpd -I./mod  -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include   -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include   -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -c security.c
 	cc -DHAVE_CONFIG_H -I. -I./common -I./sdpd -I./mod  -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include   -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include   -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -c storage.c
 	cc -DHAVE_CONFIG_H -I. -I./common -I./sdpd -I./mod  -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include   -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include   -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -c parser.c
@@ -50,9 +50,9 @@ dbus:
 	ar cru libhciserver.a security.o storage.o parser.o lexer.o kword.o server.o manager.o adapter.o device.o dbus-common.o dbus-error.o dbus-database.o dbus-security.o dbus-service.o dbus-test.o dbus-hci.o dbus-sdp.o
 	ranlib libhciserver.a
 
-main:
- 	cc -DHAVE_CONFIG_H -I. -I. -I./common -I./sdpd -I./mod  -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include   -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include   -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -c main.c
- 	cc -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -o hcid main.o  libhciserver.a ./libsdpserver.a ./libhelper.a /usr/lib/libglib-2.0.so -ldbus-1 /usr/lib/libbluetooth.so
+main_so:
+	cc -DHAVE_CONFIG_H -I. -I. -I./common -I./sdpd -I./mod  -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include   -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include   -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -c main.c
+	cc -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -g -O2 -g -Wall -O2 -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -o hcid main.o  libhciserver.a ./libsdpserver.a ./libhelper.a /usr/lib/libglib-2.0.so -ldbus-1 /usr/lib/libbluetooth.so
 
 clean:
 	rm -rf *.o *.a hcid

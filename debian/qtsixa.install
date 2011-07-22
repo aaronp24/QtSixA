@@ -3,6 +3,7 @@ qtsixa/manual/* usr/share/doc/qtsixa/manual/
 qtsixa/game-profiles/* usr/share/qtsixa/game-profiles/
 qtsixa/gui/* usr/share/qtsixa/gui/
 qtsixa/pics/* usr/share/qtsixa/pics/
+qtsixa/lang/* usr/share/qtsixa/lang/
 qtsixa/icons/* usr/share/qtsixa/icons/
 qtsixa/sixaxis-profiles/* usr/share/qtsixa/sixaxis-profiles/
 
@@ -13,6 +14,6 @@ qtsixa/qtsixa usr/bin/
 qtsixa/qtsixa.conf usr/share/qtsixa/
 qtsixa/qtsixa.desktop usr/share/applications/
 qtsixa/qtsixa.xpm usr/share/pixmaps/
-qtsixa/*.bu usr/share/qtsixa/
+qtsixa/profiles.list.bu usr/share/qtsixa/
 qtsixa/features.html usr/share/qtsixa/
 qtsixa/sixa-notify.desktop usr/share/qtsixa/

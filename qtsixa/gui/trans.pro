@@ -1,0 +1,11 @@
+FORMS += qtsixa_about.ui
+FORMS += qtsixa_addprofile.ui
+FORMS += qtsixa_main.ui
+FORMS += qtsixa_newprofile.ui
+FORMS += qtsixa_options.ui
+FORMS += qtsixa_reference.ui
+FORMS += qtsixa_sixaxis.ui
+FORMS += qtsixa_sixpair.ui
+SOURCES += qtsixa.pyw
+TRANSLATIONS += ../lang/pt_PT.ts 
+TRANSLATIONS += ../lang/default.ts 

@@ -5,5 +5,10 @@ clean:
 	make -C sixad clean
 
 install:
-	make -C sixad install
+	@echo "Run 'make install-system to really install sixad"
 
+install-system:
+	make -C sixad install-system
+
+uninstall:
+	make -C sixad uninstall

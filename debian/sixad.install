@@ -7,8 +7,7 @@ sixad/bins/sixad-raw usr/sbin/
 sixad/bins/sixad-bin usr/sbin/
 sixad/bins/sixad-uinput-sixaxis usr/sbin/
 
-sixad/bins/hcid usr/sbin/
-sixad/bins/libbluetooth.so.2 usr/lib/
+sixad/hcid/hcid usr/sbin/
 
 sixad/98-sixad.rules lib/udev/rules.d/
 

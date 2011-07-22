@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>Sixpair</class>
+ <widget class="QDialog" name="Sixpair">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SixA - Sixpair Setup</string>
+   <string>QtSixA - Sixpair Setup</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -19,7 +19,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>This text is variable...</string>
+        <string>...</string>
        </property>
       </widget>
      </item>
@@ -66,7 +66,7 @@
       <item>
        <widget class="QRadioButton" name="radio_dev_sixaxis">
         <property name="text">
-         <string>Sixaxis/DualShock3</string>
+         <string notr="true">Sixaxis/DualShock3</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -76,7 +76,7 @@
       <item>
        <widget class="QRadioButton" name="radio_dev_keypad">
         <property name="text">
-         <string>Keypad</string>
+         <string notr="true">Keypad</string>
         </property>
        </widget>
       </item>

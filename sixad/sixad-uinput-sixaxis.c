@@ -23,7 +23,7 @@
 #include <linux/input.h>
 #include <linux/uinput.h>
 
-int n_six, led_n, led_n_recv, led_js_n, ufd = -1;
+int n_six, led_n, led_js_n, ufd = -1;
 int enable_leds, enable_led_anim, enable_buttons, enable_sbuttons, enable_axis;
 int enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble, debug;
 unsigned char buf[128];
@@ -432,7 +432,7 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
 	if (acx < -508 && acx > -516) { acx = -512; } //acx is reversed
 	if (acy > 508 && acy < 516) { acy = 512; }
 	if (acz > 508 && acz < 516) { acz = 512; }
- 	if (posX > -30 && posX < 30) { posX = 0; }
+	if (posX > -30 && posX < 30) { posX = 0; }
 	if (posY > -30 && posY < 30) { posY = 0; }
 	if (posZ > -30 && posZ < 30) { posZ = 0; }
 	if (accX > -30 && accX < 30) { accX = 0; }
@@ -443,7 +443,8 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
 	if (velZ > -30 && velZ < 30) { velZ = 0; }
 
         // buttons
-        if (enable_buttons == 1) {
+        if (enable_buttons) {
+	    //part1
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 0, b1 & 1);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 1, b1 & 1);
@@ -459,6 +460,7 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 6, b1 & 1);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 7, b1 & 1);
+	    //part2
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 8, b2 & 1);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 9, b2 & 1);
@@ -474,11 +476,12 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 14, b2 & 1);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 15, b2 & 1);
+	    //part3
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 16, b3 & 1);
         }
 
         //axis
-        if (enable_axis == 1) {
+        if (enable_axis) {
             uinput_send(ufd, EV_ABS, 0, lx);
             uinput_send(ufd, EV_ABS, 1, ly);
             uinput_send(ufd, EV_ABS, 2, rx);
@@ -486,7 +489,7 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
         }
 
         //accelerometer RAW
-        if (enable_accel == 1) {
+        if (enable_accel) {
             uinput_send(ufd, EV_ABS, 4, acx);
             uinput_send(ufd, EV_ABS, 5, acy);
             uinput_send(ufd, EV_ABS, 6, acz);
@@ -494,7 +497,7 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
         }
 
         //buttons (sensible, as axis)
-        if (enable_sbuttons == 1) {
+        if (enable_sbuttons) {
             uinput_send(ufd, EV_ABS, 8, up);
             uinput_send(ufd, EV_ABS, 9, right);
             uinput_send(ufd, EV_ABS, 10, down);
@@ -510,21 +513,21 @@ static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, in
         }
 
         //acceleration
-        if (enable_accon == 1) {
+        if (enable_accon) {
             uinput_send(ufd, EV_ABS, 20, accX);
             uinput_send(ufd, EV_ABS, 21, accY);
             uinput_send(ufd, EV_ABS, 22, accZ);
         }
 
         //speed
-        if (enable_speed == 1) {
+        if (enable_speed) {
             uinput_send(ufd, EV_ABS, 23, velX);
             uinput_send(ufd, EV_ABS, 24, velY);
             uinput_send(ufd, EV_ABS, 25, velZ);
         }
 
         //position
-        if (enable_pos == 1) {
+        if (enable_pos) {
             uinput_send(ufd, EV_ABS, 26, posX);
             uinput_send(ufd, EV_ABS, 27, posY);
             uinput_send(ufd, EV_ABS, 28, posZ);
@@ -573,7 +576,6 @@ int main(int argc, char *argv[])
 	if (debug) syslog(LOG_INFO, "No valid sixad configuration file found, using default settings");
 	enable_leds = 1;
 	led_js_n = 1;
-	led_n_recv = 1;
 	enable_led_anim = 1;
 	enable_buttons = 1;
 	enable_sbuttons = 1;
@@ -587,7 +589,6 @@ int main(int argc, char *argv[])
     } else {
 	enable_leds = sfile[0];
 	led_js_n = sfile[1];
-	led_n_recv = atoi(argv[1]);
 	enable_led_anim = sfile[3];
 	enable_buttons = sfile[4];
 	enable_sbuttons = sfile[5];
@@ -611,7 +612,7 @@ int main(int argc, char *argv[])
 
     if (led_js_n) { //check for js# devices
 	int rfile[1];
-	FILE *f = popen("ls /dev/input | grep js | awk \'sub(\"js\",\"\")\' | tail -n 1", "r");
+	FILE *f = popen("ls /dev/input/ | grep js | awk \'sub(\"js\",\"\")\' | tail -n 1", "r");
 	if ( !f || fscanf(f, "%i", &rfile[0]) != 1 ) {
 	    led = 1;
 	    if (debug) syslog(LOG_INFO, "No previous js# found, setting LED # to 1");
@@ -622,7 +623,7 @@ int main(int argc, char *argv[])
 	enable_sixaxis(0, led, enable_led_anim);
         pclose(f);
     } else
-      enable_sixaxis(0, led_n_recv, enable_led_anim);
+      enable_sixaxis(0, led_n, enable_led_anim);
 
     sigfillset(&sigs);
     sigdelset(&sigs, SIGCHLD);

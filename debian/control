@@ -9,18 +9,17 @@ Build-Depends: libusb-dev, libbluetooth-dev, gcc (>= 4.1), debhelper (>= 7.0)
 Package: qtsixa
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends},
-  bluez (>= 4.12), bluez-hcidump, sixad (>= 1.0.2),
+  bluez (>= 4.12), bluez-hcidump, sixad (>= 1.2.0),
   python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
-Recommends: gksu | kdesudo, python2.5 | python2.6
+Recommends: gksu | kdesudo, python2.6 | python2.5
 Description: Sixaxis Joystick Manager
  This package provides a useful GUI to control the sixad modules.
  .
  QtSixA is written in PyQt
 
 Package: sixad
-Architecture: amd64 i386 powerpc lpia
-Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12), python
-Conflicts: libbluetooth2
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12), python2.6 | python2.5
 Description: [Qt]SixA Daemon
  This package provides the modules (called 'sixad') for connecting PS3 hardware
  (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine

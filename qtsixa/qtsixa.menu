@@ -3,5 +3,5 @@
 		     title="QtSixA" \
 		     genericname="Sixaxis Joystick Manager" \
 		     comment="Sixaxis Joystick Manager" \
-		     icon="qtsixa.xpm" \
+		     icon="qtsixa" \
 		     command="qtsixa"
