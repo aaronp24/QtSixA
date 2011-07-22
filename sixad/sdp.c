@@ -44,7 +44,7 @@
 #include "textfile.h"
 #include "sdp.h"
 
-#define STORAGEDIR "${storagedir}"
+#define STORAGEDIR "/var/lib/sixad"
 
 static sdp_record_t *record = NULL;
 static sdp_session_t *session = NULL;

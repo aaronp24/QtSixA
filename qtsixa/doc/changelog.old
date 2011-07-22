@@ -1,3 +1,20 @@
+qtsixa (1.0.4-falktx1) karmic; urgency=low
+
+  * Use "ppc64" for 64-bit PowerPC (used in some RPM distros)
+  * Fixed sixad-raw (looking for 2nd argument instead of 1st)
+  * Use "/var/lib/sixad/" for STORAGEDIR instead of "/" (root)
+
+ -- falkTX <falktx@gmail.com>  Tue, 10 Nov 2009 17:36:47 +0000
+
+
+qtsixa (1.0.3-falktx2) karmic; urgency=low
+
+  * Fixed PATH to man pages
+  * Fixed "powerpc32" typo
+
+ -- falkTX <falktx@gmail.com>  Tue, 10 Nov 2009 17:36:47 +0000
+
+
 qtsixa (1.0.3-falktx1) karmic; urgency=low
 
   * Fixed "Force connection" dialog

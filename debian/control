@@ -19,7 +19,7 @@ Description: Sixaxis Joystick Manager
 
 Package: sixad
 Architecture: amd64 i386 powerpc lpia
-Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12)
+Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12), python
 Conflicts: libbluetooth2
 Description: [Qt]SixA Daemon
  This package provides the modules (called 'sixad') for connecting PS3 hardware

@@ -3,9 +3,8 @@
  * written by falkTX, 2009  (used some code from xsixhidtest.c)
  *
  * Compile with: gcc -Wall sixad-raw.c -o sixad-raw
- * binary must be installed to /usr/sbin; then run with: "sixad --raw /dev/hidrawX"
+ * run with: "sixad-raw /dev/hidrawX"
  *
- *  TODO - read file instead of stdin
 */
 
 #include <err.h>
@@ -192,23 +191,20 @@ int main(int argc, char **argv) {
   unsigned char buf[128];
   int fd, nr, msg = 0;
   
-  if (argc < 3) {
-	  printf("Usage: sixad-raw /dev/hidrawX\n");
-	  exit(-1);
+  if (argc < 2) {
+	printf("Usage: sixad-raw /dev/hidrawX\n");
+	exit(-1);
   }
   
-  if ((fd = open(argv[argc - 1], O_RDONLY)) < 0) {
-	  perror("sixad-raw");
-	  exit(-1);
-  }
-  
-  if (argc > 2) { //test feature
+  if ((fd = open(argv[1], O_RDONLY)) < 0) { perror("sixad-raw"); exit(-1); }
+    
+  if (argc > 2) {
     if (atoi(argv[2]) == 3654) { //hidden codename for testing
-      nr=read(fd, buf, sizeof(buf));
-      if ( nr < 0 ) { printf("Error: Not a device\n"); exit(1); }
-      if ( nr == 50 ) { printf("Found a Sixaxis\n"); exit(1); }
-      else { printf("Error: Not a Sixaxis\n"); exit(1); }
-      exit(0);
+	nr=read(fd, buf, sizeof(buf));
+	if ( nr < 0 ) { printf("Error: Not a device\n"); exit(1); }
+	if ( nr == 50 ) { printf("Found a Sixaxis\n"); exit(1); }
+	else { printf("Error: Not a Sixaxis\n"); exit(1); }
+	exit(0);
     }
   }
   
@@ -234,12 +230,11 @@ int main(int argc, char **argv) {
   }
   pclose(f);
   
-  uinput_open(enable_axis, enable_accel);
-  
   while ( (nr=read(fd, buf, sizeof(buf))) ) {
 	if ( nr < 0 ) { perror("Error when opening file"); exit(1); }
 	if ( nr != 50 ) { printf("Error: Not a Sixaxis!\n"); exit(1); }
 	
+	uinput_open(enable_axis, enable_accel);
 	if ( msg == 0 ) { printf("Sixaxis sucessfully initiated\n"); msg = 1; }
 	
 	if ( gettimeofday(&tv, NULL) ) { perror("gettimeofday"); exit(1); }
