@@ -3,6 +3,9 @@
 # sixad-bin wrapper
 # written by falkTX
 
+DEBUG=0
+LEGACY=0
+
 . /etc/default/sixad
 
 
@@ -25,9 +28,16 @@ You're using a _really_ old bluetooth dongle,
 the Sixaxis will just not work!
 "
 fi
-
 }
- 
+
+bt_device_check () {
+if (hciconfig dev &> /dev/null); then true; else
+echo "No bluetooth adapters found on the system!
+sixad will not quit"
+exit
+fi
+}
+
 sixad_already_running_check () {
 ps -e | grep sixad-bin > /dev/null
 }
@@ -44,6 +54,21 @@ bt_start () {
 if [ -f /lib/udev/rules.d/97-bluetooth.rules ]; then sudo /usr/sbin/bluetoothd --udev; else sudo /etc/init.d/bluetooth start; fi
 }
 
+fix_new_rumble_code () {
+if [ -d /var/lib/sixad/profiles/ ]; then
+  FILES=`ls /var/lib/sixad/profiles/`
+  for i in $FILES; do
+    if (cat /var/lib/sixad/profiles/$i | grep old_rumble_mode > /dev/null); then
+      true
+    else
+      echo "
+# Fix for new rumble code:
+old_rumble_mode 0
+" >> /var/lib/sixad/profiles/$i
+    fi
+  done
+fi
+}
 case $1 in
 
   --boot-no)
@@ -77,6 +102,7 @@ fi
   ;;
 
   --force|-force|force|-f)  #Used for QtSixA GUI
+bt_device_check
 echo "sixad has been forced to start.
 bluetooth will not be operational in this mode"
 if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
@@ -84,8 +110,9 @@ sudo /usr/sbin/hcid
 if (sixad_already_running_check "$1"); then true
 else
   using_old_bt_ver
+  fix_new_rumble_code
   /sbin/modprobe uinput
-  /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
+  /usr/sbin/sixad-bin $DEBUG
 fi
   ;;
 
@@ -99,30 +126,30 @@ if (bluetoothd_check "$1"); then true; else bt_start; fi
   --udev)  #Used for udev
 # Only start udev action if a Sixaxis or Keypad is detected
 if (start_by_udev_q "$1"); then
-{ #Full
+
+{ #Full _start
 if (bluetoothd_check "$1"); then pkill -KILL bluetoothd; fi
 if (sixad_already_running_check "$1"); then true
 else
+  DEBUG=1
+  fix_new_rumble_code
   /sbin/modprobe uinput
-  /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy &
+  date >> /var/log/sixad.log
+  /usr/sbin/sixad-bin $DEBUG $LEGACY &>> /var/log/sixad.log
 fi
 /usr/sbin/hcid
-if [ -f /etc/rc2.d/S90sixad ]; then true; else
+if [ ! -f /etc/rc2.d/S90sixad ]; then
   sleep 10 # wait for device to connect
   pkill -KILL hcid
 fi
 bt_start
-} #Full
+} #Full _end
 
 fi
   ;;
 
-  --raw|-raw|raw)  #Also for hidraw devices!
-echo "The hidraw driver of sixad can now be runned without sixad.
-So please use: sixad-raw <hidraw device>"
-  ;;
-
-  --start|-start|start|-s)  #Running from terminal without arguments (default)
+  --start|-start|start|-s)
+bt_device_check
 if (sixad_already_running_check "$1"); then
 echo "sixad is already running.
 run 'sixad --stop' to stop it"
@@ -132,8 +159,9 @@ else
   { #3
   if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
   using_old_bt_ver
+  fix_new_rumble_code
   sudo /usr/sbin/hcid
-  sudo /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
+  sudo /usr/sbin/sixad-bin $DEBUG $LEGACY
    } #3
  else
   echo "You need admin/root access to run this application"
@@ -143,13 +171,13 @@ fi
   ;;
 
     --version|-version|version|-v)
-echo "[Qt]SixA Daemon - version 1.2.0"
+echo "[Qt]SixA Daemon - version 1.5.0"
   ;;
 
     --help|-help|help|-h)
 echo "[Qt]SixA Daemon
 "
-sixad
+$0
   ;;
 
     *)
@@ -167,7 +195,8 @@ command can be:
 	--boot-no	Does not auto-start sixad at boot time
 
 
-You can also check: sixad-raw, sixa-notify"
+You can also check: sixad-raw, sixad-notify"
   ;;
+
 
 esac

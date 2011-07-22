@@ -4,7 +4,4 @@ set -e
 
 #DEBHELPER#
 
-#Stop sixad before performing upgrade
-pkill -TERM sixad-uinput-sixaxis || true
-pkill -TERM sixad-bin || true
-pkill -TERM sixad || true
+# compatiblity with older versions

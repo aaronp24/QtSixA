@@ -1,8 +1,4 @@
-README for sixad, just to clarify:
-
-hcid is not needed at all.
-The problem is that the "normal" bluetooth is always pop-ing up when a new BT device is found.
-This makes sixad unusable, since it needs some time to detect and connect a Sixaxis.
+README for sixad, just to clarify a few things
 
 When a user presses the PS button on the Sixaxis (and if it is paired correctly to the PC),
 the "normal" bluetooth detects it and asks the user for permission to connect to it.
@@ -22,5 +18,3 @@ sixad has a udev rule that consists on:
 When "sixad --start" is run from a terminal, hcid will run forever until stopped.
 Same thing is for "sixad --force".
 
-
-The rule of 'hcid' on sixad is just to make sure the "normal" bluetooth doesn't interfere with the connection.

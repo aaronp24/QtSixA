@@ -1,65 +1,81 @@
-qtsixa (1.2.1b-0ubuntu0+ppa1) karmic; urgency=low
+qtsixa (1.4.97-1~natty3) natty; urgency=low
 
-  * Added Basic support for Ubuntu Lucid
+  * Natty build
 
- -- falkTX <falktx@gmail.com>  Sun, 25 Apr 2010 01:58:51 +0100
+ -- falkTX <falktx@gmail.com>  Fri, 21 Jan 2011 15:09:49 +0000
 
-qtsixa (1.2.1-0ubuntu0+ppa4) karmic; urgency=low
+qtsixa (1.4.97-1~maverick3) maverick; urgency=low
 
-  * SoureForge release
+  * Maverick build
 
- -- falkTX <falktx@gmail.com>  Mon, 22 Feb 2010 11:23:30 +0000
+ -- falkTX <falktx@gmail.com>  Fri, 21 Jan 2011 15:09:44 +0000
 
-qtsixa (1.2.1-0ubuntu0+ppa3) lucid; urgency=low
+qtsixa (1.4.97-1~lucid3) lucid; urgency=low
 
-  * Allow only single instance of QtSixA to run (LP: #518350)
-  * Fix Sixaxis settings window too small
-  * Start fixing 'Adding new profile works once out of a hundred times'
-    (LP: #518105)
+  * Fix Natty build
 
- -- falkTX <falktx@gmail.com>  Mon, 22 Feb 2010 10:09:18 +0000
+ -- falkTX <falktx@gmail.com>  Fri, 21 Jan 2011 15:05:15 +0000
 
-qtsixa (1.2.0-0ubuntu0+ppa1) lucid; urgency=low
+qtsixa (1.4.97-1~lucid2) lucid; urgency=low
 
-  * Final 1.2.0 release:
-    - Display a warning when the list of profiles was not found
-    - Fixed crash when the list of profiles was not found
-    - Also disable "Add New" and "Create New" buttons when no list found
-    - Use pt_PT for pt_BR translations, for now
-    - Special "--boot-yes" option fix for ArchLinux
-    - Fixed sixad Makefile
-    - Added a Makefile to QtSixA too (easy install for non-Debian systems)
-    - Sixaxis configuration menu is more usable now
-    - Warn user when using < 2.0 bluetooth dongle (Sixaxis incompatible)
-    - Drop C++ code (python is good enough)
-    - Added useful docs to the source tree
+  * Fixed neverball profile
+  * sixad-jack improvements:
+    - don't print messages (for performance)
+    - better keys sensitivity
 
- -- falkTX <falktx@gmail.com>  Wed, 27 Jan 2010 02:14:24 +0000
+ -- falkTX <falktx@gmail.com>  Tue, 18 Jan 2011 23:55:46 +0000
 
-qtsixa (1.2.0~rc1-0ubuntu0~ppa1) lucid; urgency=low
+qtsixa (1.4.97-1~lucid1) lucid; urgency=low
 
-  * Finished strings for translators
-  * Finished pt_PT translation
-  * Make sure translations don't make QtSixA crash
-  * Started GUI code port to C++ (only for v2.0)
-  * Updated manual, and added translation section
+  * Implemented legacy mode
+  * Fix segfault when config files have missing information
 
- -- falkTX <falktx@gmail.com>  Tue, 12 Jan 2010 02:32:56 +0000
+ -- falkTX <falktx@gmail.com>  Sun, 16 Jan 2011 22:55:54 +0000
 
-qtsixa (1.2.0~beta1-0ubuntu0~ppa3) lucid; urgency=low
+qtsixa (1.4.96-1~lucid4) lucid; urgency=low
 
-  * Fixed
+  * Disable sixad-raw on GUI
 
- -- falkTX <falktx@gmail.com>  Mon, 04 Jan 2010 10:14:35 +0000
+ -- falkTX <falktx@gmail.com>  Thu, 30 Dec 2010 16:50:02 +0000
 
-qtsixa (1.2.0~beta1-0ubuntu0~ppa2) lucid; urgency=low
+qtsixa (1.4.96-1~lucid3) lucid; urgency=low
 
-  * Added missing build-depends
+  * Several fixes for sixad-raw
 
- -- falkTX <falktx@gmail.com>  Mon, 04 Jan 2010 09:29:48 +0000
+ -- falkTX <falktx@gmail.com>  Thu, 30 Dec 2010 01:09:34 +0000
 
-qtsixa (1.2.0~beta1-0ubuntu0~ppa1) lucid; urgency=low
+qtsixa (1.4.96-0~lucid2) lucid; urgency=low
 
-  * Initial release. (LP: #471081)
+  * Fix Scroll usage
+  * Fix using keys in the analog sticks
+  * Prepare package for both Lucid, Maverick and Natty builds
 
- -- falkTX <falktx@gmail.com>  Tue, 03 Nov 2009 14:42:00 +0000
+ -- falkTX <falktx@gmail.com>  Thu, 23 Dec 2010 00:27:58 +0000
+
+qtsixa (1.4.95-0~ppa6) lucid; urgency=low
+
+  * Implemented log-rotation for sixad logs
+
+ -- falkTX <falktx@gmail.com>  Fri, 03 Dec 2010 17:32:12 +0000
+
+qtsixa (1.4.95-0~ppa2) lucid; urgency=low
+
+  * Implemented lr3 axis/buttons thing
+  * Fixed manage devices list sometimes empty
+  * Fix Scroll speed (was too fast)
+
+ -- falkTX <falktx@gmail.com>  Wed, 01 Dec 2010 15:40:03 +0000
+
+qtsixa (1.4.95-0~ppa1) lucid; urgency=low
+
+  * Re-write of backend code in C++ (many fixes, working rumble support)
+  * Split sixad and utils
+  * Update GUI and other stuff where needed
+
+ -- falkTX <falktx@gmail.com>  Sat, 20 Nov 2010 20:58:28 +0000
+
+qtsixa (1.4.90) lucid; urgency=low
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- falkTX <falktx@gmail.com>  Tue, 25 May 2010 18:08:08 +0100

@@ -4,24 +4,5 @@ set -e
 
 #DEBHELPER#
 
-check_4_fdi_files () {
-ls /usr/lib/X11/xorg.conf.d/ | grep sixaxis > /dev/null
-}
+# compatiblity with older versions
 
-check_4_old_profiles-list () {
-cat /usr/share/qtsixa/profiles.list | grep "2h4u;" > /dev/null
-}
-
-if [ -f /usr/share/qtsixa/profiles.list ]; then
-
-  if (check_4_old_profiles-list "$1"); then true; else
-    cp /usr/share/qtsixa/profiles.list.bu /usr/share/qtsixa/profiles.list
-  fi
-
-else
-  cp /usr/share/qtsixa/profiles.list.bu /usr/share/qtsixa/profiles.list
-fi
-
-if (check_4_fdi_files "$1"); then true; else
-cp /usr/share/qtsixa/sixaxis-udev/11-sixaxis_none.conf /usr/lib/X11/xorg.conf.d/
-fi

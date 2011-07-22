@@ -1,42 +1,57 @@
+# You know, there are pre-compile DEBs of this...
+
+DESTDIR =
+
+
 build:
-	@echo "QtSixA doesn't need to be compiled :)"
+	pyuic4 -o ./gui/ui_qtsixa_mainw.py ./gui/ui/qtsixa_mainw.ui
+	pyuic4 -o ./gui/ui_qtsixa_aboutw.py ./gui/ui/qtsixa_aboutw.ui
+	pyuic4 -o ./gui/ui_qtsixa_managew.py ./gui/ui/qtsixa_managew.ui
+	pyuic4 -o ./gui/ui_qtsixa_newdevw.py ./gui/ui/qtsixa_newdevw.ui
+	pyuic4 -o ./gui/ui_qtsixa_newprofilew.py ./gui/ui/qtsixa_newprofilew.ui
+	pyuic4 -o ./gui/ui_qtsixa_preferencesw.py ./gui/ui/qtsixa_preferencesw.ui
+	pyuic4 -o ./gui/ui_qtsixa_referencew.py ./gui/ui/qtsixa_referencew.ui
+	pyuic4 -o ./gui/ui_qtsixa_sixpairw.py ./gui/ui/qtsixa_sixpairw.ui
+	pyrcc4 -o ./gui/qtsixa_rc.py ./icons/qtsixa.qrc
 
 clean:
-	@echo "QtSixA doesn't need to be compiled :)"
+	rm -f *~ gui/*~ gui/*.pyc gui/ui_*.py gui/qtsixa_rc.py
 
 install:
-	cp ./doc/* /usr/share/doc/qtsixa/
-	cp ./manual/* /usr/share/doc/qtsixa/manual/
-	cp ./game-profiles/* /usr/share/qtsixa/game-profiles/
-	cp ./gui/* /usr/share/qtsixa/gui/
-	cp ./pics/* /usr/share/qtsixa/pics/
-	cp ./lang/* /usr/share/qtsixa/lang/
-	cp ./icons/* /usr/share/qtsixa/icons/
-	cp ./sixaxis-profiles/* /usr/share/qtsixa/sixaxis-profiles/
-	cp ./sixa /usr/bin/
-	cp ./sixa-lq /usr/bin/
-	cp ./sixa-notify /usr/bin/
-	cp ./qtsixa /usr/bin/
-	cp ./qtsixa.conf /usr/share/qtsixa/
-	cp ./qtsixa.desktop /usr/share/applications/
-	cp ./qtsixa.xpm /usr/share/pixmaps/
-	cp ./profiles.list.bu /usr/share/qtsixa/
-	cp ./features.html /usr/share/qtsixa/
-	cp ./sixa-notify.desktop /usr/share/qtsixa/
-	if [ ! -f /usr/share/qtsixa/profiles.list.bu ]; then cp ./profiles.list.bu /usr/share/qtsixa/profiles.list; fi
-
-### Note to packagers:
-#  The real "profiles.list" should not be installed by default, only if it is not found.
-#  This avoids overritting a possibly customized file
-
+	#Make directories
+	install -d $(DESTDIR)/usr/bin/
+	install -d $(DESTDIR)/usr/share/applications/
+	install -d $(DESTDIR)/usr/share/pixmaps/
+	install -d $(DESTDIR)/usr/share/doc/qtsixa/
+	install -d $(DESTDIR)/usr/share/doc/qtsixa/manual/
+	install -d $(DESTDIR)/usr/share/qtsixa/
+	install -d $(DESTDIR)/usr/share/qtsixa/game-profiles/
+	install -d $(DESTDIR)/usr/share/qtsixa/gui/
+	install -d $(DESTDIR)/usr/share/qtsixa/icons/
+	install -d $(DESTDIR)/usr/share/qtsixa/pics/
+	install -d $(DESTDIR)/usr/share/qtsixa/profiles/
+#	install -d $(DESTDIR)/usr/share/qtsixa/lang/
+	#Install files
+	install -m 655 qtsixa $(DESTDIR)/usr/bin/
+	install -m 655 sixad-lq $(DESTDIR)/usr/bin/
+	install -m 655 sixad-notify $(DESTDIR)/usr/bin/
+	install -m 644 manual/* $(DESTDIR)/usr/share/doc/qtsixa/manual/
+	install -m 644 game-profiles/* $(DESTDIR)/usr/share/qtsixa/game-profiles/
+	install -m 644 gui/*.py $(DESTDIR)/usr/share/qtsixa/gui/
+	install -m 644 icons/* $(DESTDIR)/usr/share/qtsixa/icons/
+	install -m 644 pics/* $(DESTDIR)/usr/share/qtsixa/pics/
+	install -m 644 profiles/* $(DESTDIR)/usr/share/qtsixa/profiles/
+#	install -m 644 lang/* $(DESTDIR)/usr/share/qtsixa/lang/
+	install -m 644 sixad-notify.desktop $(DESTDIR)/usr/share/qtsixa/
+	install -m 644 qtsixa.desktop $(DESTDIR)/usr/share/applications/
+	install -m 644 qtsixa.xpm $(DESTDIR)/usr/share/pixmaps/
 
 uninstall:
-	rm -rf /usr/share/doc/qtsixa/
-	rm -rf /usr/share/qtsixa/
-	rm -rf /usr/bin/sixa
-	rm -rf /usr/bin/sixa-lq
-	rm -rf /usr/bin/sixa-notify
-	rm -rf /usr/bin/qtsixa
-	rm -rf /usr/share/applications/qtsixa.desktop
-	rm -rf /usr/share/pixmaps/qtsixa.xpm
-	rm -rf /etc/hal/fdi/policy/*sixa*.fdi
+	rm -rf $(DESTDIR)/usr/share/doc/qtsixa/
+	rm -rf $(DESTDIR)/usr/share/qtsixa/
+	rm -rf $(DESTDIR)/usr/bin/sixad-lq
+	rm -rf $(DESTDIR)/usr/bin/sixad-notify
+	rm -rf $(DESTDIR)/usr/bin/qtsixa
+	rm -rf $(DESTDIR)/usr/share/applications/qtsixa.desktop
+	rm -rf $(DESTDIR)/usr/share/pixmaps/qtsixa.xpm
+

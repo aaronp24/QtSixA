@@ -3,16 +3,17 @@ Section: utils
 Priority: optional
 Maintainer: Ubuntu Devel <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Filipe Coelho (aka 'falkTX') <falktx@gmail.com>
-Standards-Version: 3.8.3
-Build-Depends: debhelper (>= 7.0), gcc (>= 4.1),
-  libusb-dev, libbluetooth-dev, libdbus-glib-1-dev, libdbus-1-dev
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 7.0), cdbs, gcc (>= 4.1), pyqt4-dev-tools,
+  libusb-dev, libbluetooth-dev, libdbus-glib-1-dev, libdbus-1-dev, libjack-dev | libjack-jackd2-dev
 
 Package: qtsixa
-Architecture: all
-Depends: ${misc:Depends}, ${python:Depends},
-  bluez (>= 4.12), bluez-hcidump, sixad (>= 1.2.0),
-  python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
-Recommends: gksu | kdesudo, python2.6 | python2.5
+Architecture: any
+Depends: ${python:Depends}, ${misc:Depends},
+  bluez (>= 4.12), sixad (>= 1.4.94),
+  python-qt4, python-dbus, xdg-utils
+Recommends: gksu | kdesudo, bluez-hcidump, libnotify-bin
+Conflicts: xserver-xorg-input-joystick
 Description: Sixaxis Joystick Manager
  This package provides a useful GUI to control the sixad modules.
  .
@@ -20,7 +21,7 @@ Description: Sixaxis Joystick Manager
 
 Package: sixad
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, bluez (>= 4.12)
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: [Qt]SixA Daemon
  This package provides the modules (called 'sixad') for connecting PS3 hardware
  (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine

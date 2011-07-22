@@ -1,77 +1,50 @@
-# You know, there are pre-compile DEBs and RPMs of this...
+# You know, there are pre-compile DEBs of this...
 
-all: sixad-bin tools hcid-bin
+DESTDIR =
 
-sixad-bin:
-	gcc -Wall -O2 sdp.c textfile.c sixad.c -o bins/sixad-bin -lbluetooth
-	gcc -Wall -O2 sdp.c textfile.c sixad-uinput-sixaxis.c -o bins/sixad-uinput-sixaxis -lbluetooth
+all: sixad_bins
 
-tools:
-	gcc -Wall -O2 sixpair.c -o bins/sixpair -lusb
-	gcc -Wall -O2 sixpair_kbd.c -o bins/sixpair-kbd -lusb
-	gcc -Wall -O2 sixad-raw.c -o bins/sixad-raw
-	gcc -Wall -O2 hidraw-dump.c -o bins/hidraw-dump
-
-hcid-bin:
-	make all -C hcid
+sixad_bins:
+	g++ -Wall -O2 sixad-bin.cpp bluetooth.cpp shared.cpp textfile.cpp -o bins/sixad-bin -lbluetooth
+	g++ -Wall -O2 sixad-sixaxis.cpp sixaxis.cpp shared.cpp uinput.cpp textfile.cpp -o bins/sixad-sixaxis -lpthread
+	g++ -Wall -O2 sixad-raw.cpp sixaxis.cpp shared.cpp uinput.cpp textfile.cpp -o bins/sixad-raw
 
 clean:
-	rm -f bins/*
-	make clean -C hcid
+	rm -f *~ bins/*
 
 install:
-	@echo "Run 'make install-system to really install sixad"
+	install -d $(DESTDIR)/etc/default/
+	install -d $(DESTDIR)/etc/init.d/
+	install -d $(DESTDIR)/etc/logrotate.d/
+	install -d $(DESTDIR)/usr/bin/
+	install -d $(DESTDIR)/usr/sbin/
+	install -d $(DESTDIR)/lib/udev/rules.d/
+	install -d $(DESTDIR)/var/lib/sixad/
+	install -m 644 sixad.default $(DESTDIR)/etc/default/sixad
+	install -m 755 sixad.init $(DESTDIR)/etc/init.d/sixad
+	install -m 644 sixad.log $(DESTDIR)/etc/logrotate.d/sixad
+	install -m 755 sixad $(DESTDIR)/usr/bin/
+	install -m 755 bins/sixad-bin $(DESTDIR)/usr/sbin/
+	install -m 755 bins/sixad-sixaxis $(DESTDIR)/usr/sbin/
+	install -m 755 bins/sixad-raw $(DESTDIR)/usr/sbin/
+	install -m 644 98-sixad.rules $(DESTDIR)/lib/udev/rules.d/
+	@echo "Please run '[sudo] make install-system' now if you're installing from source"
 
 install-system:
-	#Creating needed directories
-	mkdir -p /lib/udev/rules.d/
-	mkdir -p /var/lib/sixad/
-
-	#Installing binaries
-	cp sixad /usr/bin/
-	cp hcid/hcid /usr/sbin/
-	cp bins/hidraw-dump /usr/sbin/
-	cp bins/sixad-bin /usr/sbin/
-	cp bins/sixad-raw /usr/sbin/
-	cp bins/sixad-uinput-sixaxis /usr/sbin/
-	cp bins/sixpair /usr/sbin/
-	cp bins/sixpair-kbd /usr/sbin/
-
-	#Installing misc files
-	cp 98-sixad.rules /lib/udev/rules.d/
-	cp default/sixad /etc/default/
-	cp init/sixad /etc/init.d/
-	cp x11-sony-keypad.fdi /usr/share/hal/fdi/policy/20thirdparty/
-	cp mans/* /usr/share/man/man1/
-	ln -s /etc/init.d/sixad /etc/rc0.d/K10sixad || true
-	ln -s /etc/init.d/sixad /etc/rc1.d/K10sixad || true
-	ln -s /etc/init.d/sixad /etc/rc6.d/K10sixad || true
-
-	@echo "Finished"
-
+	@addgroup --system sixad || true
+	@chown :sixad $(DESTDIR)/var/lib/sixad/
+	@chmod 775 -R $(DESTDIR)/var/lib/sixad/
+	@echo "Installation is Complete!"
+	@echo "You may want to add yourself to the sixad group now:"
+	@echo "$ [sudo] adduser YOUR-USER sixad"
 
 uninstall:
-	rm -f /etc/default/sixad
-	rm -f /etc/init.d/sixad
-	rm -f /etc/rc0.d/K10sixad
-	rm -f /etc/rc1.d/K10sixad
-	rm -f /etc/rc6.d/K10sixad
-	rm -f /lib/udev/rules.d/98-sixad.rules
-	rm -f /usr/bin/sixad
-	rm -f /usr/sbin/hcid
-	rm -f /usr/sbin/hidraw-dump
-	rm -f /usr/sbin/sixad-bin
-	rm -f /usr/sbin/sixad-raw
-	rm -f /usr/sbin/sixad-uinput-sixaxis
-	rm -f /usr/sbin/sixpair
-	rm -f /usr/sbin/sixpair-kbd
-	rm -f /usr/share/hal/fdi/policy/20thirdparty/x11-sony-keypad.fdi
-	rm -f /usr/share/man/man1/qtsixa.1
-	rm -f /usr/share/man/man1/sixa.1
-	rm -f /usr/share/man/man1/sixad.1
-	rm -f /usr/share/man/man1/sixad-bin.1
-	rm -f /usr/share/man/man1/sixad-raw.1
-	rm -f /usr/share/man/man1/sixad-uinput-sixaxis.1
-	rm -rf /usr/lib/sixad/
-	rm -rf /var/lib/sixad/
-
+	rm -f $(DESTDIR)/etc/default/sixad
+	rm -f $(DESTDIR)/etc/init.d/sixad
+	rm -f $(DESTDIR)/etc/logrotate.d/sixad
+	rm -f $(DESTDIR)/usr/bin/sixad
+	rm -f $(DESTDIR)/usr/sbin/sixad-bin
+	rm -f $(DESTDIR)/usr/sbin/sixad-sixaxis
+	rm -f $(DESTDIR)/usr/sbin/sixad-raw
+	rm -f $(DESTDIR)/lib/udev/rules.d/98-sixad.rules
+	rm -rf $(DESTDIR)/var/lib/sixad/

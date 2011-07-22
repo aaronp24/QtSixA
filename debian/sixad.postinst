@@ -4,14 +4,15 @@ set -e
 
 #DEBHELPER#
 
+case "$1" in
+  configure)
 update-rc.d sixad stop 10 0 1 6 .
-
-
-ARCH=`uname -m`
-
-case $ARCH in
-    powerpc|ppc)
-sed "s/Legacy=0/Legacy=1/" -i /etc/default/sixad
-echo "Detected PowerPC[32] - Legacy driver will be used"
+if [ -f /usr/lib/X11/xorg.conf.d/10-joystick.conf ]; then
+mv /usr/lib/X11/xorg.conf.d/10-joystick.conf /var/lib/sixad/10-joystick.conf.bak
+fi
+addgroup --system sixad || true
+chown :sixad /var/lib/sixad/
+chmod 775 -R /var/lib/sixad/
   ;;
 esac
+
