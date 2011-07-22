@@ -10,8 +10,8 @@ print "Main Qt version:", QtCore.QT_VERSION_STR
 print "Python-Qt version:", QtCore.PYQT_VERSION_STR
 
 #Create configuration files if they don't exist
-os.system("if [ -d $HOME/.config/autostart ]; then true; else mkdir -p $HOME/.config; mkdir -p $HOME/.config/autostart; fi")
-os.system("if [ -f $HOME/.qtsixa ]; then true; else cp /usr/share/qtsixa/qtsixa.conf $HOME/.qtsixa; fi")
+os.system("if [ ! -d $HOME/.config/autostart ]; then mkdir -p $HOME/.config; mkdir -p $HOME/.config/autostart; fi")
+os.system("if [ ! -f $HOME/.qtsixa ]; then cp /usr/share/qtsixa/qtsixa.conf $HOME/.qtsixa; fi")
 
 #Read preferences file
 config_file = commands.getoutput('cat "$HOME/.qtsixa"').split()
@@ -25,7 +25,7 @@ if os.path.exists('/usr/share/qtsixa/profiles.list'):
     listOfSixaxisProfiles = open('/usr/share/qtsixa/profiles.list').read().split(";\n")
 else:
     listOfSixaxisProfiles = "".split()
-    print "Faild to load list of Sixaxis profiles"
+    print QtGui.QApplication.translate("MainPYW", "Faild to load list of Sixaxis profiles")
 
 #Use dbus for disconnect devices (no root required)
 bus = dbus.SystemBus()
@@ -49,7 +49,27 @@ def look4Root():
 
 def func_Check_BTs():
     if (commands.getoutput("hcitool dev") == "Devices:"):
-	QtGui.QMessageBox.warning(QtSixA, QtGui.QApplication.translate("MainPYW", "QtSixA - Warning"), QtGui.QApplication.translate("MainPYW", "No bluetooth dongles detected.\nConnect over bluetooth will not be possible"))
+	QtGui.QMessageBox.warning(QtSixA, QtGui.QApplication.translate("MainPYW", "QtSixA - Warning"), QtGui.QApplication.translate("MainPYW", ""
+	"No bluetooth dongles detected.\n"
+	"Connect over bluetooth will not be possible"))
+    else:
+	BT_VER = commands.getoutput("hciconfig default version | grep \"HCI Ver\" | awk '{print$3}'")
+	if (BT_VER == "1.0"):
+	    QtGui.QMessageBox.critical(QtSixA, QtGui.QApplication.translate("MainPYW", "QtSixA - Error"), QtGui.QApplication.translate("MainPYW", ""
+	    "You're using a _really_ old bluetooth dongle,\n"
+	    "the Sixaxis will just not work!"))
+	elif (BT_VER == "1.1"):
+	    QtGui.QMessageBox.warning(QtSixA, QtGui.QApplication.translate("MainPYW", "QtSixA - Warning"), QtGui.QApplication.translate("MainPYW", ""
+	    "You're using a very old bluetooth dongle,\n"
+	    "the Sixaxis will not work properly!"))
+
+def func_Check_Profiles():
+    if not os.path.exists('/usr/share/qtsixa/profiles.list'):
+	QtGui.QMessageBox.warning(QtSixA, QtGui.QApplication.translate("MainPYW", "QtSixA - Warning"), QtGui.QApplication.translate("MainPYW", ""
+	"The list of Sixaxis profiles was not found.\n"
+	"Use \"Settings\" -> \"Advanced\" -> \"Restore Sixaxis profiles\"\n"
+	"to restore the default ones."))
+
 
 #-----------
 # About Window
@@ -443,16 +463,19 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    self.optLEDm.setChecked(1)
 	if (int(sixad_config_debug)): self.checkDebug.setChecked(1)
 
-	if os.path.exists('/etc/rc2.d/S90sixad'): self.checkBoot.setChecked(1)
+	if os.path.exists('/etc/arch-release'):
+	    if (commands.getoutput("cat /etc/rc.conf | grep sixad") != ""): self.checkBoot.setChecked(1)
+	elif os.path.exists('/etc/rc2.d/S90sixad'): self.checkBoot.setChecked(1)
 
 	if commands.getoutput("cat /etc/modules | grep uinput") != "": self.checkUInput.setChecked(1)
 
-	i = 0
-	while i < len(listOfSixaxisProfiles):
-	    if i % 2 == 0:
-	      self.inputComboBox.addItem(listOfSixaxisProfiles[i+1])
-	      self.combo_specific_profiles.addItem(listOfSixaxisProfiles[i+1])
-	    i += 1
+	if os.path.exists('/usr/share/qtsixa/profiles.list'):
+	    i = 0
+	    while i < len(listOfSixaxisProfiles):
+		if i % 2 == 0:
+		  self.inputComboBox.addItem(listOfSixaxisProfiles[i+1])
+		  self.combo_specific_profiles.addItem(listOfSixaxisProfiles[i+1])
+		i += 1
 
 	self.current_profile_first = commands.getoutput("ls /etc/hal/fdi/policy | grep sixa | awk 'sub(\"sixa_\",\"\")' | awk 'sub(\".fdi\",\"\")'")
 
@@ -512,6 +535,10 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.group_specific, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "override"))
 	self.connect(self.combo_specific_device, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
 	self.connect(self.combo_specific_profiles, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
+
+	if not os.path.exists('/usr/share/qtsixa/profiles.list'):
+	    self.b_new.setEnabled(0)
+	    self.b_add.setEnabled(0)
 
     def func_ShowOverrides(self):
 	self.overrides = commands.getoutput("ls /etc/hal/fdi/policy/ | grep x11-qtsixa | awk 'sub(\"x11-qtsixa_\",\"\")' | awk 'sub(\".fdi\",\"\")' | awk 'sub(\"_\",\" -> \")'")
@@ -1622,7 +1649,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 1.2.0 RC </b><br>"
+	self.trayTooltip = "<b> QtSixA 1.2.0 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += self.tr("You're not using a Sixaxis profile")
         else: self.trayTooltip += self.tr("Your input profile is set to \"<i>%1</i>\".").arg(self.SixaxisProfile)
 	self.trayTooltip += "<p>"
@@ -1783,6 +1810,10 @@ if __name__ == '__main__':
     #if appTranslator.load(locale, "/shared/Pessoal/QtSixA/qtsixa-1.2.0/qtsixa/lang/"):
 	app.installTranslator(appTranslator)
 	print "Translatiom file found, using it now!"
+    elif (locale == "pt_BR"): #Brazilian PT
+	appTranslator.load("pt_PT", "/usr/share/qtsixa/lang/")
+	app.installTranslator(appTranslator)
+	print "Translatiom file found, using it now!"
     else:
 	print "No translation file found, default to English"
 
@@ -1794,7 +1825,9 @@ if __name__ == '__main__':
 	QtSixA.show()
 
     if (config_close_to_tray == "yes"): app.setQuitOnLastWindowClosed(0)
-    if (config_show_warnings == "yes" and config_start_minimized == "no"): func_Check_BTs()
+    if (config_show_warnings == "yes" and config_start_minimized == "no"):
+	func_Check_BTs()
+	func_Check_Profiles()
 
     #sys.exit(app.exec_())
     app.exec_()

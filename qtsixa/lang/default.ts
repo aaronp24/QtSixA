@@ -63,12 +63,6 @@ Then remove everything else
 </source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="qtsixa_about.ui" line="33"/>
-        <source>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
-&lt;font size=4&gt;&lt;b&gt;version 1.2.0 RC&lt;/b&gt;&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message encoding="UTF-8">
         <location filename="qtsixa_about.ui" line="180"/>
         <source>&lt;b&gt;&lt;i&gt;Thanks for your code:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
@@ -118,6 +112,12 @@ Gregor Kofler - £5 USD&lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
 &lt;u&gt;And the users at the Ubuntu Forums!&lt;/u&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_about.ui" line="33"/>
+        <source>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
+&lt;font size=4&gt;&lt;b&gt;version 1.2.0&lt;/b&gt;&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -192,172 +192,172 @@ Gregor Kofler - £5 USD&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="33"/>
+        <location filename="qtsixa_sixaxis.ui" line="55"/>
         <source>Enable LEDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="48"/>
+        <location filename="qtsixa_sixaxis.ui" line="70"/>
         <source>Set LED # according to joystick #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="58"/>
+        <location filename="qtsixa_sixaxis.ui" line="80"/>
         <source>Set LED # manually:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="76"/>
+        <location filename="qtsixa_sixaxis.ui" line="98"/>
         <source>Start with LED #</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="108"/>
+        <location filename="qtsixa_sixaxis.ui" line="130"/>
         <source>LED # increase after another connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="118"/>
+        <location filename="qtsixa_sixaxis.ui" line="140"/>
         <source>Enable LEDs/Rumble animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="128"/>
+        <location filename="qtsixa_sixaxis.ui" line="182"/>
         <source>Input events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="139"/>
+        <location filename="qtsixa_sixaxis.ui" line="193"/>
         <source>Enable buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="146"/>
+        <location filename="qtsixa_sixaxis.ui" line="200"/>
         <source>Enable sensible buttons (as axis)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="153"/>
+        <location filename="qtsixa_sixaxis.ui" line="207"/>
         <source>Enable axis (Left &amp;&amp; Right) (needed for some profiles)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="160"/>
+        <location filename="qtsixa_sixaxis.ui" line="214"/>
         <source>Enable accelerometers (roll/pitch/gravity/gyro)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="167"/>
+        <location filename="qtsixa_sixaxis.ui" line="221"/>
         <source>Enable acceleration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="174"/>
+        <location filename="qtsixa_sixaxis.ui" line="228"/>
         <source>Enable speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="184"/>
+        <location filename="qtsixa_sixaxis.ui" line="238"/>
         <source>Enable position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="194"/>
+        <location filename="qtsixa_sixaxis.ui" line="248"/>
         <source>Enable DualShock3 rumble (incomplete)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="220"/>
+        <location filename="qtsixa_sixaxis.ui" line="291"/>
         <source>Profiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="284"/>
+        <location filename="qtsixa_sixaxis.ui" line="377"/>
         <source>Select one profile to preview. Click on apply if you want it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="229"/>
+        <location filename="qtsixa_sixaxis.ui" line="322"/>
         <source>Use Sixaxis as Mouse/Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="250"/>
+        <location filename="qtsixa_sixaxis.ui" line="343"/>
         <source>Preview of the selected profile appears here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="277"/>
+        <location filename="qtsixa_sixaxis.ui" line="370"/>
         <source>Use the following profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="430"/>
+        <location filename="qtsixa_sixaxis.ui" line="555"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="316"/>
+        <location filename="qtsixa_sixaxis.ui" line="409"/>
         <source>This allows you to create your own profiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="319"/>
+        <location filename="qtsixa_sixaxis.ui" line="412"/>
         <source>Create New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="343"/>
+        <location filename="qtsixa_sixaxis.ui" line="436"/>
         <source>This allows you to add your custom created profiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="346"/>
+        <location filename="qtsixa_sixaxis.ui" line="439"/>
         <source>Add New...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="381"/>
+        <location filename="qtsixa_sixaxis.ui" line="506"/>
         <source>Assign a specific configuration to a specific Sixaxis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="408"/>
+        <location filename="qtsixa_sixaxis.ui" line="533"/>
         <source>Apply only for this Sixaxis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="398"/>
+        <location filename="qtsixa_sixaxis.ui" line="523"/>
         <source>For this Sixaxis: &lt;i&gt;(must be bluetooth)&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="419"/>
+        <location filename="qtsixa_sixaxis.ui" line="544"/>
         <source>Always use this profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="426"/>
+        <location filename="qtsixa_sixaxis.ui" line="551"/>
         <source>Override with this profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="444"/>
+        <location filename="qtsixa_sixaxis.ui" line="624"/>
         <source>Misc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="450"/>
+        <location filename="qtsixa_sixaxis.ui" line="630"/>
         <source>Legacy Driver</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="459"/>
+        <location filename="qtsixa_sixaxis.ui" line="639"/>
         <source>Use Legacy driver (disables sixad driver!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="466"/>
+        <location filename="qtsixa_sixaxis.ui" line="646"/>
         <source>&lt;i&gt;This option will disable the sixad driver for Sixaxis&lt;br&gt;
 and use the default driver (same as USB).&lt;br&gt;
 The option &quot;Set LED # according to joystick #&quot;&lt;br&gt;is
@@ -365,72 +365,72 @@ not available in this mode&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="485"/>
+        <location filename="qtsixa_sixaxis.ui" line="665"/>
         <source>Toggle profiles on/off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="491"/>
+        <location filename="qtsixa_sixaxis.ui" line="671"/>
         <source>Use L3/R3 to enable/disable mouse and keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="498"/>
+        <location filename="qtsixa_sixaxis.ui" line="678"/>
         <source>&lt;i&gt;This option will allow to use Sixaxis profiles under the PS3.&lt;br&gt;
 Use L3 to enable/disable mouse and R3 for keys.&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="526"/>
+        <location filename="qtsixa_sixaxis.ui" line="706"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="532"/>
+        <location filename="qtsixa_sixaxis.ui" line="712"/>
         <source>sixad at boot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="544"/>
+        <location filename="qtsixa_sixaxis.ui" line="724"/>
         <source>Auto-start sixad driver at boot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="554"/>
+        <location filename="qtsixa_sixaxis.ui" line="734"/>
         <source>&lt;i&gt;This option will make normal bluetooth unusable,&lt;br&gt;
 but sixad will connect all devices right away.&lt;br&gt;
 You can cancel this action anytime by stopping sixad&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="569"/>
+        <location filename="qtsixa_sixaxis.ui" line="749"/>
         <source>sixad debugging messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="575"/>
+        <location filename="qtsixa_sixaxis.ui" line="755"/>
         <source>Enable debug messages in sixad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="582"/>
+        <location filename="qtsixa_sixaxis.ui" line="762"/>
         <source>&lt;i&gt;This option will print additional information when&lt;br&gt;
 running sixad from a terminal.&lt;br&gt;
 Please activate it if you want to report a bug&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="597"/>
+        <location filename="qtsixa_sixaxis.ui" line="777"/>
         <source>UInput at boot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="603"/>
+        <location filename="qtsixa_sixaxis.ui" line="783"/>
         <source>Load UInput module at boot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="610"/>
+        <location filename="qtsixa_sixaxis.ui" line="790"/>
         <source>&lt;i&gt;This option will load UInput module at boot.&lt;br&gt;
 The UInput is the base driver for sixad.&lt;br&gt;
 Although UInput is auto-started when sixad runs&lt;br&gt;
@@ -440,35 +440,55 @@ In that you would need &quot;modprobe uinput&quot; manually&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="654"/>
+        <location filename="qtsixa_sixaxis.ui" line="590"/>
         <source>Show the currently set overrides</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="657"/>
+        <location filename="qtsixa_sixaxis.ui" line="593"/>
         <source>Show overrides</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="681"/>
+        <location filename="qtsixa_sixaxis.ui" line="847"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="695"/>
+        <location filename="qtsixa_sixaxis.ui" line="861"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa_sixaxis.ui" line="706"/>
+        <location filename="qtsixa_sixaxis.ui" line="872"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_sixaxis.ui" line="49"/>
+        <source>LEDs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_sixaxis.ui" line="176"/>
+        <source>Input Events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_sixaxis.ui" line="313"/>
+        <source>Sixaxis Profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa_sixaxis.ui" line="494"/>
+        <source>Overrides</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainPYW</name>
     <message>
-        <location filename="qtsixa.pyw" line="47"/>
+        <location filename="qtsixa.pyw" line="58"/>
         <source>QtSixA - Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -478,7 +498,7 @@ In that you would need &quot;modprobe uinput&quot; manually&lt;br&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="52"/>
+        <location filename="qtsixa.pyw" line="68"/>
         <source>QtSixA - Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -486,6 +506,30 @@ In that you would need &quot;modprobe uinput&quot; manually&lt;br&gt;
         <location filename="qtsixa.pyw" line="52"/>
         <source>No bluetooth dongles detected.
 Connect over bluetooth will not be possible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa.pyw" line="28"/>
+        <source>Faild to load list of Sixaxis profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa.pyw" line="68"/>
+        <source>The list of Sixaxis profiles was not found.
+Use &quot;Settings&quot; -&gt; &quot;Advanced&quot; -&gt; &quot;Restore Sixaxis profiles&quot;
+to restore the default ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa.pyw" line="58"/>
+        <source>You&apos;re using a _really_ old bluetooth dongle,
+the Sixaxis will just not work!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qtsixa.pyw" line="62"/>
+        <source>You&apos;re using a very old bluetooth dongle,
+the Sixaxis will not work properly!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1192,258 +1236,258 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
 <context>
     <name>Main_QtSixA_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="1626"/>
+        <location filename="qtsixa.pyw" line="1653"/>
         <source>You&apos;re not using a Sixaxis profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1089"/>
+        <location filename="qtsixa.pyw" line="1116"/>
         <source>Current Sixaxis profile is &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1100"/>
+        <location filename="qtsixa.pyw" line="1127"/>
         <source>Could not disconnect device(s) through DBus, will use hcitool</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1116"/>
+        <location filename="qtsixa.pyw" line="1143"/>
         <source>Could not disconnect some devices; Maybe bluetooth is off or you don&apos;t have permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1117"/>
+        <location filename="qtsixa.pyw" line="1144"/>
         <source>QtSixA - Disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1117"/>
+        <location filename="qtsixa.pyw" line="1144"/>
         <source>Could not disconect some devices.&lt;br&gt;Maybe bluetooth is off or you don&apos;t have permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1145"/>
+        <location filename="qtsixa.pyw" line="1172"/>
         <source>Device not connected; Cannot disconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1165"/>
+        <location filename="qtsixa.pyw" line="1192"/>
         <source>Device not connected; Cannot check battery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1170"/>
+        <location filename="qtsixa.pyw" line="1197"/>
         <source>Device not connected; Cannot check battery (2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1200"/>
+        <location filename="qtsixa.pyw" line="1227"/>
         <source>QtSixA - Started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1200"/>
+        <location filename="qtsixa.pyw" line="1227"/>
         <source>Bluetooth should now be started (restored)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1573"/>
+        <location filename="qtsixa.pyw" line="1600"/>
         <source>QtSixA - Stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1205"/>
+        <location filename="qtsixa.pyw" line="1232"/>
         <source>Bluetooth should now be stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1213"/>
+        <location filename="qtsixa.pyw" line="1240"/>
         <source>QtSixA - Forced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1213"/>
+        <location filename="qtsixa.pyw" line="1240"/>
         <source>The sixad driver has now been forced to start.&lt;p&gt;You should be able to connect your devices with no problem now&lt;br&gt;&lt;i&gt;(but please note that bluetooth is not workable for anything else in this mode, so you should stop sixad when you need to do something else)&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1516"/>
+        <location filename="qtsixa.pyw" line="1543"/>
         <source>QtSixA - Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1224"/>
+        <location filename="qtsixa.pyw" line="1251"/>
         <source>The modules have been stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1236"/>
+        <location filename="qtsixa.pyw" line="1263"/>
         <source>QtSixA - Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1236"/>
+        <location filename="qtsixa.pyw" line="1263"/>
         <source>All bluetooth data should now be cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1250"/>
+        <location filename="qtsixa.pyw" line="1277"/>
         <source>QtSixA - Restored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1242"/>
+        <location filename="qtsixa.pyw" line="1269"/>
         <source>The default settings have been restored.&lt;br&gt;&lt;b&gt;Please restart QtSixA now&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1250"/>
+        <location filename="qtsixa.pyw" line="1277"/>
         <source>The default input profiles are now restored.&lt;br&gt;&lt;b&gt;Please restart QtSixA now&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1276"/>
+        <location filename="qtsixa.pyw" line="1303"/>
         <source>QtSixA - Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1473"/>
+        <location filename="qtsixa.pyw" line="1500"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1501"/>
+        <location filename="qtsixa.pyw" line="1528"/>
         <source>QtSixA - Incomplete!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1501"/>
+        <location filename="qtsixa.pyw" line="1528"/>
         <source>Something is missing...
 (Empty slot is not possible!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1531"/>
+        <location filename="qtsixa.pyw" line="1558"/>
         <source>QtSixA - Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1507"/>
+        <location filename="qtsixa.pyw" line="1534"/>
         <source>The action has been set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1516"/>
+        <location filename="qtsixa.pyw" line="1543"/>
         <source>All previous set-up actions were stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1519"/>
+        <location filename="qtsixa.pyw" line="1546"/>
         <source>QtSixA - Tips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1519"/>
+        <location filename="qtsixa.pyw" line="1546"/>
         <source>Commonly used commands:&lt;p&gt;&lt;b&gt;1.&lt;/b&gt; Any suggestions ??</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1531"/>
+        <location filename="qtsixa.pyw" line="1558"/>
         <source>The sixad driver has been initialized on the selected hidraw device sucessfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1534"/>
+        <location filename="qtsixa.pyw" line="1561"/>
         <source>QtSixA - Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1534"/>
+        <location filename="qtsixa.pyw" line="1561"/>
         <source>The sixad driver could not start.
 Are you sure you selected a Sixaxis?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1540"/>
+        <location filename="qtsixa.pyw" line="1567"/>
         <source>No Sixaxis found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1559"/>
+        <location filename="qtsixa.pyw" line="1586"/>
         <source>No hidraw devices found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1573"/>
+        <location filename="qtsixa.pyw" line="1600"/>
         <source>All back to normal now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1578"/>
+        <location filename="qtsixa.pyw" line="1605"/>
         <source>Show/Hide Main &amp;Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1580"/>
+        <location filename="qtsixa.pyw" line="1607"/>
         <source>&amp;Close Systray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1605"/>
+        <location filename="qtsixa.pyw" line="1632"/>
         <source>Your system doesn&apos;t suport double-click on systray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1627"/>
+        <location filename="qtsixa.pyw" line="1654"/>
         <source>Your input profile is set to &quot;&lt;i&gt;%1&lt;/i&gt;&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1631"/>
+        <location filename="qtsixa.pyw" line="1658"/>
         <source>No devices found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1633"/>
+        <location filename="qtsixa.pyw" line="1660"/>
         <source>&lt;u&gt;Connected devices:&lt;/u&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1734"/>
+        <location filename="qtsixa.pyw" line="1761"/>
         <source>QtSixA - Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1734"/>
+        <location filename="qtsixa.pyw" line="1761"/>
         <source>Cannot write to file.
 Please check if the location you selected is not read-only or if you enough space left on disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1756"/>
+        <location filename="qtsixa.pyw" line="1783"/>
         <source>QtSixA - Game Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1753"/>
+        <location filename="qtsixa.pyw" line="1780"/>
         <source>Done!
 Now just launch the game to start the fun!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1756"/>
+        <location filename="qtsixa.pyw" line="1783"/>
         <source>Error!
 The chosen game has never been started before...
 It&apos;s configuration file does not exist!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1759"/>
+        <location filename="qtsixa.pyw" line="1786"/>
         <source>QtSixA - Game Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="1759"/>
+        <location filename="qtsixa.pyw" line="1786"/>
         <source>This is easy:&lt;p&gt;&lt;b&gt;1.&lt;/b&gt; Select the game from the combo-box in the middle&lt;br&gt;&lt;b&gt;2.&lt;/b&gt; Choose a configuration on the buttons below&lt;br&gt;&lt;b&gt;3.&lt;/b&gt; Click the apply button on the bottom right&lt;p&gt;&lt;i&gt;Please be sure to run the game at least once before clicking &quot;Apply&quot;,&lt;br&gt;or the profile may not be applied sucessfully&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1708,33 +1752,33 @@ It&apos;s configuration file does not exist!</source>
 <context>
     <name>QtSixA_Add_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="130"/>
+        <location filename="qtsixa.pyw" line="150"/>
         <source>QtSixA - Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="130"/>
+        <location filename="qtsixa.pyw" line="150"/>
         <source>Your custom profile &quot;%1&quot; has been added.
 You will need to restart QtSixA to see changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="134"/>
+        <location filename="qtsixa.pyw" line="154"/>
         <source>Open FDI File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="138"/>
+        <location filename="qtsixa.pyw" line="158"/>
         <source>Open PNG File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="142"/>
+        <location filename="qtsixa.pyw" line="162"/>
         <source>QtSixA - Incomplete!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="142"/>
+        <location filename="qtsixa.pyw" line="162"/>
         <source>Something is missing...
 (Empty slot is not possible!)</source>
         <translation type="unfinished"></translation>
@@ -1743,23 +1787,23 @@ You will need to restart QtSixA to see changes.</source>
 <context>
     <name>QtSixA_ConfQtSixA_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="886"/>
+        <location filename="qtsixa.pyw" line="913"/>
         <source>QtSixA - Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="886"/>
+        <location filename="qtsixa.pyw" line="913"/>
         <source>Cannot write to configuration file.
 Please check if your media is not read-only, enough space left on disk and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="890"/>
+        <location filename="qtsixa.pyw" line="917"/>
         <source>QtSixA - Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="890"/>
+        <location filename="qtsixa.pyw" line="917"/>
         <source>Don&apos;t forget you&apos;ll have to restart QtSixA to apply this changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1767,40 +1811,40 @@ Please check if your media is not read-only, enough space left on disk and permi
 <context>
     <name>QtSixA_ConfSixaxis_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="521"/>
+        <location filename="qtsixa.pyw" line="548"/>
         <source>QtSixA - Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="519"/>
+        <location filename="qtsixa.pyw" line="546"/>
         <source>No current overrides are set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="521"/>
+        <location filename="qtsixa.pyw" line="548"/>
         <source>Current overrides:
  
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="565"/>
+        <location filename="qtsixa.pyw" line="592"/>
         <source>QtSixA - Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="565"/>
+        <location filename="qtsixa.pyw" line="592"/>
         <source>The selected profile is not on the list of profiles!
 QtSixA will quit now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="572"/>
+        <location filename="qtsixa.pyw" line="599"/>
         <source>QtSixA - Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="572"/>
+        <location filename="qtsixa.pyw" line="599"/>
         <source>The override has been set:
  
 Device: %1
@@ -1809,12 +1853,12 @@ Profile: &quot;%2&quot;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="601"/>
+        <location filename="qtsixa.pyw" line="628"/>
         <source>QtSixA - Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="580"/>
+        <location filename="qtsixa.pyw" line="607"/>
         <source>Input profile has now been set to &quot;%1&quot;.
  
 If you want to use it now, please disconnect your Sixaxis
@@ -1822,19 +1866,19 @@ and connect them again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="601"/>
+        <location filename="qtsixa.pyw" line="628"/>
         <source>The chosen Sixaxis profile has now L3/R3 settings
 If you want to use them now, please disconnect your Sixaxis
 and connect them again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="709"/>
+        <location filename="qtsixa.pyw" line="736"/>
         <source>QtSixA - Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="709"/>
+        <location filename="qtsixa.pyw" line="736"/>
         <source>These Sixaxis settings are invalid!&lt;br&gt;&lt;b&gt;Please enable &quot;Legacy Driver&quot; when running from a 32-bit PowerPC system!&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1842,28 +1886,28 @@ and connect them again.</source>
 <context>
     <name>QtSixA_Profile_New</name>
     <message>
-        <location filename="qtsixa.pyw" line="175"/>
+        <location filename="qtsixa.pyw" line="195"/>
         <source>&lt;body style=&quot;font-size:10pt;&quot;&gt;Some tips you may need:&lt;p&gt;&lt;body style=&quot;font-size:8pt;&quot;&gt;&lt;b&gt;1. &lt;/b&gt;Click on the &quot;View available keys&quot; buttons to see a full list of available keys you can assign to a button;&lt;br&gt;&lt;b&gt;2. &lt;/b&gt;Write the key you want to a button input-text;&lt;br&gt;&lt;b&gt;3. &lt;/b&gt;If you don&apos;t want a button to work as key set the input-text to &quot;none&quot; (without quotes);&lt;br&gt;&lt;b&gt;4. &lt;/b&gt;Don&apos;t forget about the &apos;Axis&apos; part!&lt;br&gt;&lt;b&gt;5. &lt;/b&gt;Combinations are possible using &apos;+&apos; between key names (maximum 4 keys, Meta not supported)&lt;br&gt;&lt;b&gt;6. &lt;/b&gt;It&apos;s also possible to assign a mouse-button to joystick-button, use &quot;mouse_BUTTON&quot; on those you want that. (BUTTON is a number)&lt;br&gt;&lt;b&gt;7. &lt;/b&gt;Once you finish, you can open the generated file for a further customization.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="202"/>
+        <location filename="qtsixa.pyw" line="222"/>
         <source>QtSixA - Incomplete!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="202"/>
+        <location filename="qtsixa.pyw" line="222"/>
         <source>Something is missing...
 (Empty slot is not possible!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="333"/>
+        <location filename="qtsixa.pyw" line="353"/>
         <source>QtSixA - Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="333"/>
+        <location filename="qtsixa.pyw" line="353"/>
         <source>It&apos;s done!
 A new profile has been saved.
  
@@ -1872,7 +1916,7 @@ Feel free to quit now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="175"/>
+        <location filename="qtsixa.pyw" line="195"/>
         <source>QtSixA - Tips &amp;&amp; Tricks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1880,19 +1924,19 @@ Feel free to quit now</source>
 <context>
     <name>QtSixA_Sixpair_Window</name>
     <message>
-        <location filename="qtsixa.pyw" line="949"/>
+        <location filename="qtsixa.pyw" line="976"/>
         <source>Not enough rights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="950"/>
+        <location filename="qtsixa.pyw" line="977"/>
         <source>Sixpair needs root/admin privileges to run
  
 Please go back or cancel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="956"/>
+        <location filename="qtsixa.pyw" line="983"/>
         <source>Sixpair reports that no %1 was found.
 It seems like you forgot something...
  
@@ -1903,7 +1947,7 @@ The sixpair report:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="962"/>
+        <location filename="qtsixa.pyw" line="989"/>
         <source>You&apos;re bluetooth stick/pen/device should now be 
 paired with the %1.
  
@@ -1911,7 +1955,7 @@ Below you can see the sixpair report:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qtsixa.pyw" line="923"/>
+        <location filename="qtsixa.pyw" line="950"/>
         <source>&lt;font size=4 &gt;&lt;b&gt;Getting ready for Sixpair setup...&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;Before continue please make sure that your bluetooth&lt;br&gt;stick/device/pen is connected to the PC and that the Sixaxis/Keypad&lt;br&gt;is connected to the PC&apos;s USB&lt;br&gt;&lt;br&gt;&lt;i&gt;Note: only one Sixaxis/Keypad per setup is supported&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>

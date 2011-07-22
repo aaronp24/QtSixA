@@ -28,7 +28,7 @@ install-system:
 	mkdir -p /var/lib/sixad/
 
 	#Installing binaries
-	cp bins/sixad /usr/bin/
+	cp sixad /usr/bin/
 	cp hcid/hcid /usr/sbin/
 	cp bins/hidraw-dump /usr/sbin/
 	cp bins/sixad-bin /usr/sbin/
@@ -42,10 +42,12 @@ install-system:
 	cp default/sixad /etc/default/
 	cp init/sixad /etc/init.d/
 	cp x11-sony-keypad.fdi /usr/share/hal/fdi/policy/20thirdparty/
-	cp mans/* usr/share/man/man1/
-	ln -s /etc/init.d/sixad /etc/rc0.d/K10sixad
-	ln -s /etc/init.d/sixad /etc/rc1.d/K10sixad
-	ln -s /etc/init.d/sixad /etc/rc6.d/K10sixad
+	cp mans/* /usr/share/man/man1/
+	ln -s /etc/init.d/sixad /etc/rc0.d/K10sixad || true
+	ln -s /etc/init.d/sixad /etc/rc1.d/K10sixad || true
+	ln -s /etc/init.d/sixad /etc/rc6.d/K10sixad || true
+
+	@echo "Finished"
 
 
 uninstall:

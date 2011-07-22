@@ -9,20 +9,20 @@ class QtSixA_Main : public QMainWindow
 
 public:
     QtSixA_Main(QMainWindow *parent = 0);
-    char *hidd_number_1;
-    char *hidd_number_2;
-    char *hidd_number_3;
-    char *hidd_number_4;
-    char *hidd_number_5;
-    char *hidd_number_6;
-    char *hidd_number_7;
-    char *hidd_number_8;
-    char *usb_number_1;
-    char *usb_number_2;
-    char *usb_number_3;
-    char *usb_number_4;
-    char *trayTooltip;
-    char *SixaxisProfile;
+    const char *hidd_number_1;
+    const char *hidd_number_2;
+    const char *hidd_number_3;
+    const char *hidd_number_4;
+    const char *hidd_number_5;
+    const char *hidd_number_6;
+    const char *hidd_number_7;
+    const char *hidd_number_8;
+    const char *usb_number_1;
+    const char *usb_number_2;
+    const char *usb_number_3;
+    const char *usb_number_4;
+    const char *trayTooltip;
+    const char *SixaxisProfile;
     int trayIsActive;
 
 private slots:

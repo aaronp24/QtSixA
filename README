@@ -1,26 +1,24 @@
-README for sixad, just to clarify:
+QtSixA is the Sixaxis Joystick Manager
+ ------------------------------------
 
-hcid is not needed at all.
-The problem is that the "normal" bluetooth is always pop-ing up when a new BT device is found.
-This makes sixad unusable, since it needs some time to detect and connect a Sixaxis.
+QtSixA can connect PS3 hardware (Sixaxis/DualShock3 and Keypads)
+to a Linux-compatible machine.
 
-When a user presses the PS button on the Sixaxis (and if it is paired correctly to the PC),
-the "normal" bluetooth detects it and asks the user for permission to connect to it.
-Since BlueZ doesn't support Sixaxis (or any other joystick?), here sixad takes action.
+"QtSixA" is the GUI (interface), while "sixad" is the backend C code.
 
-sixad has a udev rule that consists on:
- - When a new bluetooth device is found, (among other stuff) run:
-	  hcitool name `hcitool con | head -n 2 | tail -n 1 | awk '{printf$3}'` | grep -e 'PLAYSTATION(R)3 Controller' -e 'Wireless Keypad'
-    (0) If anything gets printed -> Just don't do anything
-    (1) If something gets printed -> then we got a new Sixaxis or Keypad:
-	- Then "sixad --udev" is runned, which will:
-	    1 · Stop "normal" bluetooth
-	    2 · Start sixad (if not already running)
-	    3 · Start hcid, hold 10 seconds, then stop it
-	    4 · Restore "normal" bluetooth
+Currently sixad supports:
+ - Sixaxis buttons, axis, accelerometers and LEDs
+ - PS3 Keypads
 
-When "sixad --start" is run from a terminal, hcid will run forever until stopped.
-Same thing is for "sixad --force".
+sixad also registers the Sixaxis and Keypad's MAC/ID in the joystick name
+(ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
+
+sixad is triggered by udev, making it super easy to connect new devices
+(you just need to press the PS button)
 
 
-The rule of 'hcid' on sixad is just to make sure the "normal" bluetooth doesn't interfere with the connection.
+ -------------------------------------
+
+QtSixA and sixad are licensed under the GNU GPL v2 license.
+
+For help, check qtsixa/manual, or the online help at qtsixa.sourceforge.net

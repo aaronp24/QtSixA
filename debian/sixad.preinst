@@ -5,6 +5,6 @@ set -e
 #DEBHELPER#
 
 #Stop sixad before performing upgrade
-sudo pkill -TERM sixad-uinput-sixaxis || true
-sudo pkill -TERM sixad-bin || true
-sudo pkill -TERM sixad || true
+pkill -TERM sixad-uinput-sixaxis || true
+pkill -TERM sixad-bin || true
+pkill -TERM sixad || true

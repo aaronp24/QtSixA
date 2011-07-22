@@ -1,3 +1,20 @@
+qtsixa (1.2.0-0ubuntu0+ppa1) lucid; urgency=low
+
+  * Final 1.2.0 release:
+    - Display a warning when the list of profiles was not found
+    - Fixed crash when the list of profiles was not found
+    - Also disable "Add New" and "Create New" buttons when no list found
+    - Use pt_PT for pt_BR translations, for now
+    - Special "--boot-yes" option fix for ArchLinux
+    - Fixed sixad Makefile
+    - Added a Makefile to QtSixA too (easy install for non-Debian systems)
+    - Sixaxis configuration menu is more usable now
+    - Warn user when using < 2.0 bluetooth dongle (Sixaxis incompatible)
+    - Drop C++ code (python is good enough)
+    - Added useful docs to the source tree
+
+ -- falkTX <falktx@gmail.com>  Wed, 27 Jan 2010 02:14:24 +0000
+
 qtsixa (1.2.0~rc1-0ubuntu0~ppa1) lucid; urgency=low
 
   * Finished strings for translators

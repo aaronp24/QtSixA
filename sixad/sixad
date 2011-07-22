@@ -10,6 +10,23 @@ start_by_udev_q  () {
 ADDR=`hcitool con | head -n 2 | tail -n 1 | awk '{printf$3}'`
 hcitool name $ADDR | grep -e 'PLAYSTATION(R)3 Controller' -e 'Wireless Keypad'
 }
+
+using_old_bt_ver () {
+VER=`hciconfig default version | grep "HCI Ver" | awk '{print$3}'`
+if [ "$VER" == "1.1" ]; then
+    echo "***** NOTICE *****
+You're using a very old bluetooth dongle,
+the Sixaxis will not work properly!
+"
+fi
+if [ "$VER" == "1.0" ]; then
+    echo "***** WARNING *****
+You're using a _really_ old bluetooth dongle,
+the Sixaxis will just not work!
+"
+fi
+
+}
  
 sixad_already_running_check () {
 ps -e | grep sixad-bin > /dev/null
@@ -30,17 +47,33 @@ if [ -f /lib/udev/rules.d/97-bluetooth.rules ]; then sudo /usr/sbin/bluetoothd -
 case $1 in
 
   --boot-no)
+if [ -f /etc/arch-release ]; then
+{ #1 - ArchLinux Fix
+sudo sed "s/ sixad//" -i /etc/rc.conf
+} #1
+else
+{ #2
 if [ -f /etc/rc2.d/S90sixad ]; then sudo rm /etc/rc2.d/S90sixad; fi
 if [ -f /etc/rc3.d/S90sixad ]; then sudo rm /etc/rc3.d/S90sixad; fi
 if [ -f /etc/rc4.d/S90sixad ]; then sudo rm /etc/rc4.d/S90sixad; fi
 if [ -f /etc/rc5.d/S90sixad ]; then sudo rm /etc/rc5.d/S90sixad; fi
+} #2
+fi
   ;;
 
   --boot-yes)
+if [ -f /etc/arch-release ]; then
+{ #1 - ArchLinux Fix
+sudo sed '/DAEMONS=/ s/)/ sixad)/g' -i /etc/rc.conf
+} #1
+else
+{ #2
 if [ -f /etc/rc2.d/S90sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc2.d/S90sixad; fi
 if [ -f /etc/rc3.d/S90sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc3.d/S90sixad; fi
 if [ -f /etc/rc4.d/S90sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc4.d/S90sixad; fi
 if [ -f /etc/rc5.d/S90sixad ]; then true; else sudo ln -s /etc/init.d/sixad /etc/rc5.d/S90sixad; fi
+} #2
+fi
   ;;
 
   --force|-force|force|-f)  #Used for QtSixA GUI
@@ -50,6 +83,7 @@ if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
 sudo /usr/sbin/hcid
 if (sixad_already_running_check "$1"); then true
 else
+  using_old_bt_ver
   /sbin/modprobe uinput
   /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
 fi
@@ -97,6 +131,7 @@ else
  if (modprobe_check "$1"); then  #Check for root access before running, If NO access, quit
   { #3
   if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
+  using_old_bt_ver
   sudo /usr/sbin/hcid
   sudo /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
    } #3
@@ -108,7 +143,7 @@ fi
   ;;
 
     --version|-version|version|-v)
-echo "[Qt]SixA Daemon - version 1.2.0 (Beta)"
+echo "[Qt]SixA Daemon - version 1.2.0"
   ;;
 
     --help|-help|help|-h)
@@ -132,8 +167,7 @@ command can be:
 	--boot-no	Does not auto-start sixad at boot time
 
 
-You can also check: sixad-raw, sixa-notify
-"
+You can also check: sixad-raw, sixa-notify"
   ;;
 
 esac

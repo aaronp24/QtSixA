@@ -9,6 +9,8 @@ install:
 
 install-system:
 	make -C sixad install-system
+	make -C qtsixa install
 
 uninstall:
 	make -C sixad uninstall
+	make -C qtsixa uninstall

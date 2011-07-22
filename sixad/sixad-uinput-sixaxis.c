@@ -620,6 +620,7 @@ int main(int argc, char *argv[])
 	    led = rfile[0] + 2;
 	    if (debug) syslog(LOG_INFO, "Previous js# were found, setting LED # to %i", led);
 	}
+	
 	enable_sixaxis(0, led, enable_led_anim);
         pclose(f);
     } else

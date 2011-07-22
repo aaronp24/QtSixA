@@ -9,6 +9,13 @@ class  QtSixA_Sixpair : public QDialog
 
 public:
      QtSixA_Sixpair(QDialog *parent = 0);
+     const char *CurrentPage;
+     const char *devName;
+     QString sixpair_report;
+
+ private slots:
+     void func_GoToPage1();
+     void func_GoToPage2();
 
 private:
     Ui::Sixpair ui_sixpair;

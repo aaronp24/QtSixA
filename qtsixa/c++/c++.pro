@@ -5,8 +5,8 @@ FORMS += ../gui/qtsixa_sixpair.ui \
     ../gui/qtsixa_newprofile.ui \
     ../gui/qtsixa_main.ui \
     ../gui/qtsixa_keylist.ui \
-    ../gui/qtsixa_addprofile.ui \
-    ../gui/qtsixa_about.ui
+    ../gui/qtsixa_about.ui \
+    ../gui/qtsixa_addprofile_mod.ui
 SOURCES += main.cpp \
     qtsixa_main.cpp \
     qtsixa_about.cpp \
@@ -25,6 +25,8 @@ HEADERS += qtsixa_main.h \
     qtsixa_options.h \
     qtsixa_reference.h \
     qtsixa_sixaxis.h \
-    qtsixa_sixpair.h
+    qtsixa_sixpair.h \
+    main.h
 TRANSLATIONS += ../lang/default.ts \
     ../lang/pt_PT.ts
+RESOURCES += ../icons/qtsixa.qrc
