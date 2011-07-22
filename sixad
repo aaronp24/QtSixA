@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# sixad-bin wrapper
+# written by falktx
+
+#Fix for PowerPC:
+LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/
+
+. /etc/default/sixad
+
+
+start_by_udev_q  () {
+ADDR=`hcitool con | head -n 2 | tail -n 1 | awk '{printf$3}'`
+hcitool name $ADDR | grep -e 'PLAYSTATION(R)3 Controller' -e 'Wireless Keypad'
+}
+ 
+sixad_already_running_check () {
+ps -e | grep sixad-bin > /dev/null
+}
+
+bluetoothd_check () {
+ps -e | grep bluetoothd > /dev/null
+}
+
+modprobe_check () {
+sudo /sbin/modprobe uinput
+}
+
+bt_start () {
+if [ -f /lib/udev/rules.d/97-bluetooth.rules ]; then sudo bluetoothd --udev; else sudo /etc/init.d/bluetooth start; fi
+}
+
+case $1 in
+
+  --force|-force|force)  #Used for QtSixA GUI
+echo "sixad has been forced to start.
+bluetooth will not be operational in this mode
+"
+if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
+sudo /usr/sbin/hcid
+if (sixad_already_running_check "$1"); then true
+else
+  /sbin/modprobe uinput
+  /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro
+fi
+  ;;
+
+  --stop|-stop|stop)
+sudo pkill -KILL sixad-uinput-sixaxis
+sudo pkill -KILL sixad-bin
+sudo pkill -KILL hcid
+if (bluetoothd_check "$1"); then true; else bt_start; fi
+  ;;
+
+  --udev)  #Used for udev
+# Only start udev action if a Sixaxis or Keypad is detected
+if (start_by_udev_q "$1"); then
+{ #Full
+if (bluetoothd_check "$1"); then pkill -KILL bluetoothd; fi
+if (sixad_already_running_check "$1"); then true
+else
+  /sbin/modprobe uinput
+  /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro &
+fi
+sudo /usr/sbin/hcid
+sleep 10 # wait for device to connect
+sudo pkill -KILL hcid
+bt_start
+} #Full
+
+fi
+  ;;
+
+  --raw|-raw|raw)  #Also for hidraw devices!
+if [ "$2" == "" ]; then
+  echo "usage: sixad --raw <hidraw device>"
+else
+  { #1
+  if (modprobe_check "$1"); then
+    sudo su root -c "/usr/sbin/sixad-raw _no_specific_hidraw_yet $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro < $2"
+  else
+    echo "You need admin/root access to run this application"
+ fi
+  } #1
+fi
+  ;;
+
+  *)  #Running from terminal without arguments (default)
+if (sixad_already_running_check "$1"); then
+echo "sixad is already running"
+else
+{ #2
+ if (modprobe_check "$1"); then  #Check for root access before running, If NO access, quit
+  { #3
+  if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
+  sudo /usr/sbin/hcid
+  sudo LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/ /usr/sbin/sixad-bin $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_gyro
+   } #3
+ else
+  echo "You need admin/root access to run this application"
+ fi
+} #2
+fi
+  ;;
+
+esac

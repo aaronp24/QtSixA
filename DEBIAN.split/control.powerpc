@@ -1,0 +1,16 @@
+Package: sixad
+Version: 0.6-falktx1
+Architecture: powerpc
+Maintainer: falkTX <falktx@gmail.com>
+Installed-Size: 55
+Depends: bluez (>= 4.12)
+Conflicts: libbluetooth2, bluez-sixa, bluez-sixaxis
+Section: extra
+Priority: optional
+Homepage: http://falktx.blogspot.com
+Description: sixad - SixA Daemon
+ This package provides the modules (called 'sixad') for connecting PS3 hardware (Sixaxis/DualShock3 and Keypads) to a Linux-compatible machine (through bluetooth).
+ sixad supports Sixaxis' buttons, axis, accelerometers, acceleration/speed, and LEDs. Only the rumble and gyro features are not supported yet.
+ sixad also registers the Sixaxis and Keypad's MAC/ID in the joystick name (ex: "PLAYSTATION(R)3 Controller (00:XX:X0:0X:XX)".
+ .
+ sixad is triggered by udev, so pressing the PS button is enough to connect the devices.

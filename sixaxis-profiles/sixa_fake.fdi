@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deviceinfo version="0.2">
+  <device>
+      <!-- Sixaxis configuration for Fake-Joystick Use (Keyboard) -->
+      <match key="input.product" contains="PLAYSTATION(R)3 Controller">
+
+        <merge key="input.x11_driver" type="string">joystick</merge>
+
+	<!-- Main Axis. Left=Mouse; Right=Scroll
+        -->
+        <merge key="input.x11_options.MapAxis1" type="string">mode=relative axis=+2x deadzone=5000</merge>
+        <merge key="input.x11_options.MapAxis2" type="string">mode=relative axis=+2y deadzone=5000</merge>
+        <merge key="input.x11_options.MapAxis3" type="string">mode=relative axis=+1zx deadzone=7500</merge>
+        <merge key="input.x11_options.MapAxis4" type="string">mode=relative axis=+1zy deadzone=7500</merge>
+	<merge key="input.x11_options.MapAxis5" type="string">mode=none</merge>
+	<merge key="input.x11_options.MapAxis6" type="string">mode=none</merge>
+	<merge key="input.x11_options.MapAxis7" type="string">mode=none</merge>
+	<merge key="input.x11_options.MapAxis8" type="string">mode=none</merge>
+ 
+	<!-- Select=A; Start=D; PS=E.
+        -->
+        <merge key="input.x11_options.MapButton1" type="string">key=A</merge>
+        <merge key="input.x11_options.MapButton2" type="string">key=NoSymbol</merge>
+        <merge key="input.x11_options.MapButton3" type="string">key=NoSymbol</merge>
+        <merge key="input.x11_options.MapButton4" type="string">key=D</merge>
+        <merge key="input.x11_options.MapButton17" type="string">key=E</merge>
+
+	<!-- Direcctional keys (Up, Down, Left & Right)
+        -->
+        <merge key="input.x11_options.MapButton5" type="string">key=Up</merge>
+        <merge key="input.x11_options.MapButton8" type="string">key=Left</merge>
+        <merge key="input.x11_options.MapButton6" type="string">key=Right</merge>
+        <merge key="input.x11_options.MapButton7" type="string">key=Down</merge>
+
+	<!-- R2=T; L2=Q; R1=R; L1=W
+        -->
+        <merge key="input.x11_options.MapButton10" type="string">key=T</merge>
+        <merge key="input.x11_options.MapButton9" type="string">key=Q</merge>
+        <merge key="input.x11_options.MapButton12" type="string">key=R</merge>
+        <merge key="input.x11_options.MapButton11" type="string">key=W</merge>
+
+	<!-- X=X; O=C; []=Z; Δ=S
+        -->
+
+        <merge key="input.x11_options.MapButton15" type="string">key=X</merge>
+        <merge key="input.x11_options.MapButton14" type="string">key=C</merge>
+        <merge key="input.x11_options.MapButton16" type="string">key=Z</merge>
+        <merge key="input.x11_options.MapButton13" type="string">key=S</merge>
+
+      </match>
+  </device>
+</deviceinfo>

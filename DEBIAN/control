@@ -1,0 +1,15 @@
+Package: qtsixa
+Version: 0.5.1-falktx1
+Architecture: all
+Maintainer: falkTX <falktx@gmail.com>
+Installed-Size: 2577
+Depends: bluez (>= 4.12), bluez-hcidump, sixad (>= 0.5), python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
+Recommends: gksu | kdesu | kdesudo, python2.5 | python2.6
+Section: extra
+Priority: optional
+Homepage: http://falktx.blogspot.com
+Description: QtSixA - The Sixaxis Joystick Manager
+ This package provides a useful GUI to control the sixad modules.
+ .
+ QtSixA is written in PyQt (python-qt4), and uses sixad for the connection (written in C)
+ The sixad module is based on BlueZ, the official Linux Bluetooth protocol stack.

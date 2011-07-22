@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#Auto-stop sixad when shutting down
+sudo ln -s /etc/init.d/sixad /etc/rc0.d/K10sixad
+sudo ln -s /etc/init.d/sixad /etc/rc1.d/K10sixad
+sudo ln -s /etc/init.d/sixad /etc/rc6.d/K10sixad

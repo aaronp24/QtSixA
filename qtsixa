@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# QtSixA - The Sixaxis Joystick Manager
+# PyQt "wrapper"/launcher
+
+#Fix for auto-start on session stuff
+mkdir -p $HOME/.config/
+mkdir -p $HOME/.config/autostart/
+
+
+QTSIXA_MAINGUI="/usr/share/qtsixa/gui/qtsixa.pyw"
+
+$QTSIXA_MAINGUI
+

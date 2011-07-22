@@ -1,0 +1,7 @@
+  ?package(qtsixa): needs="X11" \
+		     section="Applications/Utility" \
+		     title="QtSixA" \
+		     genericname="Sixaxis Joystick Manager" \
+		     comment="Sixaxis Joystick Manager" \
+		     icon="qtsixa.xpm" \
+		     command="qtsixa"
