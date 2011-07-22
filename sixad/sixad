@@ -106,7 +106,6 @@ bt_device_check
 echo "sixad has been forced to start.
 bluetooth will not be operational in this mode"
 if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
-sudo /usr/sbin/hcid
 if (sixad_already_running_check "$1"); then true
 else
   using_old_bt_ver
@@ -119,7 +118,6 @@ fi
   --stop|-stop|stop)
 sudo pkill -KILL sixad-uinput-sixaxis
 sudo pkill -TERM sixad-bin
-sudo pkill -KILL hcid
 if (bluetoothd_check "$1"); then true; else bt_start; fi
   ;;
 
@@ -137,10 +135,8 @@ else
   date >> /var/log/sixad.log
   /usr/sbin/sixad-bin $DEBUG $LEGACY &>> /var/log/sixad.log
 fi
-/usr/sbin/hcid
 if [ ! -f /etc/rc2.d/S90sixad ]; then
   sleep 10 # wait for device to connect
-  pkill -KILL hcid
 fi
 bt_start
 } #Full _end
@@ -160,7 +156,6 @@ else
   if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
   using_old_bt_ver
   fix_new_rumble_code
-  sudo /usr/sbin/hcid
   sudo /usr/sbin/sixad-bin $DEBUG $LEGACY
    } #3
  else
