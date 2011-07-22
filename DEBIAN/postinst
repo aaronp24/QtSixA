@@ -1,11 +1,7 @@
 #!/bin/bash
 
 sixa_find_old_fdi_files () {
-ls /etc/hal/fdi/policy/ | grep sixa > /dev/null
-}
-
-keypad_find_old_fdi_files () {
-ls /etc/hal/fdi/policy/ | grep x11-sixad_keypad > /dev/null
+ls /etc/hal/fdi/policy/ | grep sixa_ > /dev/null
 }
 
 keypad_find_old_override_files () {
@@ -19,22 +15,14 @@ fi
 
 if [ -f /etc/hal/fdi/policy/DualShock3.fdi ]; then
 rm /etc/hal/fdi/policy/DualShock3.fdi
-echo "Note: incompatible DualShock3.fdi file was found and deleted
-"
+echo "Note: incompatible DualShock3.fdi file was found and deleted"
 fi
 
 if (sixa_find_old_fdi_files "$1"); then true; else
-cp /usr/share/qtsixa/profiles/sixa_none.fdi /etc/hal/fdi/policy/
-fi
-
-if (keypad_find_old_fdi_files "$1"); then
-rm /etc/hal/fdi/policy/x11-sixad_keypad_*
-echo "Note: Old/deprecated keypad fdi files were found and deleted
-"
+cp /usr/share/qtsixa/sixaxis-profiles/sixa_none.fdi /etc/hal/fdi/policy/
 fi
 
 if (keypad_find_old_override_files "$1"); then
 rm /etc/hal/fdi/policy/x11-qt-sixa*
-echo "Note: Old Sixaxis override files were found and deleted
-"
+echo "Note: Old Sixaxis override files were found and deleted"
 fi

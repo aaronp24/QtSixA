@@ -32,7 +32,7 @@ static char *uinput_filename[] = {"/dev/uinput", "/dev/input/uinput",
                            "/dev/misc/uinput"};
 #define UINPUT_FILENAME_COUNT (sizeof(uinput_filename)/sizeof(char *))
 
-int uinput_open_sixaxis(const char * __restrict__ sixaxis_id)
+int uinput_open_sixaxis(const char * __restrict__ sixaxis_id, int enable_accel)
 {
     unsigned int i;
     int fd = -1, ufd;
@@ -76,15 +76,15 @@ int uinput_open_sixaxis(const char * __restrict__ sixaxis_id)
 	dev.absmax[i] = 255;
 	dev.absmin[i] = 0;
       }
-      else if (i == 4) { //accelerometer X (reversed)
+      else if (i == 4 && enable_accel == 1) { //accelerometer X (reversed)
 	dev.absmax[i] = 60.5;
 	dev.absmin[i] = 37;
       }	    
-      else if (i == 5) { //accelerometer Y
+      else if (i == 5 && enable_accel == 1) { //accelerometer Y
 	dev.absmax[i] = 61;
 	dev.absmin[i] = 39;
       }
-      else if (i == 6) { //accelerometer Z
+      else if (i == 6 && enable_accel == 1) { //accelerometer Z
 	dev.absmax[i] = 63;
 	dev.absmin[i] = 41;
       }
@@ -352,67 +352,10 @@ static void process_sixaxis(int ufd, int buf_int, int enable_buttons, int enable
     int gyro = (buf[48]<<8 | buf[49]) * 10000;  //gyro ### TODO - needs something else here...
 
     //center axis
-    if (lx > 120 && lx < 140) { lx = 127.5; }
-    if (ly > 120 && ly < 140) { ly = 127.5; }
-    if (rx > 120 && rx < 140) { rx = 127.5; }
-    if (ry > 120 && ry < 140) { ry = 127.5; }
-    
-  // start axis at 0 (if not set they start at a random value)
-  if (just_started == 1) {
-    uinput_send(ufd, EV_ABS, 0, 127.5);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 1, 127.5);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 2, 127.5);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 3, 127.5);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 4, 49);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 5, 50);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 6, 52);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 7, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 8, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 9, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 10, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 11, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 12, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 13, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 14, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 15, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 16, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 17, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 18, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 19, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 20, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 21, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 22, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 23, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 24, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    uinput_send(ufd, EV_ABS, 25, 0);
-    uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-    just_started = 0;
-  }
+    if (lx > 120 && lx < 141) { lx = 127; }
+    if (ly > 120 && ly < 141) { ly = 127; }
+    if (rx > 120 && rx < 141) { rx = 127; }
+    if (ry > 120 && ry < 141) { ry = 127; }
     
     // buttons
   if (enable_buttons == 1) {

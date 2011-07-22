@@ -1,10 +1,11 @@
 Package: qtsixa
-Version: 0.5.1-falktx1
+Version: 0.5.2-falktx1
 Architecture: all
 Maintainer: falkTX <falktx@gmail.com>
 Installed-Size: 2577
-Depends: bluez (>= 4.12), bluez-hcidump, sixad (>= 0.5), python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
+Depends: bluez (>= 4.12), bluez-hcidump, sixad (>= 0.6), python-qt4, python-dbus, xserver-xorg-input-joystick, libnotify-bin, xdg-utils
 Recommends: gksu | kdesu | kdesudo, python2.5 | python2.6
+Conflicts: qt-sixa (<= 0.4.3-falktx1)
 Section: extra
 Priority: optional
 Homepage: http://falktx.blogspot.com

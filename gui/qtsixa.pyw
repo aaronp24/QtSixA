@@ -799,7 +799,13 @@ class QtSixA_Sixpair_Window(QtGui.QDialog):
 	    self.devName = "Keypad"
 	self.textEdit.setText(self.sixpair_report)
 
-	if ("found on USB busses" in self.sixpair_report):
+	if (self.sixpair_report == "Not enough rights"):
+	  self.label.setText("Sixpair needs root/admin privileges to run\n \nPlease go back or cancel.")
+	  self.b_cancel.setEnabled(1)
+	  self.b_back.setEnabled(1)
+	  self.b_next.setEnabled(0)
+	  self.b_finish.setEnabled(0)
+	elif ("found on USB busses" in self.sixpair_report):
 	  self.label.setText("Sixpair reports that no "+self.devName+" was found.\nIt seems like you forgot something...\n \nPlease go back or cancel.\n \n \nThe sixpair report:")
 	  self.b_cancel.setEnabled(1)
 	  self.b_back.setEnabled(1)
@@ -919,10 +925,10 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.func_What()
 
 	if config_display_info == "1":  QtGui.QMessageBox.information(self, self.tr("QtSixA - Updated"), self.tr(""
-	"<b>QtSixA has been updated to 0.5.1</b>.<br>"
+	"<b>QtSixA has been updated to 0.5.2</b>.<br>"
 	"This is a bugfix release.<br>"
-	"The root actions have been fixed in KDE; Small fixes to the GUI too.<br>"
-	"QtSixA driver, sixad, should now auto-start on most systems<p>"
+	"Everything should be working now.<br>"
+	"If not, please use the \"Help\" -> \"Web Links\" -> \"Report bug\".<p>"
 	"<i>(To disable this pop-up, go to \"Settings\" -> \"Configure QtSixA\")</i>"
 	""))
 
@@ -1440,6 +1446,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	  self.trayIcon.activated.connect(self.func_Systray_Clicked) #Not available on some systems ( why ? )
 	except:
 	  print "Your system doesn't suport double-click on systray"
+	  print "Your system doesn't suport disconnect devices through DBus"
 
 	self.trayIcon.setToolTip(self.trayTooltip)
 	self.trayIcon.setIcon(QtGui.QIcon('/usr/share/qtsixa/icons/qt-sixa_32.png'))
@@ -1459,8 +1466,8 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 0.5.1 </b><br>"
-	if (self.SixaxisProfile == ""): self.trayTooltip += "You are not using an input profile."
+	self.trayTooltip = "<b> QtSixA 0.5.2 </b><br>"
+	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
         else: self.trayTooltip += "Your input profile is set to \"<i>"+self.SixaxisProfile+"</i>\"."
 	self.trayTooltip += "<p>"
 
@@ -1598,7 +1605,7 @@ if __name__ == '__main__':
 
     appName     = "QtSixA"
     programName = "QtSixA"
-    version     = "0.5.1"
+    version     = "0.5.2"
     description = "Sixaxis Joystick Manager"
     license     = "GPL v2+"
     copyright   = "(C) 2009 falkTX"

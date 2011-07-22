@@ -1,4 +1,4 @@
-#! /bin/sh                                     
+#!/bin/bash                                 
 ### BEGIN INIT INFO                            
 # Provides: sixad
 # Required-Start:    $local_fs $syslog $remote_fs dbus
@@ -13,7 +13,7 @@
 # set -e 
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
-DAEMON=/usr/sbin/sixad
+DAEMON=/usr/bin/sixad
 
 sixad_already_running_check () {
 ps -e | grep sixad-bin > /dev/null
@@ -28,7 +28,7 @@ if (sixad_already_running_check "$1"); then
 else
 {
   log_daemon_msg "Starting sixad"
-  modprobe uinput
+  /sbin/modprobe uinput
   $DAEMON &
   log_end_msg 0
 }
@@ -38,7 +38,7 @@ fi
     if (sixad_already_running_check "$1"); then
     {
       log_daemon_msg "Stopping sixad"
-      sixad --stop || true
+      $DAEMON --stop || true
       log_end_msg 0
     }
     else
@@ -53,7 +53,7 @@ fi
     status_of_proc "sixad-bin" "sixad" && exit 0 || exit $?
     ;;
   *)
-    echo "Usage: /etc/init.d/sixad_init {start|stop|restart|force-reload|status}" >&2
+    echo "Usage: /etc/init.d/sixad {start|stop|restart|force-reload|status}" >&2
     exit 1
     ;;
 esac

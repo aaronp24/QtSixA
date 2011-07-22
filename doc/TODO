@@ -6,7 +6,7 @@
 
 -- Things to do later (not in order) --
 
-3. Port SixA to the official Ubuntu repositories (universe) -> Planned for Lucyd.
+3. Port SixA to the official Ubuntu repositories (universe) -> Planned for Lucyd (10.04).
 7. Support for RPM-based distros like Fedora (In progress...)
 9. DualShock3 rumble support (normal "Sixaxis" doesn't have this feature)
 10. Remote wakeup a PC (from suspend), by pressing the PS button (?)

@@ -16,10 +16,13 @@ clean:
 	rm -f bins/sixad-bin bins/sixad-raw bins/sixad-uinput-sixaxis bins/hidraw-dump bins/sixpair bins/sixpair-kbd
 
 install:
+	chmod +x bins/six*
+	chmod +x bins/hid*
+	chmod +x compat/hcid_*
 	mkdir -p /usr/lib/sixad
 	cp sixad /usr/bin/
-	cp sixad.default /etc/default/
-	cp sixad.init /etc/init.d/
+	cp sixad.default /etc/default/sixad
+	cp sixad.init /etc/init.d/sixad
 	cp 98-sixad.rules /lib/udev/rules.d/
 	cp bins/hidraw-dump /usr/sbin/
 	cp bins/sixpair /usr/sbin/

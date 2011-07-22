@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	enable_speed = atoi(argv[8]);
 	enable_gyro = atoi(argv[9]);
 
-	ufd = uinput_open_sixaxis(argv[10]); //argv[10] is char ADDRESS
+	ufd = uinput_open_sixaxis(argv[10], enable_accel); //argv[10] is char ADDRESS
 	if (ufd < 0) { return -1; }
 
 	enable_sixaxis(0, led_n_recv, enable_led_anim);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>625</width>
-    <height>467</height>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,7 +65,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA - 0.5.1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA - 0.5.2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -486,7 +486,7 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../usr/share/qtsixa/icons/eject.png</normaloff>../../../../../usr/share/qtsixa/icons/eject.png</iconset>
+                <normaloff>../../../../../../usr/share/qtsixa/icons/eject.png</normaloff>../../../../../../usr/share/qtsixa/icons/eject.png</iconset>
               </property>
              </widget>
             </item>
@@ -513,7 +513,7 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../usr/share/qtsixa/icons/battery.png</normaloff>../../../../../usr/share/qtsixa/icons/battery.png</iconset>
+                <normaloff>../../../../../../usr/share/qtsixa/icons/battery.png</normaloff>../../../../../../usr/share/qtsixa/icons/battery.png</iconset>
               </property>
              </widget>
             </item>
@@ -554,7 +554,7 @@ p, li { white-space: pre-wrap; }
          <attribute name="title">
           <string>Game Profiles</string>
          </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_15">
+         <layout class="QVBoxLayout" name="verticalLayout_20">
           <item>
            <widget class="QLabel" name="label_games">
             <property name="enabled">
@@ -602,116 +602,148 @@ This way you won't need to apply an input profile to play that game with a Sixax
            </widget>
           </item>
           <item>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="0">
-             <widget class="QWidget" name="wEP" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <item>
-                <widget class="QRadioButton" name="radio_game_epsxe_1">
-                 <property name="text">
-                  <string>1:1 PlayStation controller</string>
-                 </property>
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_15">
+             <item>
+              <layout class="QGridLayout" name="gridLayout_4">
+               <item row="0" column="1">
+                <widget class="QWidget" name="wET" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                  <item>
+                   <widget class="QRadioButton" name="radio_etracer_axis">
+                    <property name="text">
+                     <string>All Axis</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_etracer_accel">
+                    <property name="text">
+                     <string>Accelerometer direction</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_etracer_full">
+                    <property name="text">
+                     <string>All Accelerometers</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
-               <item>
-                <widget class="QRadioButton" name="radio_game_epsxe_axis">
-                 <property name="text">
-                  <string>Left axis as accelerometers</string>
-                 </property>
+               <item row="0" column="0">
+                <widget class="QWidget" name="wEP" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_5">
+                  <item>
+                   <widget class="QRadioButton" name="radio_game_epsxe_1">
+                    <property name="text">
+                     <string>1:1 PlayStation controller</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_game_epsxe_axis">
+                    <property name="text">
+                     <string>Left axis as accelerometers</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_game_epsxe_drv">
+                    <property name="text">
+                     <string>Accelerometers for driving</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
-               <item>
-                <widget class="QRadioButton" name="radio_game_epsxe_drv">
-                 <property name="text">
-                  <string>Accelerometers for driving</string>
-                 </property>
+               <item row="1" column="0">
+                <widget class="QWidget" name="wNE" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_12">
+                  <item>
+                   <widget class="QRadioButton" name="radio_neverball_axis">
+                    <property name="text">
+                     <string>Left axis moves table</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_neverball_accel">
+                    <property name="text">
+                     <string>Accelerometers moves table</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QWidget" name="wSTK" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_14">
+                  <item>
+                   <widget class="QRadioButton" name="radio_stk_digital">
+                    <property name="text">
+                     <string>All Digital</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_stk_axis">
+                    <property name="text">
+                     <string>All Axis</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_stk_accel">
+                    <property name="text">
+                     <string>Accelerometer direction</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radio_stk_full">
+                    <property name="text">
+                     <string>All Accelerometers</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QWidget" name="wET" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QRadioButton" name="radio_etracer_axis">
-                 <property name="text">
-                  <string>All Axis</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radio_etracer_accel">
-                 <property name="text">
-                  <string>Accelerometer direction</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radio_etracer_full">
-                 <property name="text">
-                  <string>All Accelerometers</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QWidget" name="wNE" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_12">
-               <item>
-                <widget class="QRadioButton" name="radio_neverball_axis">
-                 <property name="text">
-                  <string>Left axis moves table</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radio_neverball_accel">
-                 <property name="text">
-                  <string>Accelerometers moves table</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QWidget" name="wSTK" native="true">
-              <layout class="QVBoxLayout" name="verticalLayout_14">
-               <item>
-                <widget class="QRadioButton" name="radio_stk_digital">
-                 <property name="text">
-                  <string>All Digital</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radio_stk_axis">
-                 <property name="text">
-                  <string>All Axis</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radio_stk_accel">
-                 <property name="text">
-                  <string>Accelerometer direction</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radio_stk_full">
-                 <property name="text">
-                  <string>All Accelerometers</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -722,7 +754,7 @@ This way you won't need to apply an input profile to play that game with a Sixax
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../usr/share/qtsixa/icons/manual.png</normaloff>../../../../../usr/share/qtsixa/icons/manual.png</iconset>
+                <normaloff>../../../../../../usr/share/qtsixa/icons/manual.png</normaloff>../../../../../../usr/share/qtsixa/icons/manual.png</iconset>
               </property>
              </widget>
             </item>
@@ -752,7 +784,7 @@ This way you won't need to apply an input profile to play that game with a Sixax
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../usr/share/qtsixa/icons/apply.png</iconset>
+                <normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</iconset>
               </property>
              </widget>
             </item>
@@ -931,7 +963,7 @@ This way you won't need to apply an input profile to play that game with a Sixax
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/hint.png</normaloff>../../../../../usr/share/qtsixa/icons/hint.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/hint.png</normaloff>../../../../../../usr/share/qtsixa/icons/hint.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -956,7 +988,7 @@ This way you won't need to apply an input profile to play that game with a Sixax
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/undo.png</normaloff>../../../../../usr/share/qtsixa/icons/undo.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/undo.png</normaloff>../../../../../../usr/share/qtsixa/icons/undo.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -983,7 +1015,7 @@ This way you won't need to apply an input profile to play that game with a Sixax
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/refresh.png</normaloff>../../../../../usr/share/qtsixa/icons/refresh.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/refresh.png</normaloff>../../../../../../usr/share/qtsixa/icons/refresh.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1000,7 +1032,7 @@ This way you won't need to apply an input profile to play that game with a Sixax
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../usr/share/qtsixa/icons/apply.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1084,7 +1116,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/stop.png</normaloff>../../../../../usr/share/qtsixa/icons/stop.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/stop.png</normaloff>../../../../../../usr/share/qtsixa/icons/stop.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1111,7 +1143,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/refresh.png</normaloff>../../../../../usr/share/qtsixa/icons/refresh.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/refresh.png</normaloff>../../../../../../usr/share/qtsixa/icons/refresh.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1128,7 +1160,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../usr/share/qtsixa/icons/apply.png</iconset>
+                   <normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</normaloff>../../../../../../usr/share/qtsixa/icons/apply.png</iconset>
                  </property>
                 </widget>
                </item>

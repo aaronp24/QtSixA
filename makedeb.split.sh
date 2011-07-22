@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create the deb files for sixad
-VERSION="0.6-falktx1"
+VERSION="0.6-falktx4"
 
 #Make needed directories
 make_dirs () {

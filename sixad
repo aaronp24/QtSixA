@@ -34,8 +34,7 @@ case $1 in
 
   --force|-force|force)  #Used for QtSixA GUI
 echo "sixad has been forced to start.
-bluetooth will not be operational in this mode
-"
+bluetooth will not be operational in this mode"
 if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
 sudo /usr/sbin/hcid
 if (sixad_already_running_check "$1"); then true
@@ -87,7 +86,8 @@ fi
 
   *)  #Running from terminal without arguments (default)
 if (sixad_already_running_check "$1"); then
-echo "sixad is already running"
+echo "sixad is already running.
+run 'sixad --stop' to stop it"
 else
 { #2
  if (modprobe_check "$1"); then  #Check for root access before running, If NO access, quit

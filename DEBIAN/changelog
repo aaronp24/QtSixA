@@ -1,3 +1,25 @@
+qtsixa (0.5.2-falktx1) stable; urgency=low
+
+  * Fixed debian postinst script (wrong path to "sixa_none.fdi" file)
+  * Display "You're not using a Sixaxis profile" in systray when main GUI says that too
+  * Fixed layout in the "Game Profiles" tab
+  * Sixpair setup now displays an error when no root privileges are available
+  * Debian conflits with old qt-sixa version (for happy update)
+  * Report to terminal when QtSixA cannot disconnect devices (old PyQt version)
+  [On Jaunty, use the KDE updates repo to update your PyQt version]
+  * Updated features.html file (used in "Help" -> "List of Features")
+  * Other very small fixes
+
+sixad (0.6-falktx{2,3,4}) stable; urgency=low
+
+  * Fixed some PATH issues
+  * Debian conflicts with "libbluetooth2", "bluez-sixa", "bluez-sixaxis" and "bluez-sixaxis-bin"
+  * Make sure sixad binaries are executable (no more "/usr/sbin/sixad-bin: command not found" when the file is really there!)
+  * Axis 4-7 (accelerometers) are now centered at 0 when disabled (was always max, 32767)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  Fri, 10 Oct 2009 12:16:02 +0000
+
+
 qtsixa (0.5.1-falktx1) stable; urgency=low
 
   * Do not display icons on "Cancel"/"Finish" buttons, Sixpair Setup (looks bad on GTK)

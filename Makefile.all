@@ -26,6 +26,9 @@ tools:
 	ppu-gcc -mpowerpc -Wall -O2 sixpair_kbd.c -o bins/sixpair-kbd_powerpc -lusb
 	ppu-gcc -mpowerpc -Wall -O2 sixad-raw.c -o bins/sixad-raw_powerpc
 	ppu-gcc -mpowerpc -Wall -O2 hidraw-dump.c -o bins/hidraw-dump_powerpc
+	chmod +x bins/six*
+	chmod +x bins/hid*
+	chmod +x compat/hcid_*
 
 clean:
 	rm -f bins/sixad-bin_* bins/sixad-raw_* bins/sixad-uinput-sixaxis_* bins/hidraw-dump_* bins/sixpair_* bins/sixpair-kbd_*
