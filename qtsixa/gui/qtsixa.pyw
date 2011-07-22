@@ -8,7 +8,7 @@ from PyQt4 import QtCore, QtGui, uic
 #For easy debugging, print version information to terminal
 print "Qt version:", QtCore.QT_VERSION_STR
 print "PyQt version:", QtCore.PYQT_VERSION_STR
-print "QtSixA version: 1.2.1"
+print "QtSixA version: 1.2.1b"
 
 #Fix crash when cannot copy file
 os.system("mkdir -p $HOME/.config/autostart/")
@@ -482,37 +482,37 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.hidd_number_8 = ""
 	self.nOfDevices = 0
 
-	self.Check4BluetoothDevices = commands.getoutput("hcitool con")
-	self.nOfDevices_str = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | grep ACL -n | tail -n 1 | awk '{printf$1}' | awk 'sub(\":\",\"\")'")
-	if self.nOfDevices_str != "": self.nOfDevices = int(self.nOfDevices_str) - 1
-	if self.nOfDevices > 0: self.hidd_number_1 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 2 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 1: self.hidd_number_2 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 3 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 2: self.hidd_number_3 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 4 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 3: self.hidd_number_4 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 5 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 4: self.hidd_number_5 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 6 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 5: self.hidd_number_6 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 7 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 6: self.hidd_number_7 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 8 | tail -n 1 | awk '{printf$3}'")
-	if self.nOfDevices > 7: self.hidd_number_8 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 9 | tail -n 1 | awk '{printf$3}'")
+	#self.Check4BluetoothDevices = commands.getoutput("hcitool con")
+	#self.nOfDevices_str = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | grep ACL -n | tail -n 1 | awk '{printf$1}' | awk 'sub(\":\",\"\")'")
+	#if self.nOfDevices_str != "": self.nOfDevices = int(self.nOfDevices_str) - 1
+	#if self.nOfDevices > 0: self.hidd_number_1 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 2 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 1: self.hidd_number_2 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 3 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 2: self.hidd_number_3 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 4 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 3: self.hidd_number_4 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 5 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 4: self.hidd_number_5 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 6 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 5: self.hidd_number_6 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 7 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 6: self.hidd_number_7 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 8 | tail -n 1 | awk '{printf$3}'")
+	#if self.nOfDevices > 7: self.hidd_number_8 = commands.getoutput("echo '"+self.Check4BluetoothDevices+"' | head -n 9 | tail -n 1 | awk '{printf$3}'")
 
-	if (self.hidd_number_1 == ""):
-	    self.applied2override_forced = 1
-	    self.group_specific.setEnabled(0)
-	    self.combo_specific_device.addItem("No Sixaxis found")
-	else:
-	    self.applied2override_forced = 0
-	    self.group_specific.setEnabled(1)
-	    if (self.hidd_number_1 != "" and commands.getoutput("hcitool name "+self.hidd_number_1+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_1)
-	    if (self.hidd_number_2 != "" and commands.getoutput("hcitool name "+self.hidd_number_2+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_2)
-	    if (self.hidd_number_3 != "" and commands.getoutput("hcitool name "+self.hidd_number_3+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_3)
-	    if (self.hidd_number_4 != "" and commands.getoutput("hcitool name "+self.hidd_number_4+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_4)
-	    if (self.hidd_number_5 != "" and commands.getoutput("hcitool name "+self.hidd_number_5+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_5)
-	    if (self.hidd_number_6 != "" and commands.getoutput("hcitool name "+self.hidd_number_6+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_6)
-	    if (self.hidd_number_7 != "" and commands.getoutput("hcitool name "+self.hidd_number_7+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_7)
-	    if (self.hidd_number_8 != "" and commands.getoutput("hcitool name "+self.hidd_number_8+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_8)
+	#if (self.hidd_number_1 == ""):
+	    #self.applied2override_forced = 1
+	    #self.group_specific.setEnabled(0)
+	    #self.combo_specific_device.addItem("No Sixaxis found")
+	#else:
+	    #self.applied2override_forced = 0
+	    #self.group_specific.setEnabled(1)
+	    #if (self.hidd_number_1 != "" and commands.getoutput("hcitool name "+self.hidd_number_1+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_1)
+	    #if (self.hidd_number_2 != "" and commands.getoutput("hcitool name "+self.hidd_number_2+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_2)
+	    #if (self.hidd_number_3 != "" and commands.getoutput("hcitool name "+self.hidd_number_3+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_3)
+	    #if (self.hidd_number_4 != "" and commands.getoutput("hcitool name "+self.hidd_number_4+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_4)
+	    #if (self.hidd_number_5 != "" and commands.getoutput("hcitool name "+self.hidd_number_5+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_5)
+	    #if (self.hidd_number_6 != "" and commands.getoutput("hcitool name "+self.hidd_number_6+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_6)
+	    #if (self.hidd_number_7 != "" and commands.getoutput("hcitool name "+self.hidd_number_7+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_7)
+	    #if (self.hidd_number_8 != "" and commands.getoutput("hcitool name "+self.hidd_number_8+" | grep 'PLAYSTATION(R)3 Controller'") ): self.combo_specific_device.addItem(self.hidd_number_8)
 
-	self.overridesN = commands.getoutput("ls /etc/hal/fdi/policy/ | grep x11-qtsixa | awk 'sub(\"x11-qtsixa_\",\"\")' | awk 'sub(\".fdi\",\"\")' | awk 'sub(\"_\",\" -> \")'")
-	if (self.overridesN == ""): self.group_specific.setChecked(0)
-	else: self.group_specific.setChecked(1)
+	#self.overridesN = commands.getoutput("ls /etc/hal/fdi/policy/ | grep x11-qtsixa | awk 'sub(\"x11-qtsixa_\",\"\")' | awk 'sub(\".fdi\",\"\")' | awk 'sub(\"_\",\" -> \")'")
+	#if (self.overridesN == ""): self.group_specific.setChecked(0)
+	#else: self.group_specific.setChecked(1)
 
 	if (int(sixad_config_leds) == 0):
 	    self.groupLED.setChecked(0)
@@ -557,31 +557,32 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 		  self.combo_specific_profiles.addItem(listOfSixaxisProfiles[i+1])
 		i += 1
 
-	self.current_profile_first = commands.getoutput("ls /etc/hal/fdi/policy | grep sixa | awk 'sub(\"sixa_\",\"\")' | awk 'sub(\".fdi\",\"\")'")
+	#self.current_profile_first = commands.getoutput("ls /etc/hal/fdi/policy | grep sixa | awk 'sub(\"sixa_\",\"\")' | awk 'sub(\".fdi\",\"\")'")
 
-	if (self.current_profile_first == ""): self.current_profile = "none"
-	else: self.current_profile = self.current_profile_first.split()[0]
+	#if (self.current_profile_first == ""): self.current_profile = "none"
+	#else: self.current_profile = self.current_profile_first.split()[0]
+	self.current_profile = "none" #Lucid
 
 	if (self.current_profile == "none"):
 	  self.fdiProfile = "none"
 	  self.inputBox.setChecked(0)
 	  self.sPic.setPixmap(QtGui.QPixmap('/usr/share/qtsixa/pics/sixa_none.png'))
-	else:
-	  if (self.current_profile in listOfSixaxisProfiles):
-	    x = listOfSixaxisProfiles.index(self.current_profile)
-	    self.inputComboBox.setCurrentIndex(((x/2)+1))
-	    self.fdiProfile = listOfSixaxisProfiles[x]
-	    self.sPic.setPixmap(QtGui.QPixmap('/usr/share/qtsixa/pics/sixa_'+self.fdiProfile+'.png'))
-	  else:
-	    self.fdiProfile = "none"
-	    self.inputComboBox.setCurrentIndex(0)
+	#else:
+	  #if (self.current_profile in listOfSixaxisProfiles):
+	    #x = listOfSixaxisProfiles.index(self.current_profile)
+	    #self.inputComboBox.setCurrentIndex(((x/2)+1))
+	    #self.fdiProfile = listOfSixaxisProfiles[x]
+	    #self.sPic.setPixmap(QtGui.QPixmap('/usr/share/qtsixa/pics/sixa_'+self.fdiProfile+'.png'))
+	  #else:
+	    #self.fdiProfile = "none"
+	    #self.inputComboBox.setCurrentIndex(0)
 
-	if ("MapButton2" in commands.getoutput("cat /usr/share/qtsixa/sixaxis-profiles/sixa_2h4u.fdi | grep disable-mouse")):
-	    self.checkLR3.setChecked(1)
+	#if ("MapButton2" in commands.getoutput("cat /usr/share/qtsixa/sixaxis-profiles/sixa_2h4u.fdi | grep disable-mouse")):
+	    #self.checkLR3.setChecked(1)
 
 	#if QtCore.PYQT_VERSION < 0x040500: self.b_new.setEnabled(0)
 
-	self.connect(self.b_overrides, QtCore.SIGNAL("clicked()"), self.func_ShowOverrides)
+	#self.connect(self.b_overrides, QtCore.SIGNAL("clicked()"), self.func_ShowOverrides)
 	self.connect(self.b_apply, QtCore.SIGNAL('clicked()'), self.func_Apply)
 	self.connect(self.b_ok, QtCore.SIGNAL('clicked()'), self.func_OK)
 	self.connect(self.optLEDn, QtCore.SIGNAL("clicked()"), self.func_LED_js)
@@ -598,27 +599,35 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.checkSpeed, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkPos, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.checkRumble, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
-	self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
-	self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Legacy_Check))
+	#self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
+	#self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Legacy_Check))
 	self.connect(self.spinLED, QtCore.SIGNAL("valueChanged(int)"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.groupLED, QtCore.SIGNAL("clicked()"), self.func_GroupLED)
 	self.connect(self.checkDebug, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
-	self.connect(self.checkLR3, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "lr3"))
-	self.connect(self.b_new, QtCore.SIGNAL('clicked()'), self.func_NewProfile)
-	self.connect(self.b_add, QtCore.SIGNAL('clicked()'), self.func_AddProfile)
+	#self.connect(self.checkLR3, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "lr3"))
+	#self.connect(self.b_new, QtCore.SIGNAL('clicked()'), self.func_NewProfile)
+	#self.connect(self.b_add, QtCore.SIGNAL('clicked()'), self.func_AddProfile)
 	self.connect(self.inputComboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.func_UpdateProfile)
 	self.connect(self.inputComboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "profile"))
 	self.connect(self.inputBox, QtCore.SIGNAL('clicked()'), self.func_ClickBoxOnProfile)
 	self.connect(self.inputBox, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "profile"))
 	self.connect(self.checkBoot, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "boot"))
 	self.connect(self.checkUInput, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "uinput"))
-	self.connect(self.group_specific, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "override"))
-	self.connect(self.combo_specific_device, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
-	self.connect(self.combo_specific_profiles, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
+	#self.connect(self.group_specific, QtCore.SIGNAL('clicked()'), partial(self.func_Apply_Enable, "override"))
+	#self.connect(self.combo_specific_device, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
+	#self.connect(self.combo_specific_profiles, QtCore.SIGNAL('currentIndexChanged(QString)'), partial(self.func_Apply_Enable, "override"))
 
-	if not os.path.exists('/usr/share/qtsixa/profiles.list'):
-	    self.b_new.setEnabled(0)
-	    self.b_add.setEnabled(0)
+	#if not os.path.exists('/usr/share/qtsixa/profiles.list'):
+	    #self.b_new.setEnabled(0)
+	    #self.b_add.setEnabled(0)
+
+        #Ubuntu Lucid, disable unsupported stuff
+        self.groupPS3.setVisible(0)
+        self.groupBox_3.setVisible(0)
+        self.group_specific.setVisible(0)
+        self.b_overrides.setVisible(0)
+        self.b_new.setVisible(0)
+        self.b_add.setVisible(0)
 
     def func_ShowOverrides(self):
 	self.overrides = commands.getoutput("ls /etc/hal/fdi/policy/ | grep x11-qtsixa | awk 'sub(\"x11-qtsixa_\",\"\")' | awk 'sub(\".fdi\",\"\")' | awk 'sub(\"_\",\" -> \")'")
@@ -632,7 +641,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.b_cancel.setEnabled(1)
 	if (what2apply == "sixad"): self.applied2sixad = 1
 	elif (what2apply == "profile"): self.applied2profile = 1
-	elif (what2apply == "override"): self.applied2override = 1
+	#elif (what2apply == "override"): self.applied2override = 1
 	elif (what2apply == "boot"): self.applied2boot = 1
 	elif (what2apply == "lr3"): self.applied2lr3 = 1
 	elif (what2apply == "uinput"): self.applied2uinput = 1
@@ -682,9 +691,9 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 
 	if self.applied2profile == 1: #Sixaxis profile stuff
 	    if look4Root():
-		os.system(ROOT+" rm -rf /etc/hal/fdi/policy/sixa*.fdi")
-		os.system(ROOT+" cp /usr/share/qtsixa/sixaxis-profiles/sixa_"+self.fdiProfile+".fdi "+"/etc/hal/fdi/policy/")
-		QtGui.QMessageBox.information(self, self.tr("QtSixA - Profile"), self.tr("Input profile has now been set to \"%1\".\n \nIf you want to use it now, please disconnect your Sixaxis\nand connect them again.").arg(self.inputComboBox.currentText()))
+		os.system(ROOT+" rm -rf /usr/lib/X11/xorg.conf.d/11-sixaxis_*.conf")
+		os.system(ROOT+" cp /usr/share/qtsixa/sixaxis-udev/11-sixaxis_"+self.fdiProfile+".conf "+"/usr/lib/X11/xorg.conf.d/")
+		QtGui.QMessageBox.information(self, self.tr("QtSixA - Profile"), self.tr("Input profile has now been set to \"%1\".\n \nIf you want to use it now, you'll... have to restart X!\n\nGo to the menu 'settings' -> 'advanced' -> 'restart X'").arg(self.inputComboBox.currentText()))
 
 
 	if self.applied2boot == 1: #Enable/Disable at boot
@@ -1117,6 +1126,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.connect(self.actionClearBT, QtCore.SIGNAL('triggered()'), self.func_ClearBT)
 	self.connect(self.actionRestoreDef, QtCore.SIGNAL('triggered()'), self.func_RestoreDef)
 	self.connect(self.actionSixaxisResPro, QtCore.SIGNAL('triggered()'), self.func_RestoreProfiles)
+	self.connect(self.actionX, QtCore.SIGNAL('triggered()'), self.func_RestartX)
 	self.connect(self.actionManual, QtCore.SIGNAL('triggered()'), self.func_Manual)
 	self.connect(self.actionSourceForge, QtCore.SIGNAL('triggered()'), self.func_SourceForge)
 	self.connect(self.actionUbuntu, QtCore.SIGNAL('triggered()'), self.func_UbuntuForums)
@@ -1362,6 +1372,12 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    os.system(ROOT+" cp /usr/share/qtsixa/profiles.list.bu /usr/share/qtsixa/profiles.list")
 	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Restored"), self.tr("The default input profiles are now restored.<br><b>Please restart QtSixA now</b>"))
 	    self.func_What()
+
+    def func_RestartX(self):
+        ask = QtGui.QMessageBox.question(None, "Maybe You Shouldn't", "Are you sure you want to kill X?\nIt's not just your work that will be lost, but all the opened sessions in this system.\n\nAre you really sure about this??", "No, I still haven't saved my work", "y")
+        if (ask == 1):
+            if look4Root():
+                os.system(ROOT+" killall Xorg")
 
     def func_Donate(self):
 	os.system("xdg-open \"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9305140\"")

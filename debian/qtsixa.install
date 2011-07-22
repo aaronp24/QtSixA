@@ -6,6 +6,7 @@ qtsixa/pics/* usr/share/qtsixa/pics/
 qtsixa/lang/* usr/share/qtsixa/lang/
 qtsixa/icons/* usr/share/qtsixa/icons/
 qtsixa/sixaxis-profiles/* usr/share/qtsixa/sixaxis-profiles/
+qtsixa/sixaxis-udev/* usr/share/qtsixa/sixaxis-udev/
 
 qtsixa/sixa usr/bin/
 qtsixa/sixa-lq usr/bin/

@@ -11,7 +11,7 @@ sixad/hcid/hcid usr/sbin/
 
 sixad/98-sixad.rules lib/udev/rules.d/
 
-sixad/x11-sony-keypad.fdi usr/share/hal/fdi/policy/20thirdparty/
+#sixad/x11-sony-keypad.fdi usr/share/hal/fdi/policy/20thirdparty/
 
 sixad/default/sixad etc/default/
 sixad/init/sixad etc/init.d/

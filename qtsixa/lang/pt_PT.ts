@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="pt_PT">
+<!DOCTYPE TS><TS version="1.1" language="pt_PT">
 <context>
     <name>About</name>
     <message>
@@ -43,7 +42,7 @@ Copyright (C) 2010 falkTX - &lt;a href=&quot;mailto:falktx@gmail.com&quot;&gt;fa
         <source>Thanks to</source>
         <translation>Agradecimentos</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="qtsixa_about.ui" line="180"/>
         <source>&lt;b&gt;&lt;i&gt;Thanks for your code:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
 Marcel Holtmann&lt;br&gt;
@@ -180,7 +179,7 @@ Then remove everything else
         <translation type="obsolete">&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
 &lt;font size=4&gt;&lt;b&gt;versão 1.2.0 RC&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="qtsixa_about.ui" line="180"/>
         <source>&lt;b&gt;&lt;i&gt;Thanks for your code:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
 Marcel Holtmann&lt;br&gt;
@@ -291,7 +290,7 @@ Gregor Kofler - £5 USD&lt;br&gt;
         <translation>&lt;font size=5&gt;QtSixA&lt;/font&gt;&lt;br&gt;
 &lt;font size=4&gt;&lt;b&gt;versão 1.2.1&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="qtsixa_about.ui" line="180"/>
         <source>&lt;b&gt;&lt;i&gt;Thanks for your code:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
 Marcel Holtmann&lt;br&gt;

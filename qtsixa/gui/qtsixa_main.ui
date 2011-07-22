@@ -1161,7 +1161,7 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
      <x>0</x>
      <y>0</y>
      <width>632</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
@@ -1178,6 +1178,7 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
      <addaction name="actionClearBT"/>
      <addaction name="actionRestoreDef"/>
      <addaction name="actionSixaxisResPro"/>
+     <addaction name="actionX"/>
     </widget>
     <addaction name="actionConfSixaxis"/>
     <addaction name="actionConfQtSixA"/>
@@ -1677,6 +1678,11 @@ To start, just select the proper hidraw device and click apply.&lt;br&gt;
    </property>
    <property name="statusTip">
     <string>Disconnect all bluetooth devices</string>
+   </property>
+  </action>
+  <action name="actionX">
+   <property name="text">
+    <string>Restart X</string>
    </property>
   </action>
  </widget>
