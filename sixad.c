@@ -40,9 +40,7 @@
 #define L2CAP_PSM_HIDP_CTRL 0x11
 #define L2CAP_PSM_HIDP_INTR 0x13
 
-int enable_leds, led_n, enable_ledplus, n_six, use_legacy;
-char *enable_led_anim, *led_js_n, *enable_buttons, *enable_sbuttons, *enable_rumble;
-char *enable_axis, *enable_accel, *enable_accon, *enable_speed, *enable_pos;
+int n_six, enable_leds, led_js_n, led_n, enable_ledplus, enable_led_anim, use_legacy, debug;
 
 static volatile sig_atomic_t __io_canceled = 0;
 
@@ -91,10 +89,16 @@ static void enable_sixaxis(int csk, int led_n, int enable_led_anim)
         0x12, 0x14, 0x18, 0x20
     };
 
-    if (enable_leds == 0)
-        n_six = 7;
-    else
-        n_six = led_n - 1;
+    if (enable_leds) {
+	if (led_n < 1) {
+	    n_six = 0;
+	} else if (n_six > 7) {
+	    n_six = 6;
+	} else {
+	    n_six = led_n - 1;
+	}
+    } else
+      n_six = 7;
 
     /* enable reporting */
     send(csk, enable, sizeof(enable), 0);
@@ -307,7 +311,7 @@ create:
     else
     {
         if (req.vendor == 0x054c && req.product == 0x0268) {
-            enable_sixaxis(csk, led_n, atoi(enable_led_anim));
+            enable_sixaxis(csk, led_n, enable_led_anim);
         }
         err = ioctl(ctl, HIDPCONNADD, &req);
     }
@@ -322,7 +326,7 @@ error:
 void l2cap_accept(int ctl, int csk, int isk)
 {
     bdaddr_t bdaddr;
-    int ctrl_socket, intr_socket, err; // nsk = ctrl_socket or intr_socket
+    int ctrl_socket, intr_socket, err;
     struct sockaddr_l2 addr;
     socklen_t addrlen;
 
@@ -357,12 +361,12 @@ void l2cap_accept(int ctl, int csk, int isk)
     int type = get_type(ctrl_socket);
 
     if (type == 1 && use_legacy != 1) {
-        printf("Will initiate Sixaxis now\n");
+        if (debug) printf("Will initiate Sixaxis now\n");
 
         char bda[18];
-        char *led_n_char;
         ba2str(&addr.l2_bdaddr, bda);
         char *uinput_sixaxis_cmd = "/usr/sbin/sixad-uinput-sixaxis";
+	char *led_n_str;
 
         int pid = fork();
         if (pid == 0) {
@@ -375,39 +379,17 @@ void l2cap_accept(int ctl, int csk, int isk)
             close(ctrl_socket);
             dup2(intr_socket, 1);
             close(intr_socket);
-
-            if (enable_leds == 0) {
-                led_n_char = "-1";
-            }
-            else if (led_n == 1) {
-                led_n_char = "1";
-            }
-            else if (led_n == 2) {
-                led_n_char = "2";
-            }
-            else if (led_n == 3) {
-                led_n_char = "3";
-            }
-            else if (led_n == 4) {
-                led_n_char = "4";
-            }
-            else if (led_n == 5) {
-                led_n_char = "5";
-            }
-            else if (led_n == 6) {
-                led_n_char = "6";
-            }
-            else if (led_n == 7) {
-                led_n_char = "7";
-            }
-            else {
-                led_n_char = "1";
-            };
-
-            char *argv[] = { uinput_sixaxis_cmd, led_n_char, led_js_n,
-                             enable_led_anim, enable_buttons, enable_sbuttons, enable_axis,
-                             enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble, bda, NULL
-                           };
+	    
+	    if (led_n <= 1) { led_n_str = "1";
+	    } else if (led_n == 2) { led_n_str = "2";
+	    } else if (led_n == 3) { led_n_str = "3";
+	    } else if (led_n == 4) { led_n_str = "4";
+	    } else if (led_n == 5) { led_n_str = "5";
+	    } else if (led_n == 6) { led_n_str = "6";
+	    } else if (led_n >= 7) { led_n_str = "7";
+	    } else { led_n_str = "1"; }
+	    
+            char *argv[] = { uinput_sixaxis_cmd, led_n_str, bda, NULL };
 
             char *envp[] = { NULL };
 
@@ -419,12 +401,12 @@ void l2cap_accept(int ctl, int csk, int isk)
                 close(1);
             }
             else
-                syslog(LOG_INFO, "Awesome! The device %s won't be disconnected when killing sixad", bda);
+                if (debug) syslog(LOG_INFO, "Awesome! The device %s won't be disconnected when killing sixad", bda);
         }
     }
     else {
         err = create_device(ctl, ctrl_socket, intr_socket);
-        printf("Connected new device using the default driver\n");
+        if (debug) printf("Connected new device using the default driver\n");
         if (err < 0)
             syslog(LOG_ERR, "HID create error %d (%s)", errno, strerror(errno));
         close(intr_socket);
@@ -447,7 +429,7 @@ static void run_server(int ctl, int csk, int isk)
     sigdelset(&sigs, SIGINT);
     sigdelset(&sigs, SIGHUP);
 
-    printf("Server mode now active, will start search now\n");
+    if (debug) printf("Server mode now active, will start search now\n");
 
     p[0].fd = csk; //ctrl_listen
     p[0].events = POLLIN | POLLERR | POLLHUP;
@@ -472,12 +454,12 @@ static void run_server(int ctl, int csk, int isk)
 
         if (events & POLLIN) {
 
-            printf("One event received\n");
+            if (debug) printf("One event received\n");
             l2cap_accept(ctl, csk, isk);
-            printf("One event proccessed\n");
+            if (debug) printf("One event proccessed\n");
 
-            if (atoi(led_js_n)) {
-                printf("Will auto-change LED # to js#\n");
+            if (led_js_n) {
+                if (debug) printf("Will auto-change LED # to js#\n");
 	    } else if (enable_ledplus && enable_leds) {
                 /* for the next connection, don't allow the sixaxis to have the same LED; if no other choice, set to 1 */
                 if (led_n == 1) {
@@ -504,16 +486,16 @@ static void run_server(int ctl, int csk, int isk)
                 else  {
                     led_n = 1;
                 }
-                printf("Changing next LED # to %i\n", led_n);
+                if (debug) printf("Changing next LED # to %i\n", led_n);
             } else {
-		printf("No changing next LED #, keeping it on %i\n", led_n);
+		if (debug) printf("No changing next LED #, keeping it on %i\n", led_n);
 	    }
 
         }
 
         if (events & (POLLERR | POLLHUP)) {
+	    if (debug) printf("Main loop was broken...\n");
             break;
-            printf("Main loop was broken...\n");
         }
 
     }
@@ -527,14 +509,14 @@ int main(int argc, char *argv[])
     int log_option = LOG_NDELAY | LOG_PID;
     int ctl, csk, isk, lm = 0;
 
-    // sixad: leds led_js_n led_n ledplus led_anim buttons sbuttons axis accel accon speed position rumble legacy
-    if (argc < 15) {
+    // sixad: leds led_js_n led_n ledplus led_anim legacy
+    if (argc < 6) {
         printf("Running %s requires 'sixad'. Please run sixad instead\n",  argv[0]);
         exit(-1);
     }
 
     enable_leds = atoi(argv[1]);
-    led_js_n = argv[2];
+    led_js_n = atoi(argv[2]);
     led_n = atoi(argv[3]);
     if (led_n < 1) {
         led_n = 1;
@@ -542,23 +524,33 @@ int main(int argc, char *argv[])
         led_n = 7;
     }
     enable_ledplus = atoi(argv[4]);
-    enable_led_anim = argv[5];
-    enable_buttons = argv[6];
-    enable_sbuttons = argv[7];
-    enable_axis = argv[8];
-    enable_accel = argv[9];
-    enable_accon = argv[10];
-    enable_speed = argv[11];
-    enable_pos = argv[12];
-    enable_rumble = argv[13];
-    use_legacy = atoi(argv[14]);
-
-    if (use_legacy) {
-        printf("Legacy driver workaround enabled (no neat stuff...)\n");
+    enable_led_anim = atoi(argv[5]);
+    use_legacy = atoi(argv[6]);
+    
+    log_option |= LOG_PERROR;
+    openlog("sixad", log_option, LOG_DAEMON);
+    
+    int sfile[15];
+    FILE *s = popen(". /etc/default/sixad; echo $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy $Debug", "r");
+    if ( !s || fscanf(s, "%i %i %i %i %i %i %i %i %i %i %i %i %i %i %i", &sfile[0], &sfile[1], &sfile[2], &sfile[3], &sfile[4], &sfile[5], &sfile[6], &sfile[7], &sfile[8], &sfile[9], &sfile[10], &sfile[11], &sfile[12], &sfile[13], &sfile[14]) != 15 ) {
+      syslog(LOG_ERR, "No valid sixad configuration file found, using default settings");
+    } else {
+	if (use_legacy) {
+	    printf("Legacy driver workaround enabled (no neat stuff...)\n");
+	}
+	else {
+	    printf("sixad settings:\nEnable LEDs:\t%i\njs# as LED #:\t%i\nStart LED #:\t%i\nLED # increase:\t%i\nLED animation:\t%i\nButtons:\t%i\nSens. buttons:\t%i\nAxis:\t\t%i\nAccelerometers:\t%i\nAcceleration:\t%i\nSpeed:\t\t%i\nPosition:\t%i\nRumble:\t\t%i\nDebug:\t\t%i\n", sfile[0], sfile[1], sfile[2], sfile[3], sfile[4], sfile[5], sfile[6], sfile[7], sfile[8], sfile[9], sfile[10], sfile[11], sfile[12], sfile[14]);
+	}
     }
-    else {
-        printf("sixad settings:\nEnable LEDs:\t%s\njs# as LED #:\t%s\nStart LED #:\t%i\nLED # increase:\t%s\nLED animation:\t%s\nButtons:\t%s\nSens. buttons:\t%s\nAxis:\t\t%s\nAccelerometers:\t%s\nAcceleration:\t%s\nSpeed:\t\t%s\nPosition:\t%s\nRumble:\t\t%s\n", argv[1], argv[2], led_n, argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11], argv[12], argv[13]);
-    }
+        
+    //removed code after 0.8.0
+    bacpy(&bdaddr, BDADDR_ANY);
+    
+    if (bacmp(&bdaddr, BDADDR_ANY))
+        syslog(LOG_INFO, "sixad started (adress %s), press the PS button now", addr);
+    else
+        syslog(LOG_INFO, "sixad started, press the PS button now");
+    //removed code after 0.8.0
 
     lm |= L2CAP_LM_MASTER;
 
@@ -584,12 +576,6 @@ int main(int argc, char *argv[])
         close(csk);
         exit(1);
     }
-
-    log_option |= LOG_PERROR;
-
-    openlog("sixad", log_option, LOG_DAEMON);
-
-    syslog(LOG_INFO, "sixad started, press the PS button now");
 
     memset(&sa, 0, sizeof(sa));
     sa.sa_flags = SA_NOCLDSTOP;

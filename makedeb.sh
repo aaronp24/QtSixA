@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create a deb file for qtsixa
-VERSION="0.6.0-falktx1"
+VERSION="1.0.1-falktx1"
 
 #Make needed directories
 mkdir ./qtsixa_deb
@@ -11,6 +11,7 @@ mkdir ./qtsixa_deb/usr/share
 mkdir ./qtsixa_deb/usr/share/applications
 mkdir ./qtsixa_deb/usr/share/doc/
 mkdir ./qtsixa_deb/usr/share/doc/qtsixa
+mkdir ./qtsixa_deb/usr/share/doc/qtsixa/manual
 #mkdir ./qtsixa_deb/usr/share/menu
 mkdir ./qtsixa_deb/usr/share/pixmaps
 mkdir ./qtsixa_deb/usr/share/qtsixa
@@ -23,6 +24,7 @@ mkdir ./qtsixa_deb/usr/share/qtsixa/sixaxis-profiles
 #Copy folders
 cp DEBIAN/* ./qtsixa_deb/DEBIAN/
 cp doc/* ./qtsixa_deb/usr/share/doc/qtsixa/
+cp manual/* ./qtsixa_deb/usr/share/doc/qtsixa/manual/
 cp game-profiles/* ./qtsixa_deb/usr/share/qtsixa/game-profiles/
 cp gui/* ./qtsixa_deb/usr/share/qtsixa/gui/
 cp pics/* ./qtsixa_deb/usr/share/qtsixa/pics/

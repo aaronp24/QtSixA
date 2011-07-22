@@ -1,15 +1,14 @@
--- TODO Stuff before sixad v1.0:
+-- TODO Stuff for later
 
  - Rumble support for DualShock3:  -- In progress
-  · Needs check if device is Sixaxis or DualShock3 (?) [not sure if needed]
-  · I don't have a DualShock3 yet, ask for testing volunteers
+  · Study how to receive UInput events (instead of reading bluetooth packet files)
   · Get a DualShock3 and finish code
- - Fix PowerPC-32 UInput error:
+ - Fix PowerPC-32 UInput error: - NOTE - may not be a problem with Karmic
   · Try to use patch from WiiMote guys
   · Needs too many checking, ask for testing volunteers
 
 
-Stuff to do later:
+Stuff to do way later:
  - Wake up a PC from suspend
  - RPM repo ? -> needs some study
  - Make Ubuntu repository trusted - Need help!

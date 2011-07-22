@@ -2,7 +2,7 @@
 #
 # [Qt]SixA - The Sixaxis Joystick Manager
 # last modified by falkTX - 05/10/2009
-VERSION="0.6.0"
+VERSION="1.0"
 
 # NOTE - this file only exists because I still don't know how to do some things directly on python
 #	This file is almost useless and it will be removed soon

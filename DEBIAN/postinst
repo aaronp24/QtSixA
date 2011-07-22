@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sixa_find_old_fdi_files () {
+check_4_fdi_files () {
 ls /etc/hal/fdi/policy/ | grep sixa_ > /dev/null
 }
 
@@ -26,7 +26,7 @@ rm /etc/hal/fdi/policy/DualShock3.fdi
 echo "Note: incompatible DualShock3.fdi file was found and deleted"
 fi
 
-if (sixa_find_old_fdi_files "$1"); then true; else
+if (check_4_fdi_files "$1"); then true; else
 cp /usr/share/qtsixa/sixaxis-profiles/sixa_none.fdi /etc/hal/fdi/policy/
 fi
 

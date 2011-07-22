@@ -8,10 +8,13 @@
 
 import commands, os, sys, time
 
-#This file controls wherever sixa-notify is started or not
-if (commands.getoutput("ls -a /tmp | grep sixa-notify") == ""):
-  print "'Please start the notify system within the GUI, QtSixA"
+
+if os.path.exists("/tmp/.sixa-notify"):
+  print "sixa-notify is already running"
+  print "run: \"rm /tmp/.sixa-notify\" to stop it"
   exit(-1)
+else:
+  os.system("touch /tmp/.sixa-notify")
 
 
 DeviceMAC="00:00:00:00:00"
@@ -23,7 +26,8 @@ os.system('notify-send --icon=/usr/share/qtsixa/icons/qtsixa.png "QtSixA" "Devic
 
 while (1 == 1): #Always loop program until file removed, or killed
 
-  if (commands.getoutput("ls -a /tmp | grep sixa-notify") == ""):
+  #This file controls wherever sixa-notify is started or not
+  if not os.path.exists("/tmp/.sixa-notify"):
     print "Notifications are now stopped"
     exit(-2)
   else:
@@ -73,3 +77,6 @@ while (1 == 1): #Always loop program until file removed, or killed
 	last_dmesg = commands.getoutput("dmesg | tail -n 1")
 
     time.sleep(1)
+
+
+#os.system("rm /tmp/.sixa-notify")

@@ -1,6 +1,6 @@
 #!/bin/bash
 #Small script to automatically create the deb files for sixad
-VERSION="0.9-falktx1"
+VERSION="1.0.1-falktx1"
 
 #Make needed directories
 make_dirs () {
@@ -20,6 +20,8 @@ make_dirs () {
   mkdir ./sixad_deb_$ARCH/usr/lib
   mkdir ./sixad_deb_$ARCH/usr/lib/sixad
   mkdir ./sixad_deb_$ARCH/usr/sbin
+  mkdir ./sixad_deb_$ARCH/usr/share
+  mkdir ./sixad_deb_$ARCH/usr/share/sixad
 }
 
 copy_files () {
@@ -43,6 +45,7 @@ copy_files () {
   cp compat/libbluetooth.so.2_$ARCH ./sixad_deb_$ARCH/usr/lib/libbluetooth.so.2
   cp x11-sony-keypad.fdi ./sixad_deb_$ARCH/etc/hal/fdi/policy/
   cp DEBIAN.split/postinst.all ./sixad_deb_$ARCH/DEBIAN/postinst
+  cp 11-x11-synaptics.fdi.fixed ./sixad_deb_$ARCH/usr/share/sixad/
 }
 
 copy_32 () {

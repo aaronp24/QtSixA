@@ -3,20 +3,31 @@
  * written by falkTX, 2009  (used some code from sixhidtest.c)
  *
  * Compile with: gcc -Wall hidraw-dump.c -o hidraw-dump
- * Run with: sudo su root -c "./hidraw-dump < /dev/hidrawX"
+ * Run with: "./hidraw-dump /dev/hidrawX"
  *
 */
 
-#include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
 
     unsigned char buf[128];
-    int nr;
+    int fd, nr;
+    
+    if (argc < 2) {
+	    printf("Usage: hidraw-dump /dev/hidrawX\n");
+	    exit(-1);
+    }
+    
+    if ((fd = open(argv[argc - 1], O_RDONLY)) < 0) {
+	    perror("hidraw-dump");
+	    exit(-1);
+    }
 
-    while ( (nr=read(0, buf, sizeof(buf))) ) {
+    while ( (nr=read(fd, buf, sizeof(buf))) ) {
         int i;
 
         if ( nr < 0 ) {

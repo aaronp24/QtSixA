@@ -8,7 +8,6 @@ from PyQt4 import QtCore, QtGui, uic
 #For easy debugging, print version information to terminal
 print "Main Qt version:", QtCore.QT_VERSION_STR
 print "Python-Qt version:", QtCore.PYQT_VERSION_STR
-if QtCore.PYQT_VERSION < 0x040500: print "WARNING: You're using an old PyQt version, some actions will be disabled or may not work at all!"
 
 #Create configuration files if they don't exist
 os.system("if [ -d $HOME/.config/autostart ]; then true; else mkdir -p $HOME/.config; mkdir -p $HOME/.config/autostart; fi")
@@ -108,16 +107,19 @@ class QtSixA_Add_Window(QtGui.QDialog):
 	    if look4Root():
 		os.system(ROOT+" cp "+str(self.location)+" "+"/usr/share/qtsixa/sixaxis-profiles/sixa_"+str(self.line_short.displayText())+".fdi")
 		os.system(ROOT+" cp "+str(self.png_file)+" "+"/usr/share/qtsixa/pics/sixa_"+str(self.line_short.displayText())+".png")
-		os.system(ROOT+' sudo su root -c \"echo "'+str(self.line_short.displayText())+'\t'+str(self.line_full.displayText())+'\n" >> /usr/share/qtsixa/profiles.list\"')
+		self.profileFileW = open(("/tmp/qtsixa.profile"), "w")
+		self.profileFileW.write(str(self.line_short.displayText())+"\t"+str(self.line_full.displayText())+"\n")
+		self.profileFileW.close()
+		os.system(ROOT+' sudo su root -c \"cat /tmp/qtsixa.profile >> /usr/share/qtsixa/profiles.list\"')
 		QtGui.QMessageBox.information(self, self.tr("QtSixA - Done!"), self.tr("Your custom profile "+self.line_full.displayText()+" has been added.\nRestart QtSixA to see changes."))
 		QtSixA_Add_Window().close()
 
     def func_Location(self):
-	self.location = QtGui.QFileDialog.getOpenFileName(self, "Open FDI File", "", "QtSixA FDI Files (*.fdi) (*.fdi *.FDI *.Fdi)")
+	self.location = QtGui.QFileDialog.getOpenFileName(self, "Open FDI File", "", "QtSixA FDI Files (*fdi *FDI *Fdi)")
 	self.line_loc.setText(str(self.location))
 
     def func_PNG_file(self):
-	self.png_file = QtGui.QFileDialog.getOpenFileName(self, "Open PNG File", "", "PNG Image Files (*.png) (*.png *.PNG *.Png)")
+	self.png_file = QtGui.QFileDialog.getOpenFileName(self, "Open PNG File", "", "PNG Image Files (*png *PNG *Png *PnG)")
 	self.line_png.setText(str(self.png_file))
 
     def func_Warning(self):
@@ -160,7 +162,7 @@ class QtSixA_Profile_New(QtGui.QDialog):
 	"<b>3. </b>If you don't want a button to work as key set the input-text to \"NoSymbol\" (without quotes);<br>"
 	"<b>4. </b>Don't forget about the 'Axis' part!<br>"
 	"<b>5. </b>Combinations are possible using '+' between key names (but, some combinations, like 'Control_L+Alt_L+Right' won't work)<br>"
-	"<b>6. </b>It's also possible to assign a mouse-button to joystick-button, use \"mouse_BUTTON\" on those you want that.<br>"
+	"<b>6. </b>It's also possible to assign a mouse-button to joystick-button, use \"mouse_BUTTON\" on those you want that. (BUTTON is a number)<br>"
 	"<b>7. </b>Once you finish, you can open the generated file for a further customization."))
 
     def func_UpdateComboLeft(self):
@@ -298,14 +300,19 @@ class QtSixA_Profile_New(QtGui.QDialog):
 	if self.FDI_SelectedFileLocation.isEmpty():
             pass
 	else:
-	  newFile = QtCore.QFile(self.FDI_SelectedFileLocation)
-	  if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
-	    QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
-	  else:
-	    newFile.writeData(self.FDI_Content)
-	    newFile.close()
+	  #newFile = QtCore.QFile(self.FDI_SelectedFileLocation)
+	  #if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
+	    #QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
+	  #else:
+	    self.sixadFileW = open((str(self.FDI_SelectedFileLocation)+".fdi"), "w")
+	    self.sixadFileW.write(self.FDI_Content)
+	    self.sixadFileW.close()
+	    #newFile.writeData(self.FDI_Content)
+	    #newFile.close()
+	    os.system('sed -e "s/key=mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
+	    os.system('sed -e "s/key=Mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
+	    os.system('sed -e "s/key=MOUSE_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
 	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Done!"), self.tr("It's done!\nA new profile has been saved.\n \nTo add the new profile, use the \"Add Profile\" button.\nFeel free to quit now"))
-	  os.system('sed -e "s/key=mouse_/button=/" -i /'+str(self.FDI_SelectedFileLocation+''))
 #	  os.system("chmod "+"777 "+str(self.FDI_SelectedFileLocation))
 
 
@@ -321,7 +328,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
         uic.loadUi("/usr/share/qtsixa/gui/qtsixa_sixaxis.ui", self)
 
 	#Read sixad configuration file
-	sixad_file = commands.getoutput(". /etc/default/sixad; echo $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy").split()
+	sixad_file = commands.getoutput(". /etc/default/sixad; echo $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy $Debug").split()
 	sixad_config_leds = sixad_file[0]
 	sixad_config_led_js_n = sixad_file[1]
 	sixad_config_led_n = sixad_file[2]
@@ -336,6 +343,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	sixad_config_pos = sixad_file[11]
 	sixad_config_rumble = sixad_file[12]
 	sixad_config_legacy = sixad_file[13]
+	sixad_config_debug = sixad_file[14]
 
 	self.i_saw_the_warning = 0
 	self.applied2profile = 0
@@ -413,6 +421,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    self.groupInput.setEnabled(0)
 	    self.optLEDn.setEnabled(0)
 	    self.optLEDm.setChecked(1)
+	if (int(sixad_config_debug)): self.checkDebug.setChecked(1)
 
 	if commands.getoutput("if [ -f /etc/rc2.d/S90sixad ]; then echo -n 'Present'; fi") == "Present": self.checkBoot.setChecked(1)
 
@@ -442,7 +451,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    self.fdiProfile = "none"
 	    self.inputComboBox.setCurrentIndex(0)
 
-	if QtCore.PYQT_VERSION < 0x040500: self.b_new.setEnabled(0)
+	#if QtCore.PYQT_VERSION < 0x040500: self.b_new.setEnabled(0)
 
 	self.connect(self.b_overrides, QtCore.SIGNAL("clicked()"), self.func_ShowOverrides)
 	self.connect(self.b_apply, QtCore.SIGNAL('clicked()'), self.func_Apply)
@@ -465,6 +474,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	self.connect(self.checkLegacy, QtCore.SIGNAL("clicked()"), partial(self.func_Legacy_Check))
 	self.connect(self.spinLED, QtCore.SIGNAL("valueChanged(int)"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.groupLED, QtCore.SIGNAL("clicked()"), self.func_GroupLED)
+	self.connect(self.checkDebug, QtCore.SIGNAL("clicked()"), partial(self.func_Apply_Enable, "sixad"))
 	self.connect(self.b_new, QtCore.SIGNAL('clicked()'), self.func_NewProfile)
 	self.connect(self.b_add, QtCore.SIGNAL('clicked()'), self.func_AddProfile)
 	self.connect(self.inputComboBox, QtCore.SIGNAL('currentIndexChanged(QString)'), self.func_UpdateProfile)
@@ -575,6 +585,8 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    else: self.txtEnable_rumble = "0"
 	    if self.checkLegacy.isChecked(): self.txtEnable_legacy = "1"
 	    else: self.txtEnable_legacy = "0"
+	    if self.checkDebug.isChecked(): self.txtEnable_debug = "1"
+	    else: self.txtEnable_debug = "0"
 
 	    self.sixadFile = (""
 	    "# sixad configuration file\n"
@@ -595,7 +607,7 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    "# LED # increase after new connection?\n"
 	    "LED_plus="+self.txtLED_plus+"\n"
 	    "\n"
-	    "# Enable LEDs animation?\n"
+	    "# Enable LEDs/Rumble animation?\n"
 	    "LED_anim="+self.txtLED_anim+"\n"
 	    "\n"
 	    "# Enable buttons?\n"
@@ -619,23 +631,28 @@ class QtSixA_ConfSixaxis_Window(QtGui.QDialog):
 	    "# Enable position?\n"
 	    "Enable_pos="+self.txtEnable_pos+"\n"
 	    "\n"
-	    "# Enable rumble? (Experimental)\n"
+	    "# Enable rumble? (Incomplete)\n"
 	    "Enable_rumble="+self.txtEnable_rumble+"\n"
 	    "\n"
 	    "# Use Old/Legacy driver instead of sixad (Workaround for PowerPC[32] UInput)\n"
 	    "Legacy="+self.txtEnable_legacy+"\n"
+	    "\n"
+	    "# Enable debug?\n"
+	    "Debug="+self.txtEnable_debug+"\n"
 	    "")
 
-	    self.sixadFileW = open("/etc/default/sixad", "w")
+	    self.sixadFileW = open("/tmp/sixad", "w")
 	    self.sixadFileW.write(self.sixadFile)
 	    self.sixadFileW.close()
-
-	    #os.system("echo \'"+str(self.sixadFile)+"\' > /tmp/sixad")
-	    #if look4Root(): os.system(ROOT+" cp /tmp/sixad /etc/default/sixad") HEREHERE
+	    if look4Root(): os.system(ROOT+" cp /tmp/sixad /etc/default/sixad")
 
 	    if self.i_saw_the_warning == 0:
-	      QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr(""
-	      "You have changed sixad settings, you'll need to stop it first (in tasks menu) to apply them"))
+	      #QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr(""
+	      #"You have changed sixad settings, which will only be applied on the next connected Sixaxis"))
+	      if commands.getoutput("uname -m") == "powerpc" and not self.checkLegacy.isChecked():
+		  QtGui.QMessageBox.warning(self, self.tr("QtSixA - Caution!"), self.tr(""
+		  "These Sixaxis settings are invalid!<br>"
+		  "<b>Please enable \"Legacy Driver\" when running from PowerPC!</b>"))
 	    self.i_saw_the_warning = 1
 #ends here--------------------------------------------------------------------
 
@@ -790,7 +807,7 @@ class QtSixA_ConfQtSixA_Window(QtGui.QDialog):
 
 	if self.box_notify.isChecked():
 	    if (self.alreadyStartedNotify == 0):
-		os.system("touch "+"/tmp/.sixa-notify")
+		os.system("rm -rf "+"/tmp/.sixa-notify")
 		os.system("sixa-notify &")
 	    if self.box_notify_start.isChecked():
 		os.system("cp /usr/share/qtsixa/sixa-notify.desktop $HOME/.config/autostart/sixa-notify.desktop")
@@ -928,13 +945,12 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.connect(self.actionRestoreDef, QtCore.SIGNAL('triggered()'), self.func_RestoreDef)
 	self.connect(self.actionSixaxisResPro, QtCore.SIGNAL('triggered()'), self.func_RestoreProfiles)
 	self.connect(self.actionManual, QtCore.SIGNAL('triggered()'), self.func_Manual)
-	self.connect(self.actionSixA_Website, QtCore.SIGNAL('triggered()'), self.func_SixA_Website)
+	self.connect(self.actionSourceForge, QtCore.SIGNAL('triggered()'), self.func_SourceForge)
+	self.connect(self.actionUbuntu, QtCore.SIGNAL('triggered()'), self.func_UbuntuForums)
 	self.connect(self.actionDonate, QtCore.SIGNAL('triggered()'), self.func_Donate)
 	self.connect(self.actionReport_Bug, QtCore.SIGNAL('triggered()'), self.func_Report_Bug)
 	self.connect(self.actionIdea, QtCore.SIGNAL('triggered()'), self.func_Idea)
 	self.connect(self.actionAskSome, QtCore.SIGNAL('triggered()'), self.func_Questions)
-	self.connect(self.actionSourceForge, QtCore.SIGNAL('triggered()'), self.func_SourceForge)
-	self.connect(self.actionUbuntu, QtCore.SIGNAL('triggered()'), self.func_UbuntuForums)
 	self.connect(self.actionReference, QtCore.SIGNAL('triggered()'), self.func_Reference)
 	self.connect(self.actionList_of_Features, QtCore.SIGNAL('triggered()'), self.func_Features)
 	self.connect(self.actionAbout_QtSixA, QtCore.SIGNAL('triggered()'), self.func_About_QtSixA)
@@ -996,9 +1012,10 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	self.func_What()
 
 	if config_display_info == "1":  QtGui.QMessageBox.information(self, self.tr("QtSixA - Updated"), self.tr(""
-	"<b>QtSixA has been updated to 0.6.0</b>.<br>"
-	"If you have some time, please consider helping QtSixA/sixad development.<br>"
-	"If you found any bug, please report it using \"Help\" -> \"Web Links\" -> \"Report bug\".<p>"
+	"<b>QtSixA has been updated to 1.0.1</b>.<br>"
+	"This is the final stable version - Enjoy!<p>"
+	"If you found any bug, please report it using:<br>"
+	"\"Help\" -> \"Web Links\" -> \"Report bug\"<p>"
 	"<i>(To disable this pop-up, go to \"Settings\" -> \"Configure QtSixA\")</i>"
 	""))
 
@@ -1166,11 +1183,8 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    QtGui.QMessageBox.information(self, self.tr("QtSixA - Restored"), self.tr("The default input profiles are now restored"))
 	    self.func_What()
 
-    def func_SixA_Website(self):
-	os.system("xdg-open http://falktx.blogspot.com/")
-
     def func_Donate(self):
-	os.system("xdg-open http://falktx.blogspot.com/2009/07/accepting-donations.html")
+	os.system("xdg-open \"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9305140\"")
 
     def func_Report_Bug(self):
 	os.system("xdg-open https://bugs.launchpad.net/qtsixa")
@@ -1292,6 +1306,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    self.listOfDevices.item(10).setHidden(0)
 	    self.listOfDevices.item(11).setHidden(0)
 	    self.listOfDevices.item(12).setHidden(0)
+	    self.listOfDevices.setSelectionMode(1)
 	    if (self.usb_number_1 == ""): self.listOfDevices.item(9).setHidden(1)
 	    else: self.listOfDevices.item(9).setText(self.usb_number_1)
 	    if (self.usb_number_2 == ""): self.listOfDevices.item(10).setHidden(1)
@@ -1335,7 +1350,6 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    self.lineType.setText("")
 	    self.lineID.setText("")
 	    self.lineMode.setText("")
-	    self.lineStatus.setText("")
 	    self.lineAddress.setText("")
 	    self.barLQ.setTextVisible(0)
 	    self.barLQ.setValue(0)
@@ -1347,19 +1361,15 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    if (self.parsedID[2] == "054c" and self.parsedID[3] == "0268"):
 		self.devName = "PLAYSTATION(R)3 Controller"
 		self.devType = "Joystick"
-		self.lineStatus.setText("Working")
 	    elif (self.parsedID[2] == "054c" and self.parsedID[3] == "03a0"):
 		self.devName = "Wireless Keypad"
 		self.devType = "Keypad"
-		self.lineStatus.setText("Not working")
 	    elif (self.parsedID[2] == "054c" and self.parsedID[3] == "0306"):
 		self.devName = "PLAYSTATION(R)3 Remote"
 		self.devType = "Remote"
-		self.lineStatus.setText("Unknown")
 	    else:
 		self.devName = "Unkown"
 		self.devType = "Unkown"
-		self.lineStatus.setText("Unknown")
 	    self.b_disconnect.setEnabled(0)
 	    self.b_battery.setEnabled(0)
 	    self.groupDevice.setEnabled(1)
@@ -1397,7 +1407,6 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	    self.lineType.setText(self.devType)
 	    self.lineID.setText(self.devID)
 	    self.lineMode.setText("Bluetooth")
-	    self.lineStatus.setText("Unknown")
 	    self.lineAddress.setText(self.listOfDevices.item(self.listOfDevices.currentRow()).text())
 	    self.barLQ.setTextVisible(1)
 	    self.devLQ = commands.getoutput("hcitool lq "+str(self.listOfDevices.item(self.listOfDevices.currentRow()).text())+" | awk '{printf$3}'")
@@ -1433,14 +1442,14 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
         QtGui.QMessageBox.information(self, self.tr("QtSixA - Tips"), self.tr(""
 	"Commonly used commands:"
 	"<p>"
-	"<b>1. Any suggestions ??"
+	"<b>1.</b> Any suggestions ??"
 	""))
 
     def func_Apply_hidraw(self):
 	if look4Root():
-	    self.rawReport = commands.getoutput(ROOT+" sudo su root -c \"/usr/sbin/sixad-raw 3654 < "+str(self.combo_hidraw.currentText())+"\"")
+	    self.rawReport = commands.getoutput(ROOT+" /usr/sbin/sixad-raw "+str(self.combo_hidraw.currentText())+" 3654")
 	    if (self.rawReport == "Found a Sixaxis"):
-		os.system(ROOT+" sixad "+"--raw "+str(self.combo_hidraw.currentText())+" &")
+		os.system(ROOT+" /usr/sbin/sixad-raw "+str(self.combo_hidraw.currentText())+" &")
 		QtGui.QMessageBox.information(self, self.tr("QtSixA - Done"), self.tr(""
 		"The sixad driver has been initialized on the selected hidraw device sucessfully"))
 	    else:
@@ -1449,7 +1458,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 
     def func_Refresh_signal(self):
 	self.combo_signal_device.clear()
-	if (self.hidd_number_1 == ""):
+	if not "ACL" in commands.getoutput("hcitool con"):
 	    self.combo_signal_device.addItem("No Sixaxis found")
 	    self.combo_signal_device.setEnabled(0)
 	    self.b_apply_signal.setEnabled(0)
@@ -1536,7 +1545,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 	else: app.setQuitOnLastWindowClosed(1)
 
     def func_UpdateTrayTooltip(self):
-	self.trayTooltip = "<b> QtSixA 0.6.0 </b><br>"
+	self.trayTooltip = "<b> QtSixA 1.0.1 </b><br>"
 	if (self.SixaxisProfile == "" or self.SixaxisProfile == "none" or self.SixaxisProfile == "None"): self.trayTooltip += "You're not using a Sixaxis profile"
         else: self.trayTooltip += "Your input profile is set to \"<i>"+self.SixaxisProfile+"</i>\"."
 	self.trayTooltip += "<p>"
@@ -1589,58 +1598,73 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 
     def func_ApplyGame(self):
 	if self.listOfGames.currentText() == "ePSXe (Wine)":
-	    if self.radio_game_epsxe_1.isChecked():
-		os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_axis.reg")
-	    elif self.radio_game_epsxe_axis.isChecked():
-		os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_accel-mov.reg")
-	    else:
-		os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_accel-driv.reg")
+	    if os.path.exists((os.getenv("HOME"))+"/.wine/user.reg"):
+		self.applied = 1
+		if self.radio_game_epsxe_1.isChecked():
+		    os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_axis.reg")
+		elif self.radio_game_epsxe_axis.isChecked():
+		    os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_accel-mov.reg")
+		else:
+		    os.system("regedit "+"/usr/share/qtsixa/game-profiles/wine-epsxe_accel-driv.reg")
+	    else: self.applied = 0
 	elif self.listOfGames.currentText() == "Extreme Tux Racer":
-	    if self.radio_etracer_axis.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_axis`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
-	    elif self.radio_etracer_accel.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_accel`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
-	    else:
-		content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_full`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
-	    newFile = QtCore.QFile('/tmp/etracer_options')
-	    if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
-		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
-	    else:
-		newFile.writeData(content)
-		newFile.close()
-		os.system("cp /tmp/etracer_options $HOME/.etracer/options")
+	    if os.path.exists((os.getenv("HOME"))+"/.etracer/options"):
+		self.applied = 1
+		if self.radio_etracer_axis.isChecked():
+		    content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_axis`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
+		elif self.radio_etracer_accel.isChecked():
+		    content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_accel`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
+		else:
+		    content = commands.getoutput('PREV=`cat $HOME/.etracer/options | head -n 150`; MOD=`cat /usr/share/qtsixa/game-profiles/etracer_full`; NEXT=`cat $HOME/.etracer/options | tail -n 325`; echo "$PREV $MOD $NEXT"')
+		newFile = QtCore.QFile('/tmp/etracer_options')
+		if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
+		    QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
+		else:
+		    newFile.writeData(content)
+		    newFile.close()
+		    os.system("cp /tmp/etracer_options $HOME/.etracer/options")
+	    else: self.applied = 0
 	elif self.listOfGames.currentText() == "Neverball / Nevergolf":
-	    if self.radio_neverball_axis.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qtsixa/game-profiles/neverballrc_axis`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
-	    else:
-		content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qtsixa/game-profiles/neverballrc_accel`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
-	    newFile = QtCore.QFile('/tmp/neverballrc')
-	    if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
-		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
-	    else:
-		newFile.writeData(content)
-		newFile.close()
-		os.system("cp /tmp/neverballrc $HOME/.neverball/neverballrc")
+	    if os.path.exists((os.getenv("HOME"))+"/.neverball/neverballrc"):
+		self.applied = 1
+		if self.radio_neverball_axis.isChecked():
+		    content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qtsixa/game-profiles/neverballrc_axis`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
+		else:
+		    content = commands.getoutput('PREV=`cat $HOME/.neverball/neverballrc | head -n 27`; MOD=`cat /usr/share/qtsixa/game-profiles/neverballrc_accel`; NEXT=`cat $HOME/.neverball/neverballrc | tail -n 26`; echo "$PREV $MOD $NEXT"')
+		newFile = QtCore.QFile('/tmp/neverballrc')
+		if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
+		    QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
+		else:
+		    newFile.writeData(content)
+		    newFile.close()
+		    os.system("cp /tmp/neverballrc $HOME/.neverball/neverballrc")
+	    else: self.applied = 0
 	elif self.listOfGames.currentText() == "Super Tux Kart":
-	    self.config_n_stk_1 = commands.getoutput("cat $HOME/.supertuxkart/config | grep -n \"player 1 settings\" | awk '{printf$1}' | awk 'sub(\":\",\"\")'")
-	    self.config_n_stk = str(  (int(self.config_n_stk_1) + 4) )
-	    if self.radio_stk_digital.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_digital`; echo "$PREV $MOD"')
-	    elif self.radio_stk_axis.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_axis`; echo "$PREV $MOD"')
-	    elif self.radio_stk_accel.isChecked():
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_accel`; echo "$PREV $MOD"')
-	    else:
-		content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_full`; echo "$PREV $MOD"')
-	    newFile = QtCore.QFile('/tmp/supertuxkart_config')
-	    if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
-		QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
-	    else:
-		newFile.writeData(content)
-		newFile.close()
-		os.system("cp /tmp/supertuxkart_config $HOME/.supertuxkart/config")
+	    if os.path.exists((os.getenv("HOME"))+"/.supertuxkart/config"):
+		self.applied = 1
+		self.config_n_stk_1 = commands.getoutput("cat $HOME/.supertuxkart/config | grep -n \"player 1 settings\" | awk '{printf$1}' | awk 'sub(\":\",\"\")'")
+		self.config_n_stk = str(  (int(self.config_n_stk_1) + 4) )
+		if self.radio_stk_digital.isChecked():
+		    content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_digital`; echo "$PREV $MOD"')
+		elif self.radio_stk_axis.isChecked():
+		    content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_axis`; echo "$PREV $MOD"')
+		elif self.radio_stk_accel.isChecked():
+		    content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_accel`; echo "$PREV $MOD"')
+		else:
+		    content = commands.getoutput('PREV=`cat $HOME/.supertuxkart/config | head -n '+self.config_n_stk+'`; MOD=`cat /usr/share/qtsixa/game-profiles/stk_full`; echo "$PREV $MOD"')
+		newFile = QtCore.QFile('/tmp/supertuxkart_config')
+		if not newFile.open(QtCore.QFile.WriteOnly | QtCore.QFile.Text):
+		    QtGui.QMessageBox.warning(self, self.tr("QtSixA - Error!"), self.tr("Cannot write to file.\nPlease check if the location you selected is not read-only or if you enough space left on disk."))
+		else:
+		    newFile.writeData(content)
+		    newFile.close()
+		    os.system("cp /tmp/supertuxkart_config $HOME/.supertuxkart/config")
+	    else: self.applied = 0
 	else: return
-        self.func_Game_msg()
+
+        if (self.applied): self.func_Game_msg()
+	else: self.func_Game_msgNO()
+
 
     def func_Game_bOn(self):
         self.b_game_apply.setEnabled(1)
@@ -1650,6 +1674,9 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 
     def func_Game_msg(self):
         QtGui.QMessageBox.information(self, self.tr("QtSixA - Game Profile"), self.tr("Done!\nNow just launch the game to start the fun!"))
+
+    def func_Game_msgNO(self):
+        QtGui.QMessageBox.warning(self, self.tr("QtSixA - Game Profile"), self.tr("Done!\nThe chosen game has never been started before...\nIt's configuration file does not exist!"))
 
     def func_HelpGame(self):
         QtGui.QMessageBox.information(self, self.tr("QtSixA - Game Help"), self.tr(""
@@ -1663,11 +1690,7 @@ class Main_QtSixA_Window(QtGui.QMainWindow):
 
 #The Manual...
     def func_Manual(self):
-        QtGui.QMessageBox.information(self, self.tr("QtSixA - Manual"), self.tr(""
-	"I know that if you clicked here you're probably looking for help<br>"
-	"I'm sorry to say that the manual is not written yet...<p>"
-	"But you can ask anything on my blog<br>"
-	"<i>(Click 'Help'->'Web Links'->'QtSixA Blog'</i>"))
+        os.system("xdg-open file:///usr/share/doc/qtsixa/manual/manual_index.html")
 
 
 #--------------- main ------------------
@@ -1675,7 +1698,7 @@ if __name__ == '__main__':
 
     appName     = "QtSixA"
     programName = "QtSixA"
-    version     = "0.6.0"
+    version     = "1.0.1"
     description = "Sixaxis Joystick Manager"
     license     = "GPL v2+"
     copyright   = "(C) 2009 falkTX"

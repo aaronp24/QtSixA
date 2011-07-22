@@ -23,12 +23,9 @@
 #include <linux/input.h>
 #include <linux/uinput.h>
 
-int led_n_recv, led_js_n, ufd = -1;
-int n_six, just_started = 1;
-int enable_led_anim, enable_buttons, enable_sbuttons, enable_axis;
-int enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble;
-unsigned int rumble_strong = 0;
-unsigned int rumble_weak = 0;
+int n_six, led_n, led_n_recv, led_js_n, ufd = -1;
+int enable_leds, enable_led_anim, enable_buttons, enable_sbuttons, enable_axis;
+int enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble, debug;
 unsigned char buf[128];
 
 struct device_info {
@@ -117,15 +114,15 @@ int uinput_open_sixaxis(char *sixaxis_id, int enable_axis, int enable_accel, int
         if (i >= 0 && i <= 3 && enable_axis == 1) { //left & right stick axis
             dev.absmax[i] = 127;
             dev.absmin[i] = -127;
-        } else if (i == 4 && enable_accel == 1) { //accelerometer X
-            dev.absmax[i] = 630;
-            dev.absmin[i] = 410;
+        } else if (i == 4 && enable_accel == 1) { //accelerometer X (reversed)
+            dev.absmax[i] = -402;
+            dev.absmin[i] = -622;
         } else if (i == 5 && enable_accel == 1) { //accelerometer Y
-            dev.absmax[i] = 620;
-            dev.absmin[i] = 400;
+            dev.absmax[i] = 622;
+            dev.absmin[i] = 402;
         } else if (i == 6 && enable_accel == 1) { //accelerometer Z
-	  dev.absmax[i] = 630;
-	  dev.absmin[i] = 418;
+	  dev.absmax[i] = 622;
+	  dev.absmin[i] = 402;
 //      } else if (i == 7 && enable_accel == 1) { //Gyro
 // 	dev.absmax[i] = ???;
 // 	dev.absmin[i] = ???;
@@ -203,38 +200,32 @@ int uinput_send(int fd, __u16 type, __u16 code, __s32 value)
 
 static void rumble_exec(int rumble_weak_r, int rumble_strong_r)
 {
-    char buf[1024];
-    unsigned char setleds[] = {
+//     char buf[128];
+    unsigned char setrumble[] = {
         0x52, /* HIDP_TRANS_SET_REPORT | HIDP_DATA_RTYPE_OUTPUT */
         0x01,
-        0x00, 0x00, 0x00, 0x00, 0x00,	// rumble values
-        0x00, 0x00, 0x00, 0x00, 0x1E,	// 0x10=LED1 .. 0x02=LED4
-        0xff, 0x27, 0x10, 0x00, 0x32,	// LED 4
-        0xff, 0x27, 0x10, 0x00, 0x32,	// LED 3
-        0xff, 0x27, 0x10, 0x00, 0x32,	// LED 2
-        0xff, 0x27, 0x10, 0x00, 0x32,	// LED 1
-        0x00, 0x00, 0x00, 0x00, 0x00
+        0x00, 0x00, 0x00, 0x00, 0x00	// rumble values
     };
 
     if (rumble_weak_r || rumble_strong_r) {
-        setleds[3] = setleds[5] = 254; // stay on for a long while
-        setleds[4] = rumble_weak_r ? 255 : 0;
+        setrumble[3] = setrumble[5] = 254; // stay on for a long while
+        setrumble[4] = rumble_weak_r ? 255 : 0;
         int strong = 0x40 + (rumble_strong_r * 0xc8 / 65535);
         if (strong>0xff) strong = 0xff;
-        setleds[6] = strong;
+        setrumble[6] = strong;
     } else {
-        setleds[3] = setleds[5] = 0; // off
-        setleds[4] = setleds[6] = 0; // minimum rumble
+        setrumble[3] = setrumble[5] = 0; // off
+        setrumble[4] = setrumble[6] = 0; // minimum rumble
     }
 
-    send(0, setleds, sizeof(setleds), 0);
+    send(0, setrumble, sizeof(setrumble), 0);
     recv(0, buf, sizeof(buf), 0);
 
 }
 
 static void enable_sixaxis(int csk, int led_n, int enable_led_anim)
 {
-    char buf[1024];
+//     char buf[1024];
     unsigned char enable[] = {
         0x53, /* HIDP_TRANS_SET_REPORT | HIDP_DATA_RTYPE_FEATURE */
         0xf4, 0x42, 0x03, 0x00, 0x00
@@ -255,26 +246,26 @@ static void enable_sixaxis(int csk, int led_n, int enable_led_anim)
         0x12, 0x14, 0x18, 0x20
     };
 
-    if (led_n < 1) {
-	if (led_n == -1)
-	  n_six = 7;
-	else
-	  n_six = 1;
-    } else if (n_six > 7) {
-        n_six = 7;
-    } else {
-	n_six = led_n - 1;
-    }
+    if (enable_leds) {
+	if (led_n < 1) {
+	    n_six = 0;
+	} else if (n_six > 7) {
+	    n_six = 6;
+	} else {
+	    n_six = led_n - 1;
+	}
+    } else
+      n_six = 7;
 
     /* enable reporting */
     send(csk, enable, sizeof(enable), 0);
     recv(csk, buf, sizeof(buf), 0);
 
-    if (enable_led_anim && led_n != -1)
+    if (enable_led_anim && enable_leds)
     {
         /* Sixaxis LED animation - Way Cool!! */
-        int animation;
-        animation = 0;
+        int animation = 0;
+        if (enable_rumble) { rumble_exec(999, 0); } //small rumble start
         while ( animation < 4 ) {  // repeat it 4 times
             setleds[11] = ledpattern[0];
             send(csk, setleds, sizeof(setleds), 0);
@@ -349,6 +340,7 @@ static void enable_sixaxis(int csk, int led_n, int enable_led_anim)
             send(csk, setleds, sizeof(setleds), 0);
             recv(csk, buf, sizeof(buf), 0);
         }
+	if (enable_rumble) { rumble_exec(0, 0); } //stop rumble "animation"
     }
 
     /* set LEDs */
@@ -357,62 +349,20 @@ static void enable_sixaxis(int csk, int led_n, int enable_led_anim)
     recv(csk, buf, sizeof(buf), 0);
 }
 
-void fatal(const char *msg) {
-    perror(msg);
-    exit(1);
-}
-
-static void process_sixaxis(int ufd, int buf_int, int enable_buttons, int enable_sbuttons, int enable_axis, int enable_accel,
+static void process_sixaxis(int ufd, int enable_buttons, int enable_sbuttons, int enable_axis, int enable_accel,
                             int enable_accon, int enable_speed, int enable_pos, int enable_rumble) {
+    
+    int br;
+    while ( (br=read(1, buf, sizeof(buf))) ) {
 
-    int br, er;
-    struct input_event event;
-
-    while ( ((br=read(buf_int, buf, sizeof(buf))) && (er=read(buf_int, &event, sizeof(event)))) ) {
-
-        if ( br < 0 || er < 0) {
-	    syslog(LOG_ERR, "Read loop was broken on the Sixaxis process");
+        if ( br < 0) {
+	    if (debug) syslog(LOG_ERR, "Read loop was broken on the Sixaxis process");
             return;
         }
-	
-	if (enable_rumble) {
-	    if (event.type == EV_FF) {
-                // really don't know why correct code below doesn't work, so hack it!
-                rumble_weak = event.code ? 65535: 0;
-                rumble_strong = event.value;
-// 		chan_status_sent &= ~STATUS_NEED_LEDS;
-// 		chan_status |= STATUS_NEED_LEDS;
-                rumble_exec(rumble_weak, rumble_strong);
-            } else if (event.type == EV_UINPUT) {
-                if (event.code == UI_FF_UPLOAD) {
-                    struct uinput_ff_upload upload;
-                    upload.request_id = event.value;
-                    if (ioctl(ufd, UI_BEGIN_FF_UPLOAD, &upload) >= 0) {
-                        rumble_strong = upload.effect.u.rumble.strong_magnitude;
-                        rumble_weak = upload.effect.u.rumble.weak_magnitude;
-// 				chan_status_sent &= ~STATUS_NEED_LEDS;
-// 				chan_status |= STATUS_NEED_LEDS;
-                        rumble_exec(rumble_weak, rumble_strong);
-                    }
-                    upload.retval = 0;
-                    ioctl(ufd, UI_END_FF_UPLOAD, &upload);
-                } else if (event.code == UI_FF_ERASE) {
-                    struct uinput_ff_erase erase;
-                    erase.request_id = event.value;
-                    if (ioctl(ufd, UI_BEGIN_FF_ERASE, &erase) >= 0) {
-                        rumble_strong = 0;
-                        rumble_weak = 0;
-// 				chan_status_sent &= ~STATUS_NEED_LEDS;
-// 				chan_status |= STATUS_NEED_LEDS;
-                        rumble_exec(rumble_weak, rumble_strong);
-                    }
-                    erase.retval = 0;
-                    ioctl(ufd, UI_END_FF_ERASE, &erase);
-                }
-            }
-	}
 
-        if ( gettimeofday(&tv, NULL) ) fatal("gettimeofday");
+     if (br==50 && buf[0]==0xa1 && buf[1]==0x01 && buf[2]==0x00) { //only continue if we've got a Sixaxis
+
+        if ( gettimeofday(&tv, NULL) ) { perror("gettimeofday"); exit(1); }
         newH.time = tv.tv_sec + tv.tv_usec*1e-6;
         newH.ax = buf[42]<<8 | buf[43];
         newH.ay = buf[44]<<8 | buf[45];
@@ -423,7 +373,7 @@ static void process_sixaxis(int ufd, int buf_int, int enable_buttons, int enable
             prev.ay = newH.ay;
             prev.az = newH.az;
         }
-        double dt = newH.time - prev.time; //(constants were recuced by half)
+        double dt = newH.time - prev.time; // (time constants were reduced by half)
         double rc_dd = 1.0;  // Time constant for highpass filter on acceleration
         double alpha_dd = rc_dd / (rc_dd+dt);
         newH.ddx = alpha_dd*(prev.ddx + (newH.ax-prev.ax)*0.01);
@@ -448,10 +398,10 @@ static void process_sixaxis(int ufd, int buf_int, int enable_buttons, int enable
         int ly = buf[8] - 128;
         int rx = buf[9] - 128;
         int ry = buf[10] - 128;
-        int acx = buf[42]<<8 | buf[43];
+        int acx = - (buf[42]<<8 | buf[43]); //reversed
         int acy = buf[44]<<8 | buf[45];
         int acz = buf[46]<<8 | buf[47];
-//     int gyro = buf[48]<<8 | buf[49];
+//      int gyro = buf[48]<<8 | buf[49];
         int up = buf[15];
         int right = buf[16];
         int down = buf[17];
@@ -474,162 +424,121 @@ static void process_sixaxis(int ufd, int buf_int, int enable_buttons, int enable
         int velY = (int)(newH.dy*1000);
         int velZ = (int)(newH.dz*1000);
 
-	//deadzones - NOTE - this may cause garbage input...!
-	if ((lx > -10 && lx < 10) || lx > 255) { lx = 0; }
-	if ((ly > -10 && ly < 10) || ly > 255) { ly = 0; }
-	if ((rx > -10 && rx < 10) || rx > 255) { rx = 0; }
-	if ((ry > -10 && ry < 10) || ry > 255) { ry = 0; }
-//  	if (acx > 508 && acx < 516) { acx = 512; }
-// 	if (acy > 508 && acy < 516) { acy = 512; }
-// 	if (acz > 508 && acz < 516) { acz = 512; }
-//  	if (posX > -150 && posX < -150) { posX = 0; }
-// 	if (posY > -150 && posY < -150) { posY = 0; }
-// 	if (posZ > -150 && posZ < -150) { posZ = 0; }
-// 	if (accX > -150 && accX < -150) { accX = 0; }
-// 	if (accY > -150 && accY < -150) { accY = 0; }
-// 	if (accZ > -150 && accZ < -150) { accZ = 0; }
-// 	if (velX > -150 && velX < -150) { velX = 0; }
-// 	if (velY > -150 && velY < -150) { velY = 0; }
-// 	if (velZ > -150 && velZ < -150) { velZ = 0; }
+	//deadzones
+	if (lx > -10 && lx < 10) { lx = 0; }
+	if (ly > -10 && ly < 10) { ly = 0; }
+	if (rx > -11 && rx < 11) { rx = 0; }
+	if (ry > -11 && ry < 11) { ry = 0; }
+	if (acx < -508 && acx > -516) { acx = -512; } //acx is reversed
+	if (acy > 508 && acy < 516) { acy = 512; }
+	if (acz > 508 && acz < 516) { acz = 512; }
+ 	if (posX > -30 && posX < 30) { posX = 0; }
+	if (posY > -30 && posY < 30) { posY = 0; }
+	if (posZ > -30 && posZ < 30) { posZ = 0; }
+	if (accX > -30 && accX < 30) { accX = 0; }
+	if (accY > -30 && accY < 30) { accY = 0; }
+	if (accZ > -30 && accZ < 30) { accZ = 0; }
+	if (velX > -30 && velX < 30) { velX = 0; }
+	if (velY > -30 && velY < 30) { velY = 0; }
+	if (velZ > -30 && velZ < 30) { velZ = 0; }
 
         // buttons
         if (enable_buttons == 1) {
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 0, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 1, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 2, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 3, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 4, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 5, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 6, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b1 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 7, b1 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 8, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 9, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 10, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 11, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 12, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 13, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 14, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             b2 >>= 1;
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 15, b2 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_KEY, BTN_JOYSTICK + 16, b3 & 1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
         }
 
         //axis
         if (enable_axis == 1) {
             uinput_send(ufd, EV_ABS, 0, lx);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 1, ly);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 2, rx);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 3, ry);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
         }
 
         //accelerometer RAW
         if (enable_accel == 1) {
             uinput_send(ufd, EV_ABS, 4, acx);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 5, acy);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 6, acz);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
-//     uinput_send(ufd, EV_ABS, 7, gyro);
-//     uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+// 	    uinput_send(ufd, EV_ABS, 7, gyro);
         }
 
         //buttons (sensible, as axis)
         if (enable_sbuttons == 1) {
             uinput_send(ufd, EV_ABS, 8, up);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 9, right);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 10, down);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 11, left);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 12, l2);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 13, r2);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 14, l1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 15, r1);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 16, tri);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 17, cir);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 18, cro);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 19, squ);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
         }
 
         //acceleration
         if (enable_accon == 1) {
             uinput_send(ufd, EV_ABS, 20, accX);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 21, accY);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 22, accZ);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
         }
 
         //speed
         if (enable_speed == 1) {
             uinput_send(ufd, EV_ABS, 23, velX);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 24, velY);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 25, velZ);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
         }
 
         //position
         if (enable_pos == 1) {
             uinput_send(ufd, EV_ABS, 26, posX);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 27, posY);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
             uinput_send(ufd, EV_ABS, 28, posZ);
-            uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
         }
+	
+	uinput_send(ufd, EV_SYN, SYN_REPORT, 0);
+	
+     } else
+       if (debug) syslog(LOG_INFO, "non-Sixaxis packet received and ignored");
 
     }
 
     close(ufd);
-    close(buf_int);
+    if (debug) syslog(LOG_ERR, "Read loop has ended");
     return;
 
 }
@@ -637,33 +546,65 @@ static void process_sixaxis(int ufd, int buf_int, int enable_buttons, int enable
 int main(int argc, char *argv[])
 {
     struct pollfd p[3];
+    struct timespec timeout;
     sigset_t sigs;
     short events;
-    struct timespec timeout;
-
-    // led_n led_js_n led_anim buttons sbuttons axis accel accon speed pos rumble bda
-    if (argc < 13) {
+    int led;
+    int log_option = LOG_NDELAY | LOG_PID | LOG_PERROR;
+    
+    if (argc < 2) {
         printf("Running %s requires 'sixad'. Please run sixad instead\n",  argv[0]);
         exit(-1);
     }
     
-    int log_option = LOG_NDELAY | LOG_PID | LOG_PERROR;
-    openlog("sixad-debug", log_option, LOG_DAEMON);
-    syslog(LOG_INFO, "debug mode started");
+    //led_n bda
+    led_n = atoi(argv[1]);
+    if (led_n < 1) {
+        led_n = 1;
+    } else if (led_n > 7) {
+        led_n = 7;
+    }
+    
+    char *mac = argv[2];
+    
+    int sfile[13];
+    FILE *s = popen(". /etc/default/sixad; echo $Enable_leds $LED_js_n $LED_n $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Debug", "r");
+    if ( !s || fscanf(s, "%i %i %i %i %i %i %i %i %i %i %i %i %i", &sfile[0], &sfile[1], &sfile[2], &sfile[3], &sfile[4], &sfile[5], &sfile[6], &sfile[7], &sfile[8], &sfile[9], &sfile[10], &sfile[11], &sfile[12]) != 13 ) {
+	if (debug) syslog(LOG_INFO, "No valid sixad configuration file found, using default settings");
+	enable_leds = 1;
+	led_js_n = 1;
+	led_n_recv = 1;
+	enable_led_anim = 1;
+	enable_buttons = 1;
+	enable_sbuttons = 1;
+	enable_axis = 1;
+	enable_accel = 1;
+	enable_accon = 0;
+	enable_speed = 0;
+	enable_pos = 0;
+	enable_rumble = 0;
+	debug = 0;
+    } else {
+	enable_leds = sfile[0];
+	led_js_n = sfile[1];
+	led_n_recv = atoi(argv[1]);
+	enable_led_anim = sfile[3];
+	enable_buttons = sfile[4];
+	enable_sbuttons = sfile[5];
+	enable_axis = sfile[6];
+	enable_accel = sfile[7];
+	enable_accon = sfile[8];
+	enable_speed = sfile[9];
+	enable_pos = sfile[10];
+	enable_rumble = sfile[11];
+	debug = sfile[12];
+    }
+    pclose(s);
+    
+    if (debug) openlog("sixad-debug", log_option, LOG_DAEMON);
+    if (debug) syslog(LOG_INFO, "debug mode started");
 
-    led_n_recv = atoi(argv[1]);
-    led_js_n = atoi(argv[2]);
-    enable_led_anim = atoi(argv[3]);
-    enable_buttons = atoi(argv[4]);
-    enable_sbuttons = atoi(argv[5]);
-    enable_axis = atoi(argv[6]);
-    enable_accel = atoi(argv[7]);
-    enable_accon = atoi(argv[8]);
-    enable_speed = atoi(argv[9]);
-    enable_pos = atoi(argv[10]);
-    enable_rumble = atoi(argv[11]);
-
-    ufd = uinput_open_sixaxis(argv[12], enable_axis, enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble); //argv[12] is char ADDRESS
+    ufd = uinput_open_sixaxis(mac, enable_axis, enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble);
     if (ufd < 0) {
         return -1;
     }
@@ -672,11 +613,13 @@ int main(int argc, char *argv[])
 	int rfile[1];
 	FILE *f = popen("ls /dev/input | grep js | awk \'sub(\"js\",\"\")\' | tail -n 1", "r");
 	if ( !f || fscanf(f, "%i", &rfile[0]) != 1 ) {
-            syslog(LOG_INFO, "No previous js# found, setting LED # to 1");
+	    led = 1;
+	    if (debug) syslog(LOG_INFO, "No previous js# found, setting LED # to 1");
 	} else {
-	    syslog(LOG_INFO, "Previous js# were found, setting LED # to %i", rfile[0] + 1);
+	    led = rfile[0] + 2;
+	    if (debug) syslog(LOG_INFO, "Previous js# were found, setting LED # to %i", led);
 	}
-	enable_sixaxis(0, rfile[0] + 1, enable_led_anim);
+	enable_sixaxis(0, led, enable_led_anim);
         pclose(f);
     } else
       enable_sixaxis(0, led_n_recv, enable_led_anim);
@@ -710,7 +653,7 @@ int main(int argc, char *argv[])
             continue;
 
         if (p[1].revents & POLLIN)
-            process_sixaxis(ufd, 1, enable_buttons, enable_sbuttons, enable_axis, enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble);
+            process_sixaxis(ufd, enable_buttons, enable_sbuttons, enable_axis, enable_accel, enable_accon, enable_speed, enable_pos, enable_rumble);
 
         events = p[0].revents | p[1].revents | p[2].revents;
 

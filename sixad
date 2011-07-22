@@ -54,7 +54,7 @@ sudo /usr/sbin/hcid
 if (sixad_already_running_check "$1"); then true
 else
   /sbin/modprobe uinput
-  /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy
+  /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
 fi
   ;;
 
@@ -73,7 +73,7 @@ if (bluetoothd_check "$1"); then pkill -KILL bluetoothd; fi
 if (sixad_already_running_check "$1"); then true
 else
   /sbin/modprobe uinput
-  /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy &
+  /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy &
 fi
 /usr/sbin/hcid
 if [ -f /etc/rc2.d/S90sixad ]; then true; else
@@ -87,17 +87,8 @@ fi
   ;;
 
   --raw|-raw|raw)  #Also for hidraw devices!
-if [ "$2" == "" ]; then
-  echo "usage: sixad --raw <hidraw device>"
-else
-  { #1
-  if (modprobe_check "$1"); then
-    sudo su root -c "/usr/sbin/sixad-raw _no_specific_hidraw_yet $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos < $2"
-  else
-    echo "You need admin/root access to run this application"
- fi
-  } #1
-fi
+echo "The hidraw driver of sixad can now be runned without sixad.
+So please use: sixad-raw <hidraw device>"
   ;;
 
   *)  #Running from terminal without arguments (default)
@@ -110,7 +101,7 @@ else
   { #3
   if (bluetoothd_check "$1"); then sudo pkill -KILL bluetoothd; fi
   sudo /usr/sbin/hcid
-  sudo LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/ /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Enable_buttons $Enable_sbuttons $Enable_axis $Enable_accel $Enable_accon $Enable_speed $Enable_pos $Enable_rumble $Legacy
+  sudo LD_LIBRARY_PATH=/usr/lib/sixad/:/usr/lib/ /usr/sbin/sixad-bin $Enable_leds $LED_js_n $LED_n $LED_plus $LED_anim $Legacy
    } #3
  else
   echo "You need admin/root access to run this application"

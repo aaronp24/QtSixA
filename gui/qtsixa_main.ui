@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>625</width>
-    <height>441</height>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../../../../../usr/share/qt-sixa/icons/qt-sixa.png</normaloff>../../../../../../../../usr/share/qt-sixa/icons/qt-sixa.png</iconset>
+    <normaloff>../../../../../../../../usr/share/qtsixa/icons/qtsixa.png</normaloff>../../../../../../../../usr/share/qtsixa/icons/qtsixa.png</iconset>
   </property>
   <property name="statusTip">
    <string>Welcome to QtSixA!</string>
@@ -65,7 +65,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA - 0.6.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:x-large;&quot;&gt;Welcome to QtSixA!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -120,16 +120,6 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="buddy">
                   <cstring>lineMode</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_12">
-                 <property name="text">
-                  <string>Status:</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>lineStatus</cstring>
                  </property>
                 </widget>
                </item>
@@ -195,22 +185,6 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="text">
                   <string>Bluetooth</string>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineStatus">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="acceptDrops">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Working</string>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -564,10 +538,10 @@ p, li { white-space: pre-wrap; }
              <string>It's a lazy way, you know...</string>
             </property>
             <property name="text">
-             <string>Instead of using an input profile, you can edit the configuration files of a game to make it playable with a Sixaxis/DualShock3.
+             <string>Instead of using a Sixaxis profile, you can edit the configuration files of a game to make it playable with a Sixaxis/DualShock3.
 The profiles in this page are meant for that.
 When you click to apply a profile here, the game's joystick configuration is modified.
-This way you won't need to apply an input profile to play that game with a Sixaxis.</string>
+This way you won't need to apply a Sixaxis profile to play that game with it.</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1056,12 +1030,11 @@ This way you won't need to apply an input profile to play that game with a Sixax
                 <string>Use the sixad driver in a Sixaxis' hidraw device (sixad-raw)</string>
                </property>
                <property name="text">
-                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can connect Sixaxis through USB and apply the sixad driver to it.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;By watching 'dmesg' you can know which hidraw device is from a Sixaxis.&lt;br /&gt;To start, just select the proper hidraw device and click apply.&lt;br /&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;(Please note that you'll have to come here ayntime a new Sixaxis is connected)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>You can connect Sixaxis through USB and apply the sixad driver to it.&lt;br&gt;
+By watching 'dmesg' you can know which hidraw device is from a Sixaxis.&lt;br&gt;
+To start, just select the proper hidraw device and click apply.&lt;br&gt;
+&lt;i&gt;
+(Please note that you'll have to come here ayntime a new Sixaxis is connected)&lt;/i&gt;</string>
                </property>
                <property name="wordWrap">
                 <bool>false</bool>
@@ -1252,17 +1225,15 @@ p, li { white-space: pre-wrap; }
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../../../../../../../usr/share/qt-sixa/icons/web.png</normaloff>../../../../../../../../usr/share/qt-sixa/icons/web.png</iconset>
+       <normaloff>../../../../../../../../usr/share/qtsixa/icons/web.png</normaloff>../../../../../../../../usr/share/qtsixa/icons/web.png</iconset>
      </property>
-     <addaction name="actionSixA_Website"/>
-     <addaction name="actionDonate"/>
+     <addaction name="actionSourceForge"/>
+     <addaction name="actionUbuntu"/>
      <addaction name="separator"/>
      <addaction name="actionReport_Bug"/>
      <addaction name="actionIdea"/>
      <addaction name="actionAskSome"/>
-     <addaction name="separator"/>
-     <addaction name="actionSourceForge"/>
-     <addaction name="actionUbuntu"/>
+     <addaction name="actionDonate"/>
     </widget>
     <addaction name="actionManual"/>
     <addaction name="menuLinks"/>
@@ -1553,7 +1524,7 @@ p, li { white-space: pre-wrap; }
     <string>&amp;Force Connection</string>
    </property>
    <property name="statusTip">
-    <string>Force sixad to start if it's not auto-started in your system</string>
+    <string>Force sixad to connect to the next device (click again for more)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
@@ -1676,8 +1647,12 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionSourceForge">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../../usr/share/qtsixa/icons/qtsixa_16.png</normaloff>../../../../../../usr/share/qtsixa/icons/qtsixa_16.png</iconset>
+   </property>
    <property name="text">
-    <string>SourceForge Page</string>
+    <string>QtSixA Web Site</string>
    </property>
    <property name="statusTip">
     <string>QtSixA page at SourceForge.net</string>

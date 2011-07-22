@@ -1,3 +1,130 @@
+qtsixa/sixad (1.0.1-falktx1) stable; urgency=low
+
+  * Final release! (v1.0.1 for happy update)
+  * QtSixA:
+    - Final fix for the notifications
+    - Fixed sixad-raw PATH (needed for RPM Linuxes)
+    - Write to sixad config file as root (needed for RPM Linuxes)
+    - Other very small fixes where needed
+  * sixad:
+    - hidraw-dump and sixad-raw do now read file instead of stdin
+    [No more 'sudo su root -c "hid...', just 'hidraw-dump /dev/hidrawX']
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  29 Oct 2009 12:21:10 +0000
+
+
+qtsixa/sixad (1.0.0-falktx7) stable; urgency=low
+
+  * Pre-Final release (just for users to test)
+  * QtSixA:
+    - Do not apply a game profile if the it's configuration file doesn't exist
+  * sixad:
+    - Disable debug by default
+    - Workaround for a PowerPC synaptics bug (LP#351059)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  29 Oct 2009 13:02:17 +0000
+
+
+qtsixa (1.0-falktx6) stable; urgency=low
+
+  * Fixed the notifications not being able to start
+
+-- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  28 Oct 2009 09:21:24 +0000
+
+
+qtsixa (1.0-falktx5) stable; urgency=low
+
+  * QtSixA:
+    - Fixed sixa-notify file appearing on home folder
+    - Fixed notifications not auto-started on Gnome sessions
+    - Notifications can now be started anytime by running "sixa-notify"
+    - Disabled [Incomplete] Rumble feature (for v1.0 stability, can be enabled manually)
+    - Display warning when "Legacy Driver" is not enabled on PowerPC
+
+-- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  26 Oct 2009 09:52:16 +0000
+
+
+qtsixa/sixad (1.0-falktx4) stable; urgency=low
+
+  * QtSixA:
+    - Changed rumble feature to "Incomplete"
+    - Added debug on/off option in "Configure Sixaxis"/"Advanced"
+  * sixad:
+    - *REALLY* Only process packets if received from a Sixaxis (Random uinput bug now fixed!)
+    [print "got non-Sixaxis packet and ignored" for debug purposes]
+    - Added debug on/off option
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  25 Oct 2009 20:22:57 +0000
+
+
+qtsixa/sixad (1.0-falktx3) stable; urgency=low
+
+  * QtSixA:
+    - All bluetooth devices appear in the list, so updated features to match that
+  * sixad:
+    - Re-enabled axis deadzones
+    - Deadzones also for Accelerometers and Accel/Speed/Position
+    - The accelerometers are now properly centered
+    - Small rumble effect along with LEDs animation
+    - Fixed rumble activating all LEDs
+    - Removed most rumble code for now (looking for the best way to implement it)
+    - Only process packets if received from a Sixaxis (may fix random uinput bug)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  25 Oct 2009 11:53:10 +0000
+
+
+qtsixa (1.0-falktx2) stable; urgency=low
+
+  * Removed "Status" from main device properties
+  * Fixed "list of devices" unselectable when only USB devices were connected
+  * Marked update as RC
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  23 Oct 2009 21:35:04 +0000
+
+
+qtsixa (1.0-falktx1) stable; urgency=low
+
+  * Auto-add *.fdi extension to new created profiles
+  * Revert "Allow any filetype to be selected as fdi profile to add"
+  * Fixed not showing fdi/png files in browser when adding a new profile (only happened on Gnome)
+
+sixad (1.0-falktx{1,2}) stable; urgency=low
+
+  * Fixed sixad search for devices
+  * Trying to fix random input bug (disabling axis deadzones)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  22 Oct 2009 17:31:26 +0000
+
+
+qtsixa/sixad (1.0-falktx0) stable; urgency=low
+
+  * QtSixA:
+    - Changed homepage to 'http://qtsixa.sourceforge.net'
+    - Fixed crash when creating a new profile using old PyQt (create button is now available)
+    - Do not display warning about old PyQt anymore (bug fixed)
+    - Fixed script to add new profile (it works now)
+    - Allow any filetype to be selected as fdi profile to add
+    - Finally wrote the manual!
+    - A last check to the code, fixing all the possible bugs still around
+  * sixad:
+    - Small cleanup of code
+    - Read sixad configuration file when connecting a new Sixaxis
+    [You don't have to stop sixad to apply configuration changes]
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  21 Oct 2009 21:35:04 +0000
+
+
+qtsixa (0.6.0-falktx2) stable; urgency=low
+
+  * Fixed missing tray icon
+
+sixad (0.9-falktx2) unstable; urgency=low
+
+  * Reverse acX axis (was like this before, thus it makes more sense this way)
+
+ -- Filipe Coelho (aka "falkTX") <falktx@gmail.com>  20 Oct 2009 13:58:27 +0000
+
+
 qtsixa (0.6.0-falktx1) stable; urgency=low
 
   * Fixed bluetooth Keypad always appearing as USB Keypad, in notifications

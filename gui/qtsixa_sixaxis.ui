@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
+    <width>436</width>
     <height>532</height>
    </rect>
   </property>
@@ -115,7 +115,7 @@
           <item>
            <widget class="QCheckBox" name="checkLED_anim">
             <property name="text">
-             <string>Enable LEDs animation</string>
+             <string>Enable LEDs/Rumble animation</string>
             </property>
            </widget>
           </item>
@@ -187,8 +187,11 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkRumble">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
-               <string>Enable DualShock3 rumble (experimental)</string>
+               <string>Enable DualShock3 rumble (incomplete)</string>
               </property>
              </widget>
             </item>
@@ -512,6 +515,34 @@ p, li { white-space: pre-wrap; }
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>sixad debugging messages</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <widget class="QCheckBox" name="checkDebug">
+            <property name="text">
+             <string>Enable debug messages in sixad</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>&lt;i&gt;This option will print additional information when&lt;br&gt;
+running sixad from a terminal.&lt;br&gt;
+Please activate it if you want to report a bug&lt;/i&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
             </property>
            </widget>
           </item>

@@ -5,7 +5,7 @@
       <match key="input.product" contains="PLAYSTATION(R)3 Controller">
 
         <merge key="input.x11_driver" type="string">joystick</merge>
-        
+
 	<!-- Main Axis. Left=Mouse; Right=Scroll
         -->
         <merge key="input.x11_options.MapAxis1" type="string">mode=relative axis=+2x deadzone=5000</merge>

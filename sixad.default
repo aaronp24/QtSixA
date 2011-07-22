@@ -16,8 +16,8 @@ LED_n=1
 # LED # increase after new connection?
 LED_plus=1
 
-# Enable LEDs animation?
-LED_anim=0
+# Enable LEDs/Rumble animation?
+LED_anim=1
 
 # Enable buttons?
 Enable_buttons=1
@@ -40,8 +40,11 @@ Enable_speed=0
 # Enable position?
 Enable_pos=0
 
-# Enable rumble? (Experimental)
+# Enable rumble? (Incomplete)
 Enable_rumble=0
 
 # Use Old/Legacy driver instead of sixad (Workaround for PowerPC[32] UInput)
 Legacy=0
+
+# Enable debug?
+Debug=0
