@@ -18,7 +18,7 @@ sixad-sixaxis: LDLIBS += -lpthread
 sixad-raw: sixaxis.o shared.o uinput.o textfile.o
 
 clean:
-	rm -f *~ $(targets) *.o
+	$(RM) *~ $(targets) *.o
 
 extra_files := \
     sixad.default \
@@ -54,12 +54,12 @@ install-system:
 	@echo "$ [sudo] adduser YOUR-USER sixad"
 
 uninstall:
-	rm -f $(DESTDIR)/etc/default/sixad
-	rm -f $(DESTDIR)/etc/init.d/sixad
-	rm -f $(DESTDIR)/etc/logrotate.d/sixad
-	rm -f $(DESTDIR)/usr/bin/sixad
-	rm -f $(DESTDIR)/usr/sbin/sixad-bin
-	rm -f $(DESTDIR)/usr/sbin/sixad-sixaxis
-	rm -f $(DESTDIR)/usr/sbin/sixad-raw
-	rm -f $(DESTDIR)/lib/udev/rules.d/98-sixad.rules
-	rm -rf $(DESTDIR)/var/lib/sixad/
+	$(RM) $(DESTDIR)/etc/default/sixad
+	$(RM) $(DESTDIR)/etc/init.d/sixad
+	$(RM) $(DESTDIR)/etc/logrotate.d/sixad
+	$(RM) $(DESTDIR)/usr/bin/sixad
+	$(RM) $(DESTDIR)/usr/sbin/sixad-bin
+	$(RM) $(DESTDIR)/usr/sbin/sixad-sixaxis
+	$(RM) $(DESTDIR)/usr/sbin/sixad-raw
+	$(RM) $(DESTDIR)/lib/udev/rules.d/98-sixad.rules
+	$(RM) -r $(DESTDIR)/var/lib/sixad/
