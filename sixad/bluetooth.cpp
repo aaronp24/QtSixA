@@ -25,6 +25,7 @@
 #include <signal.h>
 #include <syslog.h>
 #include <sys/ioctl.h>
+#include <unistd.h>
 
 #include <bluetooth/hidp.h>
 #include <bluetooth/sdp.h>

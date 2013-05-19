@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <syslog.h>
+#include <unistd.h>
 
 #define KEYMOTE_KEY_SELECT   1 << 0
 #define KEYMOTE_KEY_START    1 << 1

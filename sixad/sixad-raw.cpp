@@ -22,6 +22,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <syslog.h>
+#include <unistd.h>
 
 int main(int argc, char **argv)
 {

@@ -27,6 +27,7 @@
 #include <syslog.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <unistd.h>
 
 int csk = 0;
 int isk = 1;

@@ -22,6 +22,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <syslog.h>
+#include <unistd.h>
 
 #if 0
 #include <sys/ioctl.h>
@@ -46,7 +47,7 @@ static void sig_hup(int sig)
 int main(int argc, char *argv[])
 {
     struct sigaction sa;
-    bdaddr_t bdaddr;
+    bdaddr_t bdaddr = { 0 };
     int ctl, csk, isk, debug, legacy, remote;
 
     if (argc > 3) {
@@ -81,7 +82,6 @@ int main(int argc, char *argv[])
 
     open_log("sixad-bin");
     syslog(LOG_INFO, "started");
-    bacpy(&bdaddr, BDADDR_ANY);
 
     ctl = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HIDP);
     if (ctl < 0) {
