@@ -1,34 +1,37 @@
 # You know, there are pre-compile DEBs of this...
 
-DESTDIR =
+CC ?= gcc
+CFLAGS ?= -O2 -Wall
+LDFLAGS += -Wl,-Bsymbolic-functions
 
-all: tools hcid_bin
+WANT_JACK = true
+
+all: tools
 
 tools:
-	gcc -Wall -O2 hidraw-dump.c -o bins/hidraw-dump
-	gcc -Wall -O2 sixad-jack.c -o bins/sixad-jack -ljack -lm
-	gcc -Wall -O2 sixpair.c -o bins/sixpair -lusb
-	gcc -Wall -O2 sixpair_kbd.c -o bins/sixpair-kbd -lusb
-
-hcid_bin:
-	make -C hcid
+	mkdir -p bins
+	$(CC) $(CFLAGS) $(LDFLAGS) hidraw-dump.c -o bins/hidraw-dump
+	$(CC) $(CFLAGS) $(LDFLAGS) sixpair.c -o bins/sixpair `pkg-config --cflags --libs libusb`
+	$(CC) $(CFLAGS) $(LDFLAGS) sixpair_kbd.c -o bins/sixpair-kbd `pkg-config --cflags --libs libusb`
+ifeq ($(WANT_JACK),true)
+	$(CC) $(CFLAGS) $(LDFLAGS) sixad-jack.c -o bins/sixad-jack `pkg-config --cflags --libs jack` -lm
+endif
 
 clean:
-	make clean -C hcid
 	rm -f *~ bins/*
 
 install:
 	install -d $(DESTDIR)/usr/bin/
 	install -d $(DESTDIR)/usr/sbin/
-	install -m 655 bins/sixad-jack $(DESTDIR)/usr/bin/
-	install -m 655 bins/sixpair $(DESTDIR)/usr/bin/
-	install -m 655 bins/sixpair-kbd $(DESTDIR)/usr/bin/
-	install -m 655 bins/hcid $(DESTDIR)/usr/sbin/
-	install -m 655 bins/hidraw-dump $(DESTDIR)/usr/sbin/
+	install -m 755 bins/sixpair $(DESTDIR)/usr/sbin/
+	install -m 755 bins/sixpair-kbd $(DESTDIR)/usr/sbin/
+	install -m 755 bins/hidraw-dump $(DESTDIR)/usr/sbin/
+ifeq ($(WANT_JACK),true)
+	install -m 755 bins/sixad-jack $(DESTDIR)/usr/bin/
+endif
 
 uninstall:
 	rm -f $(DESTDIR)/usr/bin/sixad-jack
-	rm -f $(DESTDIR)/usr/bin/sixpair
-	rm -f $(DESTDIR)/usr/bin/sixpair-kbd
-	rm -f $(DESTDIR)/usr/sbin/hcid
 	rm -f $(DESTDIR)/usr/sbin/hidraw-dump
+	rm -f $(DESTDIR)/usr/sbin/sixpair
+	rm -f $(DESTDIR)/usr/sbin/sixpair-kbd

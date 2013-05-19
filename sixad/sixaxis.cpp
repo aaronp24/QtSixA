@@ -23,9 +23,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define INPUT_TYPE_KEYS 2
-#define INPUT_TYPE_MOUSE 3
-
 double dt, rc_dd, alpha_dd, rc_d, alpha_d, rc, alpha;
 
 struct state {
@@ -46,6 +43,13 @@ int posX, posY, posZ, accX, accY, accZ, velX, velY, velZ;
 bool lr3_axis = true;
 bool lr3_buttons = true;
 int rw_timer = 0;
+
+int last_jb1 = 0;
+int last_jb2 = 0;
+int last_jb3 = 0;
+int last_ib1 = 0;
+int last_ib2 = 0;
+int last_ib3 = 0;
 
 void do_joystick(int fd, unsigned char* buf, struct dev_joystick joystick)
 {
@@ -136,39 +140,35 @@ void do_joystick(int fd, unsigned char* buf, struct dev_joystick joystick)
 
     if (joystick.buttons) {
         //part1
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 0, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 1, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 2, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 3, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 4, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 5, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 6, b1 & 1);
-        b1 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 7, b1 & 1);
+        if (last_jb1 != b1) {
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 0, b1 & 0x01 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 1, b1 & 0x02 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 2, b1 & 0x04 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 3, b1 & 0x08 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 4, b1 & 0x10 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 5, b1 & 0x20 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 6, b1 & 0x40 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 7, b1 & 0x80 ? 1 : 0);
+        }
         //part2
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 8, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 9, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 10, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 11, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 12, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 13, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 14, b2 & 1);
-        b2 >>= 1;
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 15, b2 & 1);
+        if (last_jb2 != b2) {
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK +  8, b2 & 0x01 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK +  9, b2 & 0x02 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 10, b2 & 0x04 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 11, b2 & 0x08 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 12, b2 & 0x10 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 13, b2 & 0x20 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 14, b2 & 0x40 ? 1 : 0);
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 15, b2 & 0x80 ? 1 : 0);
+        }
         //part3
-        uinput_send(fd, EV_KEY, BTN_JOYSTICK + 16, b3 & 1);
+        if (last_jb3 != b3) {
+            uinput_send(fd, EV_KEY, BTN_JOYSTICK + 16, b3 & 0x01 ? 1 : 0);
+        }
+
+        if (b1 > 0 || b2 > 0 || b3 > 0) {
+          set_active(true);
+        }
     }
 
     //axis
@@ -177,6 +177,10 @@ void do_joystick(int fd, unsigned char* buf, struct dev_joystick joystick)
         uinput_send(fd, EV_ABS, 1, ly);
         uinput_send(fd, EV_ABS, 2, rx);
         uinput_send(fd, EV_ABS, 3, ry);
+
+        if (lx != 0 || ly != 0 || rx != 0 || ry != 0) {
+          set_active(true);
+        }
     }
 
     //accelerometer RAW
@@ -197,32 +201,40 @@ void do_joystick(int fd, unsigned char* buf, struct dev_joystick joystick)
         uinput_send(fd, EV_ABS, 13, r2);
         uinput_send(fd, EV_ABS, 14, l1);
         uinput_send(fd, EV_ABS, 15, r1);
-        uinput_send(fd, EV_ABS, 16, tri);
-        uinput_send(fd, EV_ABS, 17, cir);
-        uinput_send(fd, EV_ABS, 18, cro);
-        uinput_send(fd, EV_ABS, 19, squ);
+        uinput_send(fd, EV_ABS, 16+AXIS_PADDING, tri);
+        uinput_send(fd, EV_ABS, 17+AXIS_PADDING, cir);
+        uinput_send(fd, EV_ABS, 18+AXIS_PADDING, cro);
+        uinput_send(fd, EV_ABS, 19+AXIS_PADDING, squ);
+
+        if (up > 0 || right > 0 || down > 0 || left > 0 || l2 > 0 || r2 > 0 || l1 > 0 || r1 > 0 || tri > 0 || cir > 0 || cro > 0 || squ > 0 ) {
+          set_active(true);
+        }
     }
 
     //acceleration
     if (joystick.accon) {
-        uinput_send(fd, EV_ABS, 20, accX);
-        uinput_send(fd, EV_ABS, 21, accY);
-        uinput_send(fd, EV_ABS, 22, accZ);
+        uinput_send(fd, EV_ABS, 20+AXIS_PADDING, accX);
+        uinput_send(fd, EV_ABS, 21+AXIS_PADDING, accY);
+        uinput_send(fd, EV_ABS, 22+AXIS_PADDING, accZ);
     }
 
     //speed
     if (joystick.speed) {
-        uinput_send(fd, EV_ABS, 23, velX);
-        uinput_send(fd, EV_ABS, 24, velY);
-        uinput_send(fd, EV_ABS, 25, velZ);
+        uinput_send(fd, EV_ABS, 23+AXIS_PADDING, velX);
+        uinput_send(fd, EV_ABS, 24+AXIS_PADDING, velY);
+        uinput_send(fd, EV_ABS, 25+AXIS_PADDING, velZ);
     }
 
     //position
     if (joystick.pos) {
-        uinput_send(fd, EV_ABS, 26, posX);
-        uinput_send(fd, EV_ABS, 27, posY);
-        uinput_send(fd, EV_ABS, 28, posZ);
+        uinput_send(fd, EV_ABS, 26+AXIS_PADDING, posX);
+        uinput_send(fd, EV_ABS, 27+AXIS_PADDING, posY);
+        uinput_send(fd, EV_ABS, 28+AXIS_PADDING, posZ);
     }
+
+    last_jb1 = b1;
+    last_jb2 = b2;
+    last_jb3 = b3;
 
     uinput_send(fd, EV_SYN, SYN_REPORT, 0);
 }
@@ -244,57 +256,49 @@ void do_input(int fd, unsigned char* buf, struct dev_input input)
     if (ry > -11 && ry < 11) ry = 0;
 
     //lr3 enable/disable
-    if ((b1 & 0x02) && b1 != last_b1)
+    if ((b1 & SIXAXIS_KEY_L3) && b1 != last_b1)
       lr3_axis = !lr3_axis;
 
-    if ((b1 & 0x04) && b1 != last_b1)
+    if ((b1 & SIXAXIS_KEY_R3) && b1 != last_b1)
       lr3_buttons = !lr3_buttons;
 
     last_b1 = b1;
 
     //buttons
     if (!input.use_lr3 || (input.use_lr3 && lr3_buttons)) {
-      //part1
-      if (input.key_select) uinput_send(fd, EV_KEY, input.key_select, b1 & 1);
-      b1 >>= 1;
-      if (input.key_l3) uinput_send(fd, EV_KEY, input.key_l3, b1 & 1);
-      b1 >>= 1;
-      if (input.key_r3) uinput_send(fd, EV_KEY, input.key_r3, b1 & 1);
-      b1 >>= 1;
-      if (input.key_start) uinput_send(fd, EV_KEY, input.key_start, b1 & 1);
-      b1 >>= 1;
-      if (input.key_up) uinput_send(fd, EV_KEY, input.key_up, b1 & 1);
-      b1 >>= 1;
-      if (input.key_right) uinput_send(fd, EV_KEY, input.key_right, b1 & 1);
-      b1 >>= 1;
-      if (input.key_down) uinput_send(fd, EV_KEY, input.key_down, b1 & 1);
-      b1 >>= 1;
-      if (input.key_left) uinput_send(fd, EV_KEY, input.key_left, b1 & 1);
-      //part2
-      if (input.key_l2) uinput_send(fd, EV_KEY, input.key_l2, b2 & 1);
-      b2 >>= 1;
-      if (input.key_r2) uinput_send(fd, EV_KEY, input.key_r2, b2 & 1);
-      b2 >>= 1;
-      if (input.key_l1) uinput_send(fd, EV_KEY, input.key_l1, b2 & 1);
-      b2 >>= 1;
-      if (input.key_r1) uinput_send(fd, EV_KEY, input.key_r1, b2 & 1);
-      b2 >>= 1;
-      if (input.key_tri) uinput_send(fd, EV_KEY, input.key_tri, b2 & 1);
-      b2 >>= 1;
-      if (input.key_cir) uinput_send(fd, EV_KEY, input.key_cir, b2 & 1);
-      b2 >>= 1;
-      if (input.key_cro) uinput_send(fd, EV_KEY, input.key_cro, b2 & 1);
-      b2 >>= 1;
-      if (input.key_squ) uinput_send(fd, EV_KEY, input.key_squ, b2 & 1);
-      //part3
-      if (input.key_ps) uinput_send(fd, EV_KEY, input.key_ps, b3 & 1);
+        //part1
+        if (last_ib1 != b1) {
+            if (input.key_select) uinput_send(fd, EV_KEY, input.key_select, b1 & 0x01 ? 1 : 0);
+            if (input.key_l3) uinput_send(fd, EV_KEY, input.key_l3, b1 & 0x02 ? 1 : 0);
+            if (input.key_r3) uinput_send(fd, EV_KEY, input.key_r3, b1 & 0x04 ? 1 : 0);
+            if (input.key_start) uinput_send(fd, EV_KEY, input.key_start, b1 & 0x08 ? 1 : 0);
+            if (input.key_up) uinput_send(fd, EV_KEY, input.key_up, b1 & 0x10 ? 1 : 0);
+            if (input.key_right) uinput_send(fd, EV_KEY, input.key_right, b1 & 0x20 ? 1 : 0);
+            if (input.key_down) uinput_send(fd, EV_KEY, input.key_down, b1 & 0x40 ? 1 : 0);
+            if (input.key_left) uinput_send(fd, EV_KEY, input.key_left, b1 & 0x80 ? 1 : 0);
+        }
+        //part2
+        if (last_ib2 != b2) {
+            if (input.key_l2) uinput_send(fd, EV_KEY, input.key_l2, b2 & 0x01 ? 1 : 0);
+            if (input.key_r2) uinput_send(fd, EV_KEY, input.key_r2, b2 & 0x02 ? 1 : 0);
+            if (input.key_l1) uinput_send(fd, EV_KEY, input.key_l1, b2 & 0x04 ? 1 : 0);
+            if (input.key_r1) uinput_send(fd, EV_KEY, input.key_r1, b2 & 0x08 ? 1 : 0);
+            if (input.key_tri) uinput_send(fd, EV_KEY, input.key_tri, b2 & 0x10 ? 1 : 0);
+            if (input.key_cir) uinput_send(fd, EV_KEY, input.key_cir, b2 & 0x20 ? 1 : 0);
+            if (input.key_cro) uinput_send(fd, EV_KEY, input.key_cro, b2 & 0x40 ? 1 : 0);
+            if (input.key_squ) uinput_send(fd, EV_KEY, input.key_squ, b2 & 0x80 ? 1 : 0);
+        }
+        //part3
+        if (last_ib3 != b3) {
+            if (input.key_ps) uinput_send(fd, EV_KEY, input.key_ps, b3 & 0x01 ? 1 : 0);
+        }
     }
 
     //axis
     if (!input.use_lr3 || (input.use_lr3 && lr3_axis)) {
       int rel;
       bool rw_do;
-      
+
       if (rw_timer%(input.axis_speed*2) == 0)
         rw_do = true;
       else
@@ -357,9 +361,16 @@ void do_input(int fd, unsigned char* buf, struct dev_input input)
       }
     }
 
+    if (b1 > 0 || b2 > 0 || b3 > 0 || lx != 0 || ly != 0 || rx != 0 || ry != 0) {
+      set_active(true);
+    }
+
+    last_ib1 = b1;
+    last_ib2 = b2;
+    last_ib3 = b3;
+
     uinput_send(fd, EV_SYN, SYN_REPORT, 0);
-    
-    
+
     if (rw_timer > 0xff)
       rw_timer = 0;
     else
@@ -388,6 +399,11 @@ void do_rumble(int csk, int led_n, int weak, int strong, int timeout)
         0x1C, 0x1E  // 9, 10
     };
 
+    // TESTING
+    weak *= 10;
+    strong *= 10;
+    timeout *= 10;
+
     if (weak > 0xff) weak = 0xff;
     else if (weak < 0) weak = 0;
     if (strong > 0xff) strong = 0xff;
@@ -399,7 +415,7 @@ void do_rumble(int csk, int led_n, int weak, int strong, int timeout)
     setrumble[4] = weak;
     setrumble[6] = strong;
 
-    syslog(LOG_INFO, "Rumble Callback (%i|%i|%i)", weak, strong, timeout);
+    //syslog(LOG_INFO, "Rumble Callback (%i|%i|%i)", weak, strong, timeout);
 
     setrumble[11] = ledpattern[led_n]; //keep old led
     send(csk, setrumble, sizeof(setrumble), 0);
