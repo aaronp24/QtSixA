@@ -17,7 +17,7 @@ if __name__ == '__main__':
   #For easy debugging, print version information to terminal
   print "Qt version:", QT_VERSION_STR
   print "PyQt version:", PYQT_VERSION_STR
-  print "QtSixA version: 1.5.0"
+  print "QtSixA version: 1.5.1"
 
   #Check for root tool
   shared.ROOT = getoutput("qtsixa "+"--get-root")
@@ -30,15 +30,6 @@ if __name__ == '__main__':
   if (shared.Globals.close_to_tray): shared.app.setQuitOnLastWindowClosed(False)
   gui = qtsixa_main.MainW()
   #gui = qtsixa_manage.ManageW()
-  if (not "sixad" in getoutput("groups").split()):
-    ask = QMessageBox.question(None, shared.app.translate("Init.Warn", "QtSixA - Question"), shared.app.translate("Init.Warn", ""
-    "In order to use QtSixA you moust be in the sixad group.\n\nDo you want do do this now?"),
-          QMessageBox.Yes | QMessageBox.No)
-    if (ask == QMessageBox.Yes):
-      #if look4Root(None):
-        user = getoutput("whoami")
-        os.system(shared.ROOT+" addgroup "+user+" sixad")
-        QMessageBox.information(None, shared.app.translate("Init.Warn", "QtSixA - Information"), shared.app.translate("Init.Warn", "Please logoff and login again to make it work"))
   if (shared.Globals.start_minimized and shared.Globals.systray_enabled):
       gui.hide()
   else:

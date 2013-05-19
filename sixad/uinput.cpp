@@ -2,7 +2,7 @@
  * uinput.cpp
  *
  * This file is part of the QtSixA, the Sixaxis Joystick Manager
- * Copyright 2008-10 Filipe Coelho <falktx@gmail.com>
+ * Copyright 2008-2010 Filipe Coelho <falktx@gmail.com>
  *
  * QtSixA can be redistributed and/or modified under the terms of the GNU General
  * Public License (Version 2), as published by the Free Software Foundation.
@@ -24,33 +24,69 @@
 #include <syslog.h>
 #include <unistd.h>
 
-int uinput_open(int JS_TYPE, const char *mac, struct device_settings settings)
+struct uinput_fd *uinput_open(int DEV_TYPE, const char *mac, struct device_settings settings)
 {
-    const char *uinput_filename[] = {"/dev/uinput", "/dev/input/uinput", "/dev/misc/uinput"};
-    struct uinput_user_dev dev;
-    char dev_name[512];
-    int i, fd;
+    const char *uinput_filename[] = { "/dev/uinput", "/dev/input/uinput", "/dev/misc/uinput" };
+    uinput_fd *ufd = new uinput_fd;
+    int i;
 
-    for (i=0; i<3; i++) {
-        if ((fd = open(uinput_filename[i], O_RDWR)) >= 0) {
-            break;
+    if (settings.joystick.enabled) {
+        for (i=0; i<3; i++) {
+            if ((ufd->js = open(uinput_filename[i], O_RDWR)) >= 0) {
+                break;
+            }
         }
+        if (ufd->js < 0) {
+            syslog(LOG_ERR, "uinput_open()::open(uinput_filename[i], O_RDWR) - failed to open uinput (js)");
+            goto error;
+        }
+    } else {
+        ufd->js = 0;
     }
 
-    if (fd < 0) {
-        syslog(LOG_ERR, "uinput_open()::open(uinput_filename[i], O_RDWR) - failed to open uinput");
-        return -1;
+    if (settings.remote.enabled || settings.input.enabled) {
+        for (i=0; i<3; i++) {
+            if ((ufd->mk = open(uinput_filename[i], O_RDWR)) >= 0) {
+                break;
+            }
+        }
+        if (ufd->mk < 0) {
+            syslog(LOG_ERR, "uinput_open()::open(uinput_filename[i], O_RDWR) - failed to open uinput (mk)");
+            goto error;
+        }
+    } else {
+        ufd->mk = 0;
     }
+
+    char dev_name[512];
+    struct uinput_user_dev dev, dev_mk;
 
     memset(&dev, 0, sizeof(dev));
+    memset(&dev_mk, 0, sizeof(dev_mk));
 
-    if (JS_TYPE == JS_TYPE_SIXAXIS) {
+    if (DEV_TYPE == DEV_TYPE_SIXAXIS) {
         strcpy(dev_name, "PLAYSTATION(R)3 Controller (");
         strcat(dev_name, mac);
         strcat(dev_name, ")");
         snprintf(dev.name, sizeof(dev.name), "%s", dev_name);
         dev.id.vendor = 0x054c;
         dev.id.product = 0x0268;
+        dev.id.version = 0x0100;
+        dev.id.bustype = BUS_VIRTUAL;
+    } else if (DEV_TYPE == DEV_TYPE_REMOTE) {
+        strcpy(dev_name, "PLAYSTATION(R)3 Remote (");
+        strcat(dev_name, mac);
+        strcat(dev_name, ")");
+        snprintf(dev.name, sizeof(dev.name), "%s", dev_name);
+        dev.id.vendor = 0x054c;
+        dev.id.product = 0x0306;
+        dev.id.version = 0x0100;
+        dev.id.bustype = BUS_VIRTUAL;
+    } else if (DEV_TYPE == DEV_TYPE_3IN1) {
+        strcpy(dev_name, "Brooklyn 3in1 KeyMote");
+        snprintf(dev.name, sizeof(dev.name), "%s", dev_name);
+        dev.id.vendor = 0x062a;
+        dev.id.product = 0x0818;
         dev.id.version = 0x0100;
         dev.id.bustype = BUS_VIRTUAL;
     } else {
@@ -64,75 +100,81 @@ int uinput_open(int JS_TYPE, const char *mac, struct device_settings settings)
         dev.id.bustype = BUS_VIRTUAL;
     }
 
+    dev_mk = dev;
+    strcat(dev_name, " MK");
+    snprintf(dev_mk.name, sizeof(dev_mk.name), "%s", dev_name);
+
     if (settings.joystick.enabled) {
         for (i=0; i<17; i++) {
-            if (ioctl(fd, UI_SET_KEYBIT, BTN_JOYSTICK + i) < 0) {
+            if (ioctl(ufd->js, UI_SET_KEYBIT, BTN_JOYSTICK + i) < 0) {
                 syslog(LOG_ERR, "uinput_open()::ioctl(BTN_JOYSTICK) - failed to register button %i", i);
-                return -1;
+                goto error;
             }
         }
 
-        // enable all sixaxis axis and accelerometers
+        // enable all axis and accelerometers
+        int pos;
         for (i=0; i<29; i++) {
+            pos = (i >= 16) ? i+AXIS_PADDING : i;
             if (i >= 0 && i <= 3) {// left & right axis
-                dev.absmax[i] = 127;
-                dev.absmin[i] = -127;
+                dev.absmax[pos] = 127;
+                dev.absmin[pos] = -127;
             } else if (i == 4) {  // Accelerometer X (reversed)
-                dev.absmax[i] = -402;
-                dev.absmin[i] = -622;
+                dev.absmax[pos] = -402;
+                dev.absmin[pos] = -622;
             } else if (i == 5) {  // Accelerometer Y
-                dev.absmax[i] = 622;
-                dev.absmin[i] = 402;
+                dev.absmax[pos] = 622;
+                dev.absmin[pos] = 402;
             } else if (i == 6) {  // Accelerometer Z
-                dev.absmax[i] = 622;
-                dev.absmin[i] = 402;
+                dev.absmax[pos] = 622;
+                dev.absmin[pos] = 402;
             } else if (i == 7) {  // Gyro - Does NOT work
-                dev.absmax[i] = 127;
-                dev.absmin[i] = -127;
+                dev.absmax[pos] = 127;
+                dev.absmin[pos] = -127;
             } else if (i >= 8 && i <= 19) {  // Buttons
-                dev.absmax[i] = 255;
-                dev.absmin[i] = -255;
+                dev.absmax[pos] = 255;
+                dev.absmin[pos] = -255;
             } else if (i >= 20 && i <= 22) { // Acceleration
-                dev.absmax[i] = 1250;
-                dev.absmin[i] = -1250;
+                dev.absmax[pos] = 1250;
+                dev.absmin[pos] = -1250;
             } else if (i >= 23 && i <= 25) { // Speed
-                dev.absmax[i] = 1250;
-                dev.absmin[i] = -1250;
+                dev.absmax[pos] = 1250;
+                dev.absmin[pos] = -1250;
             } else if (i >= 26 && i <= 28) { // Position
-                dev.absmax[i] = 1250;
-                dev.absmin[i] = -1250;
+                dev.absmax[pos] = 1250;
+                dev.absmin[pos] = -1250;
             } else {
-                dev.absmax[i] = 32767;
-                dev.absmin[i] = -32767;
+                dev.absmax[pos] = 32767;
+                dev.absmin[pos] = -32767;
             }
 
-            if (ioctl(fd, UI_SET_ABSBIT, i) < 0) {
-                syslog(LOG_ERR, "uinput_open()::ioctl(ABS_AXIS) - failed to register axis %i", i);
-                return -1;
+            if (ioctl(ufd->js, UI_SET_ABSBIT, pos) < 0) {
+                syslog(LOG_ERR, "uinput_open()::ioctl(ABS_AXIS) - failed to register axis %i", pos);
+                goto error;
             }
         }
 
-      if (ioctl(fd, UI_SET_EVBIT, EV_ABS) < 0) {
+      if (ioctl(ufd->js, UI_SET_EVBIT, EV_ABS) < 0) {
           syslog(LOG_ERR, "uinput_open()::ioctl(EV_ABS) - failed to set attribute");
-          return -1;
+          goto error;
       }
     }
 
     if (settings.input.enabled) {
         // enable all keys
-        for (i=KEY_RESERVED; i<KEY_WIMAX; i++) {
-            if (ioctl (fd, UI_SET_KEYBIT, i) < 0) {
+        for (i=KEY_RESERVED+1; i<KEY_WIMAX; i++) {
+            if (ioctl(ufd->mk, UI_SET_KEYBIT, i) < 0) {
                 syslog(LOG_ERR, "uinput_open()::ioctl(BTN_KEYBOARD) - failed to register key %i", i);
-                return -1;
+                goto error;
             }
         }
 
         // enable all mouse clicks
         int MouseClicks[] = { BTN_MOUSE, BTN_LEFT, BTN_RIGHT, BTN_MIDDLE, BTN_SIDE, BTN_EXTRA, BTN_FORWARD, BTN_BACK, BTN_TASK };
         for (i=0; i<9; i++) {
-            if (ioctl (fd, UI_SET_KEYBIT, MouseClicks[i]) < 0) {
+            if (ioctl(ufd->mk, UI_SET_KEYBIT, MouseClicks[i]) < 0) {
                 syslog(LOG_ERR, "uinput_open()::ioctl(BTN_MOUSE) - failed to register key %i", MouseClicks[i]);
-                return -1;
+                goto error;
             }
         }
 
@@ -140,66 +182,107 @@ int uinput_open(int JS_TYPE, const char *mac, struct device_settings settings)
           // enable all mouse axis
           int MouseAxis[] = { REL_X, REL_Y, REL_WHEEL, REL_HWHEEL };
           for (i=0; i<4; i++) {
-              if (ioctl (fd, UI_SET_RELBIT, MouseAxis[i]) < 0) { //RELBIT
+              if (ioctl(ufd->mk, UI_SET_RELBIT, MouseAxis[i]) < 0) {
                   syslog(LOG_ERR, "uinput_open()::ioctl(ABS_MOUSE) - failed to register axis %i", i);
-                  return -1;
+                  goto error;
               }
            }
 
           // enable mouse axis
-          if (ioctl (fd, UI_SET_EVBIT, EV_REL) < 0) {
+          if (ioctl(ufd->mk, UI_SET_EVBIT, EV_REL) < 0) {
               syslog(LOG_ERR, "uinput_open()::ioctl(EV_REL) - failed to set attribute");
-              return -1;
+              goto error;
           }
         }
     }
 
-    if (settings.joystick.enabled || settings.input.enabled) {
-      if (ioctl(fd, UI_SET_EVBIT, EV_KEY) < 0) {
-          syslog(LOG_ERR, "uinput_open()::ioctl(EV_KEY) - failed to set attribute");
-          return -1;
-      }
-    }
-
-    if (settings.rumble.enabled) {
-        if (ioctl(fd, UI_SET_FFBIT, FF_RUMBLE) < 0) {
+    if (DEV_TYPE == DEV_TYPE_SIXAXIS && settings.joystick.enabled && settings.rumble.enabled) {
+        if (ioctl(ufd->js, UI_SET_FFBIT, FF_RUMBLE) < 0) {
             syslog(LOG_ERR, "uinput_open()::ioctl(FF_RUMBLE) - failed to set attribute");
-            return -1;
+            goto error;
+        }
+        if (ioctl(ufd->js, UI_SET_FFBIT, FF_PERIODIC) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(FF_PERIODIC) - failed to set attribute");
+            goto error;
+        }
+        if (ioctl(ufd->js, UI_SET_FFBIT, FF_SQUARE) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(FF_SQUARE) - failed to set attribute");
+            goto error;
+        }
+        if (ioctl(ufd->js, UI_SET_FFBIT, FF_TRIANGLE) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(FF_TRIANGLE) - failed to set attribute");
+            goto error;
+        }
+        if (ioctl(ufd->js, UI_SET_FFBIT, FF_SINE) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(FF_SINE) - failed to set attribute");
+            goto error;
         }
         dev.ff_effects_max = MAX_RUMBLE_EFFECTS;
 
-        if (ioctl(fd, UI_SET_EVBIT, EV_FF) < 0) {
+        if (ioctl(ufd->js, UI_SET_EVBIT, EV_FF) < 0) {
             syslog(LOG_ERR, "uinput_open()::ioctl(EV_FF) - failed to set attribute");
-            return -1;
+            goto error;
         }
     }
 
-    if (write(fd, &dev, sizeof(dev)) != sizeof(dev)) {
-        syslog(LOG_ERR, "uinput_open()::write(dev) - failed to set device information");
-        return -1;
+    // Activate buttons and register device
+    if (settings.joystick.enabled) {
+        if (ioctl(ufd->js, UI_SET_EVBIT, EV_KEY) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(EV_KEY) - failed to set attribute (js)");
+            goto error;
+        }
+
+        if (write(ufd->js, &dev, sizeof(dev)) != sizeof(dev)) {
+            syslog(LOG_ERR, "uinput_open()::write(dev) - failed to set device information (js)");
+            goto error;
+        }
+
+        if (ioctl(ufd->js, UI_DEV_CREATE) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(UI_DEV_CREATE) - failed to create device (js)");
+            goto error;
+        }
     }
 
-    if (ioctl(fd, UI_DEV_CREATE) < 0) {
-        syslog(LOG_ERR, "uinput_open()::ioctl(UI_DEV_CREATE) - failed to create device");
-        return -1;
+    if (settings.remote.enabled || settings.input.enabled) {
+        if (ioctl(ufd->mk, UI_SET_EVBIT, EV_KEY) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(EV_KEY) - failed to set attribute (mk)");
+            goto error;
+        }
+
+        if (write(ufd->mk, &dev_mk, sizeof(dev_mk)) != sizeof(dev_mk)) {
+            syslog(LOG_ERR, "uinput_open()::write(dev) - failed to set device information (mk)");
+            goto error;
+        }
+
+        if (ioctl(ufd->mk, UI_DEV_CREATE) < 0) {
+            syslog(LOG_ERR, "uinput_open()::ioctl(UI_DEV_CREATE) - failed to create device (mk)");
+            goto error;
+        }
     }
 
-    return fd;
+    return ufd;
+
+error:
+    ufd->js = -1;
+    ufd->mk = -1;
+    return ufd;
 }
 
 int uinput_close(int fd, int debug)
 {
     if (ioctl(fd, UI_DEV_DESTROY) < 0) {
-        syslog(LOG_ERR, "uinput_close()::ioctl(UI_DEV_DESTROY) - failed to destroy device");
+        if (debug) syslog(LOG_ERR, "uinput_close()::ioctl(UI_DEV_DESTROY) - failed to destroy device");
         return -1;
-    } else
+    } else {
         if (debug) syslog(LOG_INFO, "uinput_close()::ioctl(UI_DEV_DESTROY) - success!");
+    }
 
     if (close(fd)) {
-        syslog(LOG_ERR, "uinput_close()::close(fd) - failed to close uinput");
+        if (debug) syslog(LOG_ERR, "uinput_close()::close(fd) - failed to close uinput");
         return -1;
-    } else
+    } else {
         if (debug) syslog(LOG_INFO, "uinput_close()::close(fd) - success!");
+    }
 
     return 0;
 }

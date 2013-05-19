@@ -16,8 +16,6 @@ class NewDevW(QWizard, ui_qtsixa_newdevw.Ui_NewDevW):
         self.setupUi(self)
         self.setWindowIcon(QIcon(":/icons/qtsixa.png"))
 
-        self.connect(self.ch_js, SIGNAL('clicked()'), self.func_ShowBugWarn)
-        self.connect(self.ch_input, SIGNAL('clicked()'), self.func_ShowBugWarn)
         self.connect(self.co_input, SIGNAL('currentIndexChanged(QString)'), self.func_UpdatePreview)
         self.connect(self, SIGNAL('accepted()'), self.func_Done)
         self.connect(self, SIGNAL('currentIdChanged(int)'), self.func_ChangedPage)
@@ -25,8 +23,6 @@ class NewDevW(QWizard, ui_qtsixa_newdevw.Ui_NewDevW):
         self.l_preview.setPixmap(QPixmap("/usr/share/qtsixa/pics/(None).png"))
         self.lastpage = -1
 
-        self.warn_joyin_ico.setVisible(False)
-        self.warn_joyin_txt.setVisible(False)
         self.warn_disablejoy_ico.setVisible(False)
         self.warn_disablejoy_txt.setVisible(False)
 
@@ -35,6 +31,8 @@ class NewDevW(QWizard, ui_qtsixa_newdevw.Ui_NewDevW):
           self.ch_led.setEnabled(False)
           self.ch_rumble.setChecked(False)
           self.ch_rumble.setEnabled(False)
+          self.ch_timeout.setChecked(False)
+          self.ch_timeout.setEnabled(False)
 
         profs = os.listdir(os.getenv("HOME")+"/.qtsixa2/profiles/")
         profList = []
@@ -108,9 +106,9 @@ class NewDevW(QWizard, ui_qtsixa_newdevw.Ui_NewDevW):
               if (not self.checkDevOpt(dev, "enable_sbuttons")): self.js_sbutton.setChecked(False)
               if (not self.checkDevOpt(dev, "enable_axis")): self.js_axis.setChecked(False)
               if (not self.checkDevOpt(dev, "enable_accel")): self.js_accel.setChecked(False)
-              if (self.checkDevOpt(dev, "enable_accon")): self.js_accon.setChecked(False)
-              if (self.checkDevOpt(dev, "enable_speed")): self.js_speed.setChecked(False)
-              if (self.checkDevOpt(dev, "enable_pos")): self.js_pos.setChecked(False)
+              if (self.checkDevOpt(dev, "enable_accon")): self.js_accon.setChecked(True)
+              if (self.checkDevOpt(dev, "enable_speed")): self.js_speed.setChecked(True)
+              if (self.checkDevOpt(dev, "enable_pos")): self.js_pos.setChecked(True)
 
               app_name = open("/var/lib/sixad/profiles/"+dev, "r").read().split("# Input - \"")[1].split("\"")[0]
               for i in range(self.co_input.count()):
@@ -142,14 +140,6 @@ class NewDevW(QWizard, ui_qtsixa_newdevw.Ui_NewDevW):
 	else:
 	  self.warn_disablejoy_ico.setVisible(False)
 	  self.warn_disablejoy_txt.setVisible(False)
-
-    def func_ShowBugWarn(self):
-	if (self.ch_js.isChecked() and self.ch_input.isChecked()):
-	  self.warn_joyin_ico.setVisible(True)
-	  self.warn_joyin_txt.setVisible(True)
-	else:
-	  self.warn_joyin_ico.setVisible(False)
-	  self.warn_joyin_txt.setVisible(False)
 
     def func_ChangedPage(self, page):
         if (page == 2): #joystick
